@@ -1,0 +1,19 @@
+<p class="text-right font-weight-light font-italic" *ngIf="medidas">Mostrando {{medidas.length}} registros</p>
+<table class="table table-bordered table-condensed table-hover table-striped">
+    <thead>
+        <tr>
+            <th scope="col">#</th>
+            <th scope="col">Descripción</th>
+            <th scope="col">Acciones</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr *ngFor="let item of medidas">
+            <td scope="row"></td>
+            <td>{{item.nombre}}</td>
+            <td>
+                <a>Editar</a>
+            </td>
+        </tr>
+    </tbody>
+</table>

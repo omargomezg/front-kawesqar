@@ -1,0 +1,35 @@
+<div [hidden]="submitted">
+    <p>Las unidades de medidas son útiles para identificar a cada tipo de producto, aquí puedes especificar por ejemplo
+        unidades como litro, caja, pack, etc.</p>
+    <form (ngSubmit)="guardar()" #medidaForm="ngForm">
+        <div class="form-group row">
+            <label for="txt-nombre" class="col-sm-2 col-form-label text-right">Nombre</label>
+            <div class="col-sm-5">
+                <input id="txt-nombre" type="text" class="form-control" [(ngModel)]="model.nombre" required name="nombre"
+                    id="nombre" #nombre="ngModel" />
+                <div [hidden]="nombre.valid || nombre.pristine" class="invalid-feedback">
+                    Nombre es requerido
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-sm-7 text-right">
+                <button type="button" (click)="limpiar()" class="btn btn-link">Cancelar</button>
+                <button type="submit" class="btn btn-primary" [disabled]="!medidaForm.form.valid">Guardar</button>
+
+                <small class="form-text text-success">
+                    {{mensaje}}
+                </small>
+            </div>
+        </div>
+    </form>
+</div>
+<div [hidden]="!submitted">
+    <h2>Se ha registrado correctamente:</h2>
+    <div class="row">
+        <div class="col-sm-2">Nombre</div>
+        <div class="col-sm-10">{{ model.nombre }}</div>
+    </div>
+    <br>
+    <button class="btn btn-primary" (click)="showList()">Continuar</button>
+</div>

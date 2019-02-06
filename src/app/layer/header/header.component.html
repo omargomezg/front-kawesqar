@@ -1,16 +1,19 @@
 <div class="container-fluid" style="background-image: linear-gradient(#598ace, #163c95);">
-  <div class="row">
-      <div class="col-4">
-          <a href="{{homeUrl}}">
-              <div class="logo">
-              </div>
-          </a>
-      </div>
-      <div class="col-8 text-left">
-          Bienvenido <a href="#">Omar Gómez</a> | Turno N° 344
-          <div></div>
-      </div>
-  </div>
+    <div class="row">
+        <div class="col-4">
+            <a href="{{homeUrl}}">
+                <div class="logo">
+                </div>
+            </a>
+        </div>
+        <div class="col-8 text-left" style="color:aliceblue; padding-top: 10px;">
+            Bienvenido <a href="{{homeUrl + '/perfil/modificarPerfil.aspx?id=0'}}" class="linkMenu">Omar Gómez</a> | <a
+                href="#" class="login">Cerrar Sesión</a> <br />
+            <div class="font-weight-light">
+                <a href="#" class="linkMenu">Escritorio</a> | <a href="#" class="linkMenu">Turno
+                    N° 344</a>
+            </div>
+        </div>
+    </div>
 
 </div>
-<a [routerLink]="['/medidas']">Ver Medidas</a>

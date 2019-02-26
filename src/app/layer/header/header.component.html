@@ -9,11 +9,18 @@
         <div class="col-8 text-left" style="color:aliceblue; padding-top: 10px;">
             Bienvenido <a href="{{homeUrl + '/perfil/modificarPerfil.aspx?id=0'}}" class="linkMenu">Omar Gómez</a> | <a
                 href="#" class="login">Cerrar Sesión</a> <br />
-            <div class="font-weight-light">
-                <a href="#" class="linkMenu">Escritorio</a> | <a href="#" class="linkMenu">Turno
+
+            <div class="form-inline font-weight-light">
+                <a href="#" class="linkMenu">Escritorio</a>
+                <div class="form-group marg5px" *ngIf="data">
+                    <select class="small form-control form-control-sm" *ngIf="data.length > 1">
+                        <option *ngFor="let element of data">{{element.descripcion}}</option>
+                    </select>
+                    <span *ngIf="data.length === 1"> | {{data[0].descripcion}} | </span>
+                </div>
+                <a href="#" class="linkMenu">Turno
                     N° 344</a>
             </div>
         </div>
     </div>
-
 </div>

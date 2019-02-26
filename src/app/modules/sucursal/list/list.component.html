@@ -1,6 +1,6 @@
 <p class="text-right font-weight-light font-italic" *ngIf="sucursales">Mostrando {{sucursales.length}}
   registros</p>
-<table class="table table-bordered table-condensed table-hover table-striped">
+<table class="table table-bordered table-condensed table-hover table-striped small">
   <thead>
     <tr>
       <th scope="col">#</th>
@@ -13,13 +13,13 @@
     </tr>
   </thead>
   <tbody>
-    <tr *ngFor="let item of sucursales">
-      <td scope="row"></td>
+    <tr *ngFor="let item of sucursales; let i = index">
+      <td scope="row">{{i +1}}</td>
       <td>{{item.rut}}</td>
       <td scope="col" class="text-capitalize">{{item.descripcion | titlecase}}</td>
       <td scope="col">{{item.direccion | titlecase}}</td>
       <td scope="col">{{item.ciudad | titlecase}}</td>
-      <td scope="col">{{item.representanteLegal | titlecase}}</td>
+      <td scope="col">{{item.representante | titlecase}}</td>
       <td>
         <a [routerLink]="['/sucursales/edit', item.id]">Editar</a>
 

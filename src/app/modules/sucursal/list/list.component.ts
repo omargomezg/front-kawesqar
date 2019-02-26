@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
-import { SucursalService } from 'src/app/core/services/sucursal.service';
-import { SucursalModel } from '../core/models/sucursal-model';
+import { SucursalesService } from '../core/services/sucursales.service';
 import { CommonDataService } from '../core/services/common-data.service';
+import { SucursalesModel } from '../core/models/sucursales-model';
 
 @Component({
   selector: 'app-list',
@@ -9,8 +9,8 @@ import { CommonDataService } from '../core/services/common-data.service';
   styleUrls: ['./list.component.css']
 })
 export class ListComponent implements OnInit {
-  sucursales: SucursalModel[];
-  constructor(private sucService: SucursalService, private commonData: CommonDataService) { }
+  sucursales: SucursalesModel[];
+  constructor(private sucService: SucursalesService, private commonData: CommonDataService) { }
 
   ngOnInit() {
     this.loadTable();

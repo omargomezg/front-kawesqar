@@ -6,14 +6,16 @@ import { ListComponent } from './list/list.component';
 import { FormComponent } from './form/form.component';
 import { CommonDataService } from './core/services/common-data.service';
 import { FormsModule } from '@angular/forms';
+import { Ng2Rut, RutValidator } from 'ng2-rut';
 
 @NgModule({
   declarations: [HomeComponent, ListComponent, FormComponent],
   imports: [
     CommonModule,
     SucursalRoutingModule,
-    FormsModule
+    FormsModule,
+    Ng2Rut
   ],
-  providers: [CommonDataService]
+  providers: [CommonDataService, RutValidator]
 })
 export class SucursalModule { }

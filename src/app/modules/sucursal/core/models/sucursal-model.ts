@@ -1,8 +1,15 @@
 export class SucursalModel {
-    id: number;
-    rut: string;
-    descripcion: string;
+    codigoComuna: number;
     direccion: string;
-    ciudad: string;
-    representanteLegal: string;
+    fax: string;
+    giro: string;
+    id: number;
+    nombre: string;
+    nombreComuna: string;
+    nombreRepLegal: string;
+    numInicialRegContado: number;
+    registroContado: boolean;
+    rut: string;
+    rutRepLegal: string;
+    telefono: string;
 }

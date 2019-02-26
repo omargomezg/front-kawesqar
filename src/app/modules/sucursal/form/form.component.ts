@@ -1,7 +1,8 @@
 import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Route, Router } from '@angular/router';
 import { SucursalesService } from '../core/services/sucursales.service';
 import { SucursalModel } from '../core/models/sucursal-model';
+
 
 @Component({
   selector: 'app-form',
@@ -11,7 +12,8 @@ import { SucursalModel } from '../core/models/sucursal-model';
 export class FormComponent implements OnInit {
 
   model: SucursalModel = new SucursalModel();
-  constructor(private sucursalService: SucursalesService, private route: ActivatedRoute) { }
+  constructor(private sucursalService: SucursalesService, private route: ActivatedRoute,
+    private router: Router) { }
 
   ngOnInit() {
     this.route.params.subscribe(params => {
@@ -24,6 +26,28 @@ export class FormComponent implements OnInit {
           });
       }
     });
+  }
+
+  numberOnly(event): boolean {
+    const charCode = (event.which) ? event.which : event.keyCode;
+    if (charCode > 31 && (charCode < 48 || charCode > 57)) {
+      return false;
+    }
+    return true;
+
+  }
+
+  update() {
+    this.sucursalService.putSucursal(this.model)
+      .subscribe(data => {
+        this.router.navigateByUrl('/sucursales');
+      }, error => {
+        console.log('ouch!' + error.status);
+      });
+  }
+
+  goList() {
+
   }
 
 }

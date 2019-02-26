@@ -13,7 +13,7 @@ h1 {
   }
   body, input[text], button {
     color: #888;
-    font-family: Cambria, Georgia;
+    /* font-family: Cambria, Georgia; */
   }
   a {
     cursor: pointer;
@@ -28,6 +28,7 @@ h1 {
     cursor: pointer;
     cursor: hand;
   }
+
   button:hover {
     background-color: #cfd8dc;
   }
@@ -35,6 +36,11 @@ h1 {
     background-color: #eee;
     color: #aaa;
     cursor: auto;
+  }
+
+  .btn-space-left {
+    margin-right: 2px;
+    margin-left: 2px;
   }
   
   /* Navigation link styles */

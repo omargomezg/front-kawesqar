@@ -37,6 +37,11 @@ export class FormComponent implements OnInit {
 
   }
 
+  setCiudad(data: any) {
+    this.model.codigoComuna = data.codigo;
+    this.model.nombreComuna = data.nombre;
+  }
+
   update() {
     this.sucursalService.putSucursal(this.model)
       .subscribe(data => {

@@ -1,4 +1,3 @@
-<p>Estas en el formulario de sucursales</p>
 <form novalidate #sucursalForm="ngForm" (ngSubmit)="update()">
   <fieldset>
     <legend>Información básica </legend>
@@ -32,8 +31,10 @@
     <div class="form-group row">
       <label for="txt-ciudad" class="col-sm-2 col-form-label text-right">Ciudad</label>
       <div class="col-sm-5">
-        <input id="txt-ciudad" type="text" class="form-control" [(ngModel)]="model.nombreComuna" name="nombreComuna"
-          #nombreComuna="ngModel" />
+        <!-- <input id="txt-ciudad" type="text" class="form-control" [(ngModel)]="model.nombreComuna" name="nombreComuna"
+          #nombreComuna="ngModel" /> -->
+        <app-selector (valueChange)='setCiudad($event)' name="nombreComuna">
+        </app-selector>
       </div>
     </div>
     <div class="form-group row">
@@ -114,4 +115,4 @@
       <button routerLink="/sucursales" class="btn btn-sm btn-outline-primary btn-space-left">Cancelar</button>
     </div>
   </div>
-</form>
+</form><code>{{model | json}}</code>

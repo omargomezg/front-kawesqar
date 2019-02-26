@@ -28,7 +28,7 @@ import { HeaderComponent } from './layer/header/header.component';
     Ng2Rut,
     BsDropdownModule.forRoot(),
     TooltipModule.forRoot(),
-    ModalModule.forRoot()
+    ModalModule.forRoot(),
   ],
   providers: [RutValidator],
   bootstrap: [AppComponent]

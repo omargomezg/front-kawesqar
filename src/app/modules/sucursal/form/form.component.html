@@ -111,8 +111,9 @@
   </fieldset>
   <div class="row">
     <div class="col-sm-7 text-right">
-      <button type="submit" class="btn btn-sm btn-primary">Guardar</button>
-      <button routerLink="/sucursales" class="btn btn-sm btn-outline-primary btn-space-left">Cancelar</button>
+      <button type="submit" mat-button [disabled]="!sucursalForm.valid">Guardar</button>
+      <a mat-button href="{{homeUrl + '/administrador/asociarBodegas.aspx?id=' + model.id +'&nom=' + model.nombre}}"
+        class="btn btn-light">Ver Bodegas</a>
+      <button (click)="gotoList()" mat-button>Cancelar</button>
     </div>
   </div>
-</form><code>{{model | json}}</code>

@@ -1,5 +1,8 @@
 import { HttpClientModule } from '@angular/common/http';
-import { NgModule } from '@angular/core';
+
+import localeCl from '@angular/common/locales/es-CL';
+import { registerLocaleData } from '@angular/common';
+import { NgModule, LOCALE_ID } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { BrowserModule } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
@@ -11,13 +14,16 @@ import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { HomeComponent } from './components/home/home.component';
 import { HeaderComponent } from './layer/header/header.component';
+import { GetExternalBaseComponent } from './components/get-external-base/get-external-base.component';
 
+registerLocaleData(localeCl);
 
 @NgModule({
   declarations: [
     AppComponent,
     HeaderComponent,
-    HomeComponent
+    HomeComponent,
+    GetExternalBaseComponent
   ],
   imports: [
     HttpClientModule,
@@ -30,7 +36,10 @@ import { HeaderComponent } from './layer/header/header.component';
     TooltipModule.forRoot(),
     ModalModule.forRoot(),
   ],
-  providers: [RutValidator],
+  providers: [
+    RutValidator,
+    { provide: LOCALE_ID, useValue: 'es-CL' }
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

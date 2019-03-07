@@ -18,6 +18,7 @@ export class SelectorComponent implements OnInit {
   ciudades: CiudadModel[];
   options: string[] = [];
   filteredOptions: Observable<string[]>;
+  inputValue: string;
 
   constructor(private serCiudad: CiudadService) {
   }
@@ -32,14 +33,27 @@ export class SelectorComponent implements OnInit {
   }
 
   private _filter(value: string): string[] {
-    const filterValue = value.toLowerCase();
+    if (value) {
+      const filterValue = value.toLowerCase();
 
-    return this.options.filter(option => option.toLowerCase().includes(filterValue));
+      return this.options.filter(option => option.toLowerCase().includes(filterValue));
+    }
   }
 
   onSelectionChanged(event: MatAutocompleteSelectedEvent) {
-    const ciudad: CiudadModel = this.ciudades.find(item => item.nombre === event.option.value);
+    const ciudad = this.getCiudad(event.option.value);
     this.valueChange.emit(ciudad);
+
+  }
+
+  changedValue(event: any) {
+    const ciudad = this.getCiudad(event.target.value);
+    this.myControl.setValue(ciudad.nombre);
+  }
+
+  getCiudad(nombre: string): CiudadModel {
+    const ciudad: CiudadModel = this.ciudades.find(item => item.nombre === nombre);
+    return ciudad ? ciudad : new CiudadModel();
   }
 
   getCiudades() {

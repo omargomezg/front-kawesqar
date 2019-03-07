@@ -1,0 +1,68 @@
+<h2>Historico de Existencias</h2>
+<div class="card">
+  <div class="card-body">
+    <div class="form-row  align-items-center">
+      <div class="col-auto">
+        <div class="form-group">
+          <div class="input-group">
+            <mat-form-field>
+              <input disabled matInput [matDatepicker]="pickerStart" [(ngModel)]="dataRequest.fechaInicio"
+                placeholder="Fecha incial" (dateChange)="StartDateChange($event)">
+              <mat-datepicker-toggle class="input-group-sm" matSuffix [for]="pickerStart">
+              </mat-datepicker-toggle>
+              <mat-datepicker #pickerStart disabled="false"></mat-datepicker>
+            </mat-form-field>
+          </div>
+        </div>
+      </div>
+      <div class="col-auto">
+        <div class="form-group">
+          <div class="input-group">
+            <mat-form-field>
+              <input disabled matInput [matDatepicker]="pickerEnd" placeholder="Fecha final"
+                [(ngModel)]="dataRequest.fechaFin" (dateChange)="EndDateChange($event)">
+              <mat-datepicker-toggle class="input-group-sm" matSuffix [for]="pickerEnd">
+              </mat-datepicker-toggle>
+              <mat-datepicker #pickerEnd disabled="false"></mat-datepicker>
+            </mat-form-field>
+          </div>
+        </div>
+      </div>
+      <div class="col-auto">
+        <button type="button" mat-button (click)="search()">Buscar</button>
+      </div>
+    </div>
+  </div>
+</div>
+<br>
+<table *ngIf="dataResponse  && loading === false"
+  class="table table-bordered table-condensed table-hover table-striped small">
+  <thead>
+    <tr>
+      <th>N° Documento</th>
+      <th>Sucursal</th>
+      <th>Fecha</th>
+      <th>Monto Total</th>
+      <th>Acciones</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr *ngFor="let item of dataResponse">
+      <td>{{item.id}}</td>
+      <td>{{item.sucursal | titlecase}}</td>
+      <td>{{item.fecha | date}}</td>
+      <td class="text-right">{{item.total | currency:'CLP'}}</td>
+      <td>
+        <button mat-button routerLink="/informes/detalle/{{item.id}}/{{item.idSucursal}}">Imprimir</button>
+        <button mat-button color="warn" (click)="delete(item.id, item.idSucursal)">Eliminar</button>
+      </td>
+    </tr>
+  </tbody>
+</table>
+<div *ngIf="!dataResponse && loading === false">
+  <div class="card">
+    <div class="card-body">
+      <h5>No existen registros para visualizar.</h5>
+    </div>
+  </div>
+</div>

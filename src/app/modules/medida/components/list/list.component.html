@@ -12,7 +12,7 @@
             <td scope="row"></td>
             <td>{{item.nombre}}</td>
             <td>
-                <a>Editar</a>
+                <a [routerLink]="['/medidas/edit', item.id]">Editar</a>
             </td>
         </tr>
     </tbody>

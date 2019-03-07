@@ -1,0 +1,37 @@
+<h2>Existencia</h2>
+<div class="col-12 text-right">
+  <button mat-button routerLink="/informes/home">Mostrar todas</button>
+</div>
+<hr>
+<div class="card">
+  <div class="card-body">
+    <div class="form-row">
+      <div class="col">Fecha: {{fecha | date}}</div>
+      <div class="col">Sucursal: {{sucursal | titlecase}}</div>
+      <div class="col">Bodega: {{bodega | titlecase}}</div>
+    </div>
+  </div>
+</div>
+<br>
+<table class="table table-bordered table-condensed table-hover table-striped small">
+  <thead>
+    <tr>
+      <th>Código</th>
+      <th>Descripción</th>
+      <th>Medida</th>
+      <th>Cantidad</th>
+      <th>Unitario</th>
+      <th>Total</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr *ngFor="let item of data">
+      <td class="text-right">{{item.idArticulo}}</td>
+      <td>{{item.nomArticulo | uppercase}}</td>
+      <td>{{item.unMedida}}</td>
+      <td class="text-right">{{item.cantidad | number}}</td>
+      <td class="text-right">{{item.valorUnitario | currency:'CLP'}}</td>
+      <td class="text-right">{{item.total | currency:'CLP'}}</td>
+    </tr>
+  </tbody>
+</table>

@@ -2,6 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Route, Router } from '@angular/router';
 import { SucursalesService } from '../core/services/sucursales.service';
 import { SucursalModel } from '../core/models/sucursal-model';
+import { CommonDataService } from '../core/services/common-data.service';
+import { environment } from 'src/environments/environment';
 
 
 @Component({
@@ -12,8 +14,11 @@ import { SucursalModel } from '../core/models/sucursal-model';
 export class FormComponent implements OnInit {
 
   model: SucursalModel = new SucursalModel();
+  homeUrl = environment.homeRoot;
+
   constructor(private sucursalService: SucursalesService, private route: ActivatedRoute,
-    private router: Router) { }
+    private router: Router,
+    private commonData: CommonDataService) { }
 
   ngOnInit() {
     this.route.params.subscribe(params => {
@@ -51,8 +56,14 @@ export class FormComponent implements OnInit {
       });
   }
 
-  goList() {
-
+  gotoList() {
+    this.route.params.subscribe(params => {
+      if (params.id !== undefined) {
+        this.router.navigateByUrl('sucursales');
+      } else {
+        this.commonData.showData(true);
+      }
+    });
   }
 
 }

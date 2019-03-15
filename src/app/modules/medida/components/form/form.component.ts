@@ -15,7 +15,11 @@ export class FormComponent implements OnInit {
   estado = false;
   mensaje = '';
   result = true;
-  constructor(private readonly serv: MedidaService, private router: Router, private commonData: CommonDataService) { }
+  constructor(private readonly serv: MedidaService, private router: Router, private commonData: CommonDataService) {
+    this.commonData.serviceMedidaModel.subscribe((data) => {
+      this.model = data;
+    });
+  }
 
   ngOnInit() {
   }
@@ -24,14 +28,17 @@ export class FormComponent implements OnInit {
     this.model = new MedidaModel();
   }
 
-  showList() {
-    this.commonData.showData(true);
+  emptyform() {
+    this.limpiar();
+    this.submitted = false;
+    this.commonData.setRefreshList(true);
   }
 
   guardar() {
     this.serv.putMedidas(this.model)
       .subscribe(data => {
         this.submitted = true;
+        this.commonData.setRefreshList(true);
       }, error => {
         console.log('ouch!' + error.status);
       });

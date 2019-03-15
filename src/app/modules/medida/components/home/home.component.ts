@@ -1,5 +1,4 @@
 import { Component, OnInit } from '@angular/core';
-import { CommonDataService } from '../../core/services/common-data.service';
 
 @Component({
   selector: 'app-home',
@@ -10,17 +9,10 @@ export class HomeComponent implements OnInit {
 
   viewForm = true;
 
-  constructor(private commonData: CommonDataService) {
-    this.commonData.serviceShowList.subscribe((data) => {
-      this.viewForm = data ? false : true;
-    });
+  constructor() {
   }
 
   ngOnInit() {
-  }
-
-  cambiarVista() {
-    this.viewForm = !this.viewForm;
   }
 
 }

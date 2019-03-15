@@ -4,6 +4,7 @@ import { environment } from 'src/environments/environment';
 import { SucursalModel } from '../models/sucursal.model';
 import { Observable, of } from 'rxjs';
 import { map } from 'rxjs/operators';
+import { HeaderModel } from 'src/app/layer/header/header.model';
 
 @Injectable({
   providedIn: 'root'
@@ -21,6 +22,12 @@ export class SucursalService {
   getSucursalesUsuario(rut: string): Observable<SucursalModel[]> {
     return this.http
       .get<SucursalModel[]>(`${environment.apiUrl}/api/${rut}/sucursal`)
+      .pipe(map(data => data));
+  }
+
+  getHeader(rut: string): Observable<HeaderModel> {
+    return this.http
+      .get<HeaderModel>(`${environment.apiUrl}/api/header/${rut}`)
       .pipe(map(data => data));
   }
 

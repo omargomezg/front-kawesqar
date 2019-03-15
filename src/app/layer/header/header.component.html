@@ -7,19 +7,20 @@
             </a>
         </div>
         <div class="col-8 text-left" style="color:aliceblue; padding-top: 10px;">
-            Bienvenido <a href="{{homeUrl + '/perfil/modificarPerfil.aspx?id=0'}}" class="linkMenu">Omar Gómez</a> | <a
-                href="#" class="login">Cerrar Sesión</a> <br />
-
+            <section *ngIf="header">
+                Bienvenido <a href="{{homeUrl + '/perfil/modificarPerfil.aspx?id=0'}}"
+                    class="linkMenu">{{header.nombre}}</a> | <a href="#" class="login">Cerrar Sesión</a> <br />
+            </section>
             <div class="form-inline font-weight-light">
-                <a href="#" class="linkMenu">Escritorio</a>
+                <a href="{{homeUrl}}" class="linkMenu">Escritorio</a>
                 <div class="form-group marg5px" *ngIf="data">
                     <select class="small form-control form-control-sm" *ngIf="data.length > 1">
                         <option *ngFor="let element of data">{{element.descripcion}}</option>
                     </select>
-                    <span *ngIf="data.length === 1"> | {{data[0].descripcion}} | </span>
+                    <span *ngIf=" data.length===1"> | {{data[0].descripcion}} | </span>
                 </div>
-                <a href="#" class="linkMenu">Turno
-                    N° 344</a>
+                <a *ngIf="header" href="{{homeUrl + '/Informes/ventas/informeVentas.aspx'}}" class="linkMenu">Turno
+                    N° {{header.numeroTurno}}</a>
             </div>
         </div>
     </div>

@@ -39,10 +39,12 @@ export class HomeComponent implements OnInit {
     this.servMenu.getMenu(id, this.localStorage.getRutUser())
       .subscribe(
         data => {
-          this.menu = data;
-          this.raiz.backId = data[0].parent;
-          this.raiz.nombre = nombre;
-          this.raiz.mostrar = data[0].idParent === -1 ? false : true;
+          if (data.length > 0) {
+            this.menu = data;
+            this.raiz.backId = data[0].parent;
+            this.raiz.nombre = nombre;
+            this.raiz.mostrar = data[0].idParent === -1 ? false : true;
+          }
         },
         error => {
           console.log('ouch!' + error.status);

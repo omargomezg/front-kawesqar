@@ -1,6 +1,6 @@
 <br />
 <div class="form-group text-right" *ngIf="!showForm">
-  <button type="button" class="btn btn-primary" (click)="showForm = true">Nueva sucursal</button>
+  <a class="btn btn-primary" routerLink="/sucursales/new">Nueva sucursal</a>
 </div>
 <app-form *ngIf="showForm">
 </app-form>

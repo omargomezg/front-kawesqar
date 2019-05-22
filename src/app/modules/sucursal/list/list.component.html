@@ -9,20 +9,23 @@
       <th scope="col">Dirección</th>
       <th scope="col">Ciudad</th>
       <th scope="col">Representante legal</th>
-      <th scope="col">Acciones</th>
+      <th scope="col">Actualizado</th>
     </tr>
   </thead>
   <tbody>
     <tr *ngFor="let item of sucursales; let i = index">
       <td scope="row">{{i +1}}</td>
-      <td>{{item.rut}}</td>
-      <td scope="col" class="text-capitalize">{{item.descripcion | titlecase}}</td>
+      <td class="text-nowrap">{{item.rut | rut}}</td>
+      <td scope="col" class="text-capitalize">
+        <a title="Editar {{item.descripcion | titlecase}}"
+          [routerLink]="['/sucursales/edit', item.id]">{{item.descripcion | titlecase}}</a><br>
+        <small *ngIf="item.bodegasAsociadas > 0"><a>{{item.bodegasAsociadas}}
+            {{item.bodegasAsociadas > 1 ? 'bodegas' : 'bodega'}}</a></small>
+      </td>
       <td scope="col">{{item.direccion | titlecase}}</td>
       <td scope="col">{{item.ciudad | titlecase}}</td>
       <td scope="col">{{item.representante | titlecase}}</td>
-      <td>
-        <a [routerLink]="['/sucursales/edit', item.id]">Editar</a>
-      </td>
+      <td scope="col">{{item.updateDate | date}}</td>
     </tr>
   </tbody>
 </table>

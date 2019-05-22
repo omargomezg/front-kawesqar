@@ -10,7 +10,7 @@ import { SucursalesModel } from '../core/models/sucursales-model';
 })
 export class ListComponent implements OnInit {
   sucursales: SucursalesModel[];
-  constructor(private sucService: SucursalesService, private commonData: CommonDataService) { }
+  constructor(private sucService: SucursalesService) { }
 
   ngOnInit() {
     this.loadTable();
@@ -19,7 +19,9 @@ export class ListComponent implements OnInit {
   loadTable() {
     this.sucService.getSucursales()
       .subscribe(data => {
-        this.sucursales = data;
+        this.sucursales = data.sort((a, b) => {
+          return <any>new Date(b.createDate) - <any>new Date(a.createDate);
+        });
       }, error => {
         console.log('ouch!' + error.status);
       });

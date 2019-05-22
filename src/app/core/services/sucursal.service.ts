@@ -21,7 +21,7 @@ export class SucursalService {
 
   getSucursalesUsuario(rut: string): Observable<SucursalModel[]> {
     return this.http
-      .get<SucursalModel[]>(`${environment.apiUrl}/api/${rut}/sucursal`)
+      .get<SucursalModel[]>(`${environment.apiUrl}/api/user/${rut}/sucursal`)
       .pipe(map(data => data));
   }
 

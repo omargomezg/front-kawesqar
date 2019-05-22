@@ -31,7 +31,7 @@ export class HomeComponent implements OnInit {
     } else if (url.includes('my-app')) {
       this.router.navigate([url.replace('~/my-app', '')]);
     } else {
-      window.open(`${environment.homeRoot}${url.replace('~', '')}`, '_self');
+      window.open(`${this.router.url}${url.replace('~', '')}`, '_self');
     }
   }
 

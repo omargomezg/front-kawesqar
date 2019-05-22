@@ -1,4 +1,4 @@
-<form novalidate #sucursalForm="ngForm" (ngSubmit)="update()">
+<form *ngIf="(dataPage.edit && model) || !dataPage.edit" novalidate #sucursalForm="ngForm" (ngSubmit)="update()">
   <fieldset>
     <legend>Información básica </legend>
     <div class="form-group row">
@@ -31,9 +31,7 @@
     <div class="form-group row">
       <label for="txt-ciudad" class="col-sm-2 col-form-label text-right">Ciudad</label>
       <div class="col-sm-5">
-        <!-- <input id="txt-ciudad" type="text" class="form-control" [(ngModel)]="model.nombreComuna" name="nombreComuna"
-          #nombreComuna="ngModel" /> -->
-        <app-selector (valueChange)='setCiudad($event)' name="nombreComuna">
+        <app-selector (valueChange)='setCiudad($event)' [nameCity]="model.nombreComuna" name="nombreComuna">
         </app-selector>
       </div>
     </div>
@@ -114,6 +112,10 @@
       <button type="submit" mat-button [disabled]="!sucursalForm.valid">Guardar</button>
       <a mat-button href="{{homeUrl + '/administrador/asociarBodegas.aspx?id=' + model.id +'&nom=' + model.nombre}}"
         class="btn btn-light">Ver Bodegas</a>
-      <button (click)="gotoList()" mat-button>Cancelar</button>
+      <button type="button" (click)="gotoList()" mat-button>Cancelar</button>
     </div>
   </div>
+</form>
+<section *ngIf="dataPage.edit && !model">
+  <p>NO hay nada que mostrar</p>
+</section>

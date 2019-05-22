@@ -1,0 +1,29 @@
+<h1 mat-dialog-title>Avanzado</h1>
+<div mat-dialog-content>
+  <mat-form-field class="example-full-width">
+    <input matInput placeholder="Descripción" [(ngModel)]="model.name">
+  </mat-form-field>
+  <mat-form-field class="example-full-width">
+    <input matInput placeholder="Folio" [(ngModel)]="model.folio">
+  </mat-form-field>
+  <mat-form-field class="example-full-width">
+    <input matInput placeholder="Medida"  [(ngModel)]="model.measure">
+  </mat-form-field>
+  <mat-form-field class="example-full-width">
+    <input matInput placeholder="Bodega"  [(ngModel)]="model.bodega">
+  </mat-form-field>
+  <div class="row">
+    <div class="col-6">
+      <mat-form-field class="example-full-width">
+        <input matInput placeholder="Cantidad" [(ngModel)]="model.quantity">
+      </mat-form-field></div>
+    <div class="col-6">
+      <mat-form-field class="example-full-width">
+        <input matInput placeholder="$ Unitario" [(ngModel)]="model.unitario">
+      </mat-form-field></div>
+  </div>
+</div>
+<div mat-dialog-actions class="text-right">
+  <button mat-button [mat-dialog-close]="updateContent()" cdkFocusInitial>Ok</button>
+  <button mat-button (click)="onNoClick()">Cerrar</button>
+</div>

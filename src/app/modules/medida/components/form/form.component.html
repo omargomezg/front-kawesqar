@@ -3,9 +3,9 @@
         unidades como litro, caja, pack, etc.</p>
     <form (ngSubmit)="guardar()" #medidaForm="ngForm">
         <div class="form-group row">
-            <label for="txt-nombre" class="col-sm-2 col-form-label text-right">Nombre</label>
+            <label for="nombre" class="col-sm-2 col-form-label text-right">Nombre</label>
             <div class="col-sm-5">
-                <input id="txt-nombre" type="text" class="form-control" [(ngModel)]="model.nombre" required
+                <input type="text" class="form-control" [(ngModel)]="model.nombre" required
                     name="nombre" id="nombre" #nombre="ngModel" />
                 <div [hidden]="nombre.valid || nombre.pristine" class="invalid-feedback">
                     Nombre es requerido
@@ -14,8 +14,8 @@
         </div>
         <div class="row">
             <div class="col-sm-7 text-right">
-                <button type="button" (click)="emptyform()" class="btn btn-link">Cancelar</button>
                 <button type="submit" class="btn btn-primary" [disabled]="!medidaForm.form.valid">Guardar</button>
+                <button type="button" (click)="emptyform()" class="btn btn-link">Cancelar</button>
 
                 <small class="form-text text-success">
                     {{mensaje}}

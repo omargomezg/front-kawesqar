@@ -14,7 +14,7 @@ export class MedidaService {
   constructor(private readonly http: HttpClient) { }
 
   getMedidas(): Observable<MedidaModel[]> {
-    return this.http.get<MedidaModel[]>(`${environment.apiUrl}/api/medida`);
+    return this.http.get<MedidaModel[]>(`${environment.apiUrl}/api/measure`);
   }
 
   getMedida(id: number): Observable<MedidaModel> {

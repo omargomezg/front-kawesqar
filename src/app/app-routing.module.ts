@@ -10,6 +10,8 @@ const routes: Routes = [
     { path: 'medidas', loadChildren: './modules/medida/medida.module#MedidaModule' },
     { path: 'sucursales', loadChildren: './modules/sucursal/sucursal.module#SucursalModule' },
     { path: 'informes', loadChildren: './modules/informes/informes.module#InformesModule' },
+    { path: 'usuarios', loadChildren: './modules/usuario/usuario.module#UsuarioModule' },
+    { path: 'factura', loadChildren: './modules/factura/factura.module#FacturaModule' },
     { path: '**', redirectTo: 'home' }
 ];
 @NgModule({

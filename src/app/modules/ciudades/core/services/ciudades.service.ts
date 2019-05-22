@@ -14,7 +14,7 @@ export class CiudadService {
 
     getCiudades(): Observable<CiudadModel[]> {
         return this.http
-            .get<CiudadModel[]>(environment.apiUrl + '/api/ciudad')
+            .get<CiudadModel[]>(environment.apiUrl + '/api/city')
             .pipe(map(data => data));
     }
 

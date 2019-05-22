@@ -1,4 +1,4 @@
-import { Component, EventEmitter, OnInit, Output } from '@angular/core';
+import { Component, EventEmitter, OnInit, Output, Input } from '@angular/core';
 import { FormControl } from '@angular/forms';
 import { Observable } from 'rxjs';
 import { map, startWith } from 'rxjs/operators';
@@ -18,13 +18,29 @@ export class SelectorComponent implements OnInit {
   ciudades: CiudadModel[];
   options: string[] = [];
   filteredOptions: Observable<string[]>;
-  inputValue: string;
+  @Input()
+  set nameCity(nameCity: string) {
+    if (nameCity && this.ciudades) {
+      this.myControl.setValue(this.getCiudad(nameCity).nombre);
+    } else {
+      this.serCiudad.getCiudades()
+        .subscribe(data => {
+          data.forEach(element => {
+            this.options.push(element.nombre);
+          });
+          this.ciudades = data;
+          this.myControl.setValue(this.getCiudad(nameCity).nombre);
+        }, error => {
+          console.log('ouch!' + error.status);
+        });
+    }
+  }
 
   constructor(private serCiudad: CiudadService) {
+    this.getCiudades();
   }
 
   ngOnInit() {
-    this.getCiudades();
     this.filteredOptions = this.myControl.valueChanges
       .pipe(
         startWith(''),
@@ -35,7 +51,6 @@ export class SelectorComponent implements OnInit {
   private _filter(value: string): string[] {
     if (value) {
       const filterValue = value.toLowerCase();
-
       return this.options.filter(option => option.toLowerCase().includes(filterValue));
     }
   }
@@ -53,6 +68,7 @@ export class SelectorComponent implements OnInit {
 
   getCiudad(nombre: string): CiudadModel {
     const ciudad: CiudadModel = this.ciudades.find(item => item.nombre === nombre);
+
     return ciudad ? ciudad : new CiudadModel();
   }
 

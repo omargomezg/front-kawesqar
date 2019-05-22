@@ -15,14 +15,18 @@ export class MenuService {
     constructor(private http: HttpClient) { }
 
     getMenu(id: number, rut: string): Observable<MenuModel[]> {
+        let url = '';
+        if (id > 0) {
+            url = `${environment.apiUrl}/api/menu/${rut}/${id}`;
+        } else {
+            url = `${environment.apiUrl}/api/menu/${rut}`;
+        }
         return this.http
-            .post<MenuModel[]>(`${environment.apiUrl}/api/menu/${id}`,
-                { rut: rut }, this.httpOptions)
+            .get<MenuModel[]>(url)
             .pipe(
                 catchError((error) => {
                     throw error;
                 })
             );
     }
-
 }

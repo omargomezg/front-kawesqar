@@ -14,11 +14,11 @@ export class SucursalesService {
   constructor(private readonly http: HttpClient) { }
 
   getSucursales(): Observable<SucursalesModel[]> {
-    return this.http.get<SucursalesModel[]>(`${environment.apiUrl}/api/sucursal`);
+    return this.http.get<SucursalesModel[]>(`${environment.apiUrl}/api/subsidiary`);
   }
 
   getSucursal(id: number): Observable<SucursalModel> {
-    return this.http.get<SucursalModel>(`${environment.apiUrl}/api/sucursal/${id}`);
+    return this.http.get<SucursalModel>(`${environment.apiUrl}/api/subsidiary/${id}`);
   }
 
   putSucursal(model: SucursalModel): Observable<any> {
@@ -26,7 +26,7 @@ export class SucursalesService {
       headers: new HttpHeaders({ 'Content-Type': 'application/json' })
     };
     return this.http
-      .put(`${environment.apiUrl}/api/sucursal/${model.id}`,
+      .put(`${environment.apiUrl}/api/subsidiary/${model.id}`,
         JSON.stringify(model), httpOptions)
       .pipe(
         map(data => data),

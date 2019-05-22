@@ -1,5 +1,4 @@
 import { Component, OnInit } from '@angular/core';
-import { environment } from 'src/environments/environment';
 import { SucursalService } from 'src/app/core/services/sucursal.service';
 import { SucursalModel } from 'src/app/core/models/sucursal.model';
 import { StorageDataService } from 'src/app/core/services/storage-data.service';
@@ -12,7 +11,7 @@ import { HeaderModel } from './header.model';
 })
 export class HeaderComponent implements OnInit {
 
-  homeUrl = environment.homeRoot;
+  homeUrl = window.location.origin;
   data: SucursalModel[];
   header: HeaderModel;
   constructor(private readonly sucursalService: SucursalService,
@@ -20,7 +19,6 @@ export class HeaderComponent implements OnInit {
 
   ngOnInit() {
     if (this.localStorage.getRutUser() !== '') {
-      console.log('El rut es:', this.localStorage.getRutUser());
       this.getSucursales();
       this.getHeader();
     }

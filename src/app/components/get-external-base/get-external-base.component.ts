@@ -24,7 +24,7 @@ export class GetExternalBaseComponent implements OnInit {
   }
 
   getUrl(url: string): string {
-    const tokens = url.split('+');
+    const tokens = url.split('-');
     return tokens.join('/');
   }
 

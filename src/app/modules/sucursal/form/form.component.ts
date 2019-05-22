@@ -1,9 +1,7 @@
 import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute, Route, Router } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { SucursalesService } from '../core/services/sucursales.service';
 import { SucursalModel } from '../core/models/sucursal-model';
-import { CommonDataService } from '../core/services/common-data.service';
-import { environment } from 'src/environments/environment';
 
 
 @Component({
@@ -13,33 +11,36 @@ import { environment } from 'src/environments/environment';
 })
 export class FormComponent implements OnInit {
 
-  model: SucursalModel = new SucursalModel();
-  homeUrl = environment.homeRoot;
+  model: SucursalModel;
+  dataPage = {
+    edit: false
+  };
 
   constructor(private sucursalService: SucursalesService, private route: ActivatedRoute,
-    private router: Router,
-    private commonData: CommonDataService) { }
+    private router: Router) { }
 
   ngOnInit() {
     this.route.params.subscribe(params => {
       if (params.id !== undefined) {
+        this.dataPage.edit = true;
         this.sucursalService.getSucursal(params.id)
           .subscribe(data => {
             this.model = data;
           }, error => {
             console.log('ouch!' + error.status);
           });
+      } else {
+        this.model = new SucursalModel;
       }
     });
+    if (!this.model) {
+      this.model = new SucursalModel;
+    }
   }
 
   numberOnly(event): boolean {
     const charCode = (event.which) ? event.which : event.keyCode;
-    if (charCode > 31 && (charCode < 48 || charCode > 57)) {
-      return false;
-    }
-    return true;
-
+    return !(charCode > 31 && (charCode < 48 || charCode > 57));
   }
 
   setCiudad(data: any) {
@@ -49,21 +50,15 @@ export class FormComponent implements OnInit {
 
   update() {
     this.sucursalService.putSucursal(this.model)
-      .subscribe(data => {
-        this.router.navigateByUrl('/sucursales');
+      .subscribe(() => {
+        this.router.navigateByUrl('sucursales/home');
       }, error => {
         console.log('ouch!' + error.status);
       });
   }
 
   gotoList() {
-    this.route.params.subscribe(params => {
-      if (params.id !== undefined) {
-        this.router.navigateByUrl('sucursales');
-      } else {
-        this.commonData.showData(true);
-      }
-    });
+    this.router.navigateByUrl('sucursales/home');
   }
 
 }

@@ -15,6 +15,8 @@ import { AppComponent } from './app.component';
 import { HomeComponent } from './components/home/home.component';
 import { HeaderComponent } from './layer/header/header.component';
 import { GetExternalBaseComponent } from './components/get-external-base/get-external-base.component';
+import { AllMaterialModule } from './material-module';
+import { OnlyNumbersDirective } from './directives/only-numbers.directive';
 
 registerLocaleData(localeCl);
 
@@ -23,7 +25,8 @@ registerLocaleData(localeCl);
     AppComponent,
     HeaderComponent,
     HomeComponent,
-    GetExternalBaseComponent
+    GetExternalBaseComponent,
+    OnlyNumbersDirective
   ],
   imports: [
     HttpClientModule,
@@ -32,6 +35,7 @@ registerLocaleData(localeCl);
     AppRoutingModule,
     FormsModule,
     Ng2Rut,
+    AllMaterialModule,
     BsDropdownModule.forRoot(),
     TooltipModule.forRoot(),
     ModalModule.forRoot(),

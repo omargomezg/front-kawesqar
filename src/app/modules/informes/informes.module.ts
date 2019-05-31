@@ -8,10 +8,11 @@ import { InformesRoutingModule } from './informes-routing.module';
 import localeCl from '@angular/common/locales/es-CL';
 import { registerLocaleData } from '@angular/common';
 import { StorageDataService } from './core/services/storage-data.service';
+import { ExistenceComponent } from './existence/existence.component';
 
 registerLocaleData(localeCl);
 @NgModule({
-  declarations: [HistoricalExistenceComponent, HistoricalExistenceDetailComponent],
+  declarations: [HistoricalExistenceComponent, HistoricalExistenceDetailComponent, ExistenceComponent],
   imports: [
     CommonModule,
     FormsModule,

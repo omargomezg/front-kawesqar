@@ -1,3 +1,4 @@
+import 'hammerjs';
 import { HttpClientModule } from '@angular/common/http';
 
 import localeCl from '@angular/common/locales/es-CL';

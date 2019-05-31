@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { UtilsService } from '../core/services/utils.service';
 import { UserModel } from '../core/models/user.model';
-import { MatSlideToggleChange } from '@angular/material';
+import { MatSlideToggleChange } from '@angular/material/slide-toggle';
 
 @Component({
   selector: 'app-list-users',

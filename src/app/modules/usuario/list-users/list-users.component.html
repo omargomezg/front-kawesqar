@@ -1,0 +1,42 @@
+<br>
+<div class="row d-print-none bg-light">
+  <div class="col-12">
+    <p class="small text-capitalize p-2 mb-0">Configuración > Usuarios</p>
+  </div>
+</div>
+<div class="row">
+  <div class="col-4">
+    <h4>Usuarios registrados</h4>
+  </div>
+</div>
+<mat-card>
+  <mat-card-content>
+    <table class="table table-bordered table-condensed table-hover table-striped small">
+      <thead>
+        <tr>
+          <th>Usuario</th>
+          <th>Rol</th>
+          <th>Correo electrónico</th>
+          <th>&nbsp;</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let item of users">
+          <td scope="row">
+            <a title="Editar a {{item.nombres | titlecase}} {{item.apPaterno | titlecase}} {{item.apMaterno | titlecase}}"
+              [routerLink]="['/usuarios/edit', item.rutUsuario]">
+              {{item.nombres | titlecase}} {{item.apPaterno | titlecase}} {{item.apMaterno | titlecase}}</a>
+
+          </td>
+          <td scope="row">{{item.DefaultRol}}</td>
+          <td scope="row">{{item.eMail}}</td>
+          <td>
+            <mat-slide-toggle class="example-margin" [checked]="item.estado"
+              (change)="changeStatus($event, item.rutUsuario)">
+            </mat-slide-toggle>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </mat-card-content>
+</mat-card>

@@ -1,6 +1,5 @@
 import { Component, OnInit } from '@angular/core';
 import { UtilsService } from '../core/services/utils.service';
-import { serializePath } from '@angular/router/src/url_tree';
 import { UserModel } from '../core/models/user.model';
 import { MatSlideToggleChange } from '@angular/material';
 

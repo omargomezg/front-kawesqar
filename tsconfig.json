@@ -2,10 +2,11 @@
   "compileOnSave": false,
   "compilerOptions": {
     "baseUrl": "./",
-    "outDir": "./dist/out-tsc",
+    "importHelpers": true,
+    "outDir": "./lib",
     "sourceMap": true,
     "declaration": false,
-    "module": "es2015",
+    "module": "esnext",
     "moduleResolution": "node",
     "emitDecoratorMetadata": true,
     "experimentalDecorators": true,
@@ -16,6 +17,9 @@
     "lib": [
       "es2018",
       "dom"
-    ]
-  }
+    ],
+    "incremental": true,
+    "tsBuildInfoFile": "./buildcache/front-end",
+  },
+  "include": ["./src"]
 }

@@ -19,7 +19,7 @@
       "dom"
     ],
     "incremental": true,
-    "tsBuildInfoFile": "./buildcache/front-end",
+    "tsBuildInfoFile": "./buildcache/front-end"
   },
   "include": ["./src"]
 }

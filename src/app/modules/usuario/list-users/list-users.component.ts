@@ -16,7 +16,7 @@ export class ListUsersComponent implements OnInit {
     this.serviceRole.getAllUsers().subscribe(data => {
       this.users = data;
     }, error => {
-      console.log('ouch!' + error.status);
+      console.log(error);
     });
   }
 
@@ -25,7 +25,7 @@ export class ListUsersComponent implements OnInit {
       // Any code
     }, error => {
       console.log('ouch!' + error.status);
-    });;
+    });
   }
 
 }

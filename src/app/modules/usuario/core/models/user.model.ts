@@ -15,6 +15,11 @@ export class UserModel {
     salidaVenta: boolean;
     salidaFactura: boolean;
     salidaEmpleados: boolean;
+    traspaso: boolean;
+    credito: boolean;
+    discount: boolean;
+    updated: Date;
+    DefaulltRol: string;
 }
 
 export class ExistsModel {

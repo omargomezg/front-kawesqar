@@ -18,6 +18,7 @@ import { HeaderComponent } from './layer/header/header.component';
 import { GetExternalBaseComponent } from './components/get-external-base/get-external-base.component';
 import { AllMaterialModule } from './material-module';
 import { OnlyNumbersDirective } from './directives/only-numbers.directive';
+import { EgresoComponent } from './components/egreso/egreso.component';
 
 registerLocaleData(localeCl);
 
@@ -27,7 +28,8 @@ registerLocaleData(localeCl);
     HeaderComponent,
     HomeComponent,
     GetExternalBaseComponent,
-    OnlyNumbersDirective
+    OnlyNumbersDirective,
+    EgresoComponent
   ],
   imports: [
     HttpClientModule,

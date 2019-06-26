@@ -1,4 +1,7 @@
 export class RegistrarModel {
   rut: string;
-  razonSocial: string;
+  /**
+   * Razón socialñ
+   */
+  businessName: string;
 }

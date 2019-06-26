@@ -1,4 +1,7 @@
 export class SupplierModel {
   rut: string;
-  razonSocial: string;
+  /**
+   * Razón social
+   */
+  businessName: string;
 }

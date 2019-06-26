@@ -28,7 +28,7 @@ export class RegistrarComponent implements OnInit {
   search() {
     this.supplierService.getByRut(this.model.rut)
       .subscribe(data => {
-        this.model.razonSocial = data.razonSocial;
+        this.model.businessName = data.businessName;
       }, error => {
         console.log('ouch!' + error.status);
       });

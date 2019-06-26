@@ -21,5 +21,8 @@
     "incremental": true,
     "tsBuildInfoFile": "./buildcache/front-end"
   },
-  "include": ["./src"]
+  "include": [
+    "./src",
+    "types"
+  ]
 }

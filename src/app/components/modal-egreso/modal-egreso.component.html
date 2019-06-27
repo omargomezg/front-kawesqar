@@ -1,0 +1,31 @@
+<h1 mat-dialog-title>Avanzado</h1>
+<div mat-dialog-content>
+  <mat-form-field class="example-full-width">
+    <input matInput placeholder="Descripción">
+  </mat-form-field>
+  <mat-form-field class="example-full-width">
+    <input matInput placeholder="Folio">
+  </mat-form-field>
+  <mat-form-field class="example-full-width">
+    <input matInput placeholder="Medida">
+  </mat-form-field>
+  <mat-form-field class="example-full-width">
+    <input matInput placeholder="Bodega">
+  </mat-form-field>
+  <div class="row">
+    <div class="col-6">
+      <mat-form-field class="example-full-width">
+        <input matInput placeholder="Cantidad">
+      </mat-form-field>
+    </div>
+    <div class="col-6">
+      <mat-form-field class="example-full-width">
+        <input matInput placeholder="$ Unitario">
+      </mat-form-field>
+    </div>
+  </div>
+</div>
+<div mat-dialog-actions class="text-right">
+  <button mat-button [mat-dialog-close]="updateContent()" cdkFocusInitial>Ok</button>
+  <button mat-button (click)="onNoClick()">Cerrar</button>
+</div>

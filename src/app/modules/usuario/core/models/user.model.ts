@@ -18,10 +18,25 @@ export class UserModel {
     traspaso: boolean;
     credito: boolean;
     discount: boolean;
+    allowedServices: AllowedDeliveriesModel;
     updated: Date;
-    DefaulltRol: string;
+    DefaultRol: string;
+
+    constructor() {
+        this.allowedServices.bill = false;
+        this.allowedServices.employees = false;
+        this.allowedServices.sales = false;
+        this.allowedServices.subsidiary = false;
+    }
 }
 
 export class ExistsModel {
     value: boolean;
+}
+
+export class AllowedDeliveriesModel {
+    sales: boolean;
+    employees: boolean;
+    subsidiary: boolean;
+    bill: boolean;
 }

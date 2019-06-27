@@ -19,6 +19,8 @@ import { GetExternalBaseComponent } from './components/get-external-base/get-ext
 import { AllMaterialModule } from './material-module';
 import { OnlyNumbersDirective } from './directives/only-numbers.directive';
 import { EgresoComponent } from './components/egreso/egreso.component';
+import { ModalEgresoComponent } from './components/modal-egreso/modal-egreso.component';
+import {DialogComponent} from 'src/app/modules/factura/registrar/dialog.component';
 
 registerLocaleData(localeCl);
 
@@ -29,7 +31,8 @@ registerLocaleData(localeCl);
     HomeComponent,
     GetExternalBaseComponent,
     OnlyNumbersDirective,
-    EgresoComponent
+    EgresoComponent,
+    ModalEgresoComponent
   ],
   imports: [
     HttpClientModule,
@@ -47,6 +50,7 @@ registerLocaleData(localeCl);
     RutValidator,
     { provide: LOCALE_ID, useValue: 'es-CL' }
   ],
-  bootstrap: [AppComponent]
+  bootstrap: [AppComponent],
+  entryComponents: [ModalEgresoComponent]
 })
 export class AppModule { }

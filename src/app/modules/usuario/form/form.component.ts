@@ -30,6 +30,10 @@ export class FormComponent implements OnInit {
         this.serviceRole.getUserByRut(params.rut)
           .subscribe(data => {
             this.model = data;
+            this.model.allowedServices.bill = data.salidaFactura;
+            this.model.allowedServices.employees = data.salidaEmpleados;
+            this.model.allowedServices.sales = data.salidaVenta;
+            this.model.allowedServices.subsidiary = data.traspaso;
             this.model.rut = params.rut;
             this.model.action = 'edit';
           }, error => {

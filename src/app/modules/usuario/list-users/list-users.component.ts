@@ -21,7 +21,7 @@ export class ListUsersComponent implements OnInit {
   }
 
   changeStatus(event: MatSlideToggleChange, rut: string) {
-    this.serviceRole.putUserState({ state: event.checked }, rut).subscribe(data => {
+    this.serviceRole.putUserState({ rut: rut, enabled: event.checked }, rut).subscribe(data => {
       // Any code
     }, error => {
       console.log('ouch!' + error.status);

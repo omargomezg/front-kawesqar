@@ -5,7 +5,7 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { EgressModel } from '../models/egress.model';
 import { catchError, retry, map } from 'rxjs/operators';
 import { UserModel, ExistsModel } from '../models/user.model';
-import {environment} from 'src/environments/environment';
+import { environment } from 'src/environments/environment';
 
 @Injectable({
   providedIn: 'root'
@@ -37,7 +37,7 @@ export class UtilsService {
   }
 
   putUserState(data: any, rut: string): Observable<any[]> {
-    return this.http.put<any>(`${environment.apiUrl}/api/user/${rut}/enable`, JSON.stringify(data), this.httpOptions)
+    return this.http.put<any>(`${environment.apiUrl}/api/user/${rut}/enabled`, JSON.stringify(data), this.httpOptions)
       .pipe(
         retry(1),
         catchError(this.handleError)

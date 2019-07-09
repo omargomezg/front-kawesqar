@@ -21,6 +21,7 @@ import { OnlyNumbersDirective } from './directives/only-numbers.directive';
 import { EgresoComponent } from './components/egreso/egreso.component';
 import { ModalEgresoComponent } from './components/modal-egreso/modal-egreso.component';
 import {DialogComponent} from 'src/app/modules/factura/registrar/dialog.component';
+import {ArticleService} from 'src/app/core/services/article.service';
 
 registerLocaleData(localeCl);
 
@@ -48,6 +49,7 @@ registerLocaleData(localeCl);
   ],
   providers: [
     RutValidator,
+    ArticleService,
     { provide: LOCALE_ID, useValue: 'es-CL' }
   ],
   bootstrap: [AppComponent],

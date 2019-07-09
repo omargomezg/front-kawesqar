@@ -7,6 +7,7 @@ import {DialogComponent} from './registrar/dialog.component';
 import {FormsModule} from '@angular/forms';
 import {Ng2Rut} from 'ng2-rut';
 import {SearchPipe} from './core/search.pipe';
+import {MatNativeDateModule} from '@angular/material';
 
 @NgModule({
   declarations: [RegistrarComponent, DialogComponent, SearchPipe],
@@ -15,9 +16,10 @@ import {SearchPipe} from './core/search.pipe';
     FacturaRoutingModules,
     AllMaterialModule,
     Ng2Rut,
-    FormsModule
+    FormsModule,
+    MatNativeDateModule
   ],
-  entryComponents: [DialogComponent]
+  entryComponents: [DialogComponent],
 })
 export class FacturaModule {
 }

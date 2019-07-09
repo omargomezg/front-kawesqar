@@ -9,7 +9,11 @@
           </div>
           <div class="col-10">
             <div class="form-group">
-              <input type="text" placeholder="Código / Descripción" class="form-control form-control-sm"/>
+              <input type="text" [(ngModel)]='currentProduct' (change)="searchArticle()" (keyup)="getBySku($event)"
+                     placeholder="Código / Descripción" class="form-control form-control-sm" list="dynmicUserIds"/>
+              <datalist id="dynmicUserIds">
+                <option *ngFor="let item of articleList" [value]="item.sku">{{item.name}}</option>
+              </datalist>
             </div>
           </div>
           <div class="col-1">
@@ -19,25 +23,42 @@
       </div>
     </div>
     <div class="row justify-content-md-center">
-      <div class="col-sm-4">
-        <div class="form-group">
-          <label>Código</label>
-          <input type="text" placeholder="Código/Descripción" class="form-control form-control-sm">
-        </div>
-        <div class="form-group">
-          <label>Descripción</label>
-          <input type="text" class="form-control form-control-sm">
-        </div>
-        <div class="form-group">
-          <label>Disponible</label>
-          <input type="text" class="form-control form-control-sm">
-        </div>
-        <div class="form-group">
-          <label>Valor</label>
-          <input type="text" class="form-control form-control-sm">
-        </div>
+      <div class="col-sm-3">
+        <section *ngIf="shippingForm">
+          <div class="form-group">
+            <textarea placeholder="Notas u Observacione" class="form-control form-control-sm" rows="3"></textarea>
+          </div>
+        </section>
+        <section *ngIf="editModel">
+          <div class="row">
+            <div class="col-4">Descripción</div>
+            <div class="col-8">{{editModel.description}}</div>
+          </div>
+          <div class="row">
+            <div class="col-8">Disponible</div>
+            <div class="col-4"><span class="text-right">{{editModel.available | number}}</span></div>
+          </div>
+          <div class="row">
+            <div class="col-8">Valor</div>
+            <div class="col-4"><span class="text-right">{{editModel.amount | number}}</span></div>
+          </div>
+          <div class="form-group">
+            <label>Cantidad</label>
+            <input type="text" class="form-control form-control-sm" [(ngModel)]="editModel.quantity">
+          </div>
+          <div class="form-group">
+            <label>Disponible</label>
+            <input type="text" class="form-control form-control-sm" [(ngModel)]="editModel.available">
+          </div>
+          <div class="form-group">
+            <label>Valor</label>
+            <input type="text" class="form-control form-control-sm" [(ngModel)]="editModel.amount">
+          </div>
+          <button mat-button>Agregar</button>
+          <button mat-button (click)="clean()">Limpiar</button>
+        </section>
       </div>
-      <div class="col-sm-6">
+      <div class="col-sm-7">
         <mat-card>
           <mat-card-content>
             <b>Detalle</b>
@@ -52,10 +73,10 @@
               </tr>
               </thead>
               <tbody>
-              <tr *ngFor="let item of model" (click)="openDialog()" style="cursor: pointer;">
-                <td>1</td>
+              <tr *ngFor="let item of model" (click)="openDialog(item)" style="cursor: pointer;">
+                <td>{{item.quantity}}</td>
                 <td>{{item.description}}</td>
-                <td>{{item.quantity | number}}</td>
+                <td>{{item.amount | number}}</td>
                 <td>{{item.cashDiscount | number}}</td>
                 <td>{{item.quantity * item.amount - item.cashDiscount | number}}</td>
               </tr>
@@ -63,6 +84,13 @@
             </table>
           </mat-card-content>
         </mat-card>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-12">
+        <button mat-button (click)="preFinalize()" color="primary">Finalizar</button>
+        <button mat-button (click)="clean()">Limpiar pantalla</button>
+        <button mat-button (click)="cashDiscount()">Descuento</button>
       </div>
     </div>
   </mat-card-content>

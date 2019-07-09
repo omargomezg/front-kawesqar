@@ -1,7 +1,7 @@
-import { Component, OnInit } from '@angular/core';
-import { UtilsService } from '../core/services/utils.service';
-import { ActivatedRoute, Router } from '@angular/router';
-import { UserModel } from '../core/models/user.model';
+import {Component, OnInit} from '@angular/core';
+import {UtilsService} from '../core/services/utils.service';
+import {ActivatedRoute, Router} from '@angular/router';
+import {UserModel} from '../core/models/user.model';
 
 @Component({
   selector: 'app-form',
@@ -10,7 +10,7 @@ import { UserModel } from '../core/models/user.model';
 })
 export class FormComponent implements OnInit {
 
-  model: UserModel = new UserModel;
+  model: UserModel;
   common: any = {
     roles: []
   };
@@ -18,9 +18,11 @@ export class FormComponent implements OnInit {
     exists: false,
     rut: ''
   };
+  loading = true;
 
   constructor(private serviceRole: UtilsService,
-    private route: ActivatedRoute, private router: Router) { }
+              private route: ActivatedRoute, private router: Router) {
+  }
 
   ngOnInit() {
     this.loadRol();
@@ -36,6 +38,7 @@ export class FormComponent implements OnInit {
             this.model.allowedServices.subsidiary = data.traspaso;
             this.model.rut = params.rut;
             this.model.action = 'edit';
+            this.loading = false;
           }, error => {
             console.log('ouch!' + error.status);
           });
@@ -53,7 +56,9 @@ export class FormComponent implements OnInit {
       this.serviceRole.getExist(this.model.rut)
         .subscribe(data => {
           this.validation.exists = data;
-          if (data) { this.model.rut = ''; }
+          if (data) {
+            this.model.rut = '';
+          }
         }, error => {
           console.log('ouch!' + error.status);
         });
@@ -66,6 +71,7 @@ export class FormComponent implements OnInit {
         this.common.roles = data.sort(function (a, b) {
           return a.titulo.localeCompare(b.titulo);
         });
+        console.log(this.common.roles);
         this.model.rol = this.common.roles[0].idRol;
       }, error => {
         console.log('ouch!' + error.status);
@@ -85,6 +91,7 @@ export class FormComponent implements OnInit {
   goToList() {
     this.router.navigateByUrl('usuarios/list');
   }
+
   save() {
     if (this.model.action === 'edit') {
       this.model.clave = '';

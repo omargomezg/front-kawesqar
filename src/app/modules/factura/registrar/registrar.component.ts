@@ -19,7 +19,9 @@ export class RegistrarComponent implements OnInit {
   supplier: SupplierModel;
   model: RegistrarModel = new RegistrarModel();
 
-  constructor(public dialog: MatDialog, private localStorage: StorageDataService, private supplierService: SupplierService) {
+  constructor(public dialog: MatDialog,
+              private localStorage: StorageDataService,
+              private supplierService: SupplierService) {
   }
 
   ngOnInit() {
@@ -40,7 +42,6 @@ export class RegistrarComponent implements OnInit {
       width: '300px',
       data: this.dialogModel
     });
-
     dialogRef.afterClosed().subscribe(result => {
       console.log('The dialog was closed');
       console.log(result);

@@ -5,7 +5,7 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { EgressModel } from '../models/egress.model';
 import { catchError, retry, map } from 'rxjs/operators';
 import { UserModel, ExistsModel } from '../models/user.model';
-import { environment } from 'src/environments/environment';
+import {environment} from '../../../../../environments/environment';
 
 @Injectable({
   providedIn: 'root'

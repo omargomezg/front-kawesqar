@@ -4,7 +4,7 @@
     <p class="small text-capitalize p-2 mb-0">Configuración > Usuarios</p>
   </div>
 </div>
-<form novalidate #usuarioForm="ngForm" (ngSubmit)="save()" *ngIf="model">
+<form novalidate #usuarioForm="ngForm" (ngSubmit)="save()" *ngIf="loading">
   <div class="row">
     <div class="col-4">
       <h4>{{model.action == 'edit' ? 'Actualización de usuario' : 'Nuevo usuario'}}</h4>

@@ -50,20 +50,20 @@ export class EgresoComponent implements OnInit {
 
   preFinalize() {
     this.shippingForm = true;
-  }
+    }
 
-  searchArticle(sku: string) {
-    console.log(this.currentProduct);
-  }
+    searchArticle(sku: number) {
+      console.log(this.currentProduct);
+    }
 
-  cashDiscount() {}
+    cashDiscount() {}
 
-  openDialog(data: ExpensesModel): void {
-    const dialogRef = this.dialog.open(ModalEgresoComponent, {
-      width: '250px',
-      data: data
-    });
-    dialogRef.afterClosed().subscribe(result => {
+    openDialog(data: ExpensesModel): void {
+      const dialogRef = this.dialog.open(ModalEgresoComponent, {
+        width: '250px',
+        data: data
+      });
+        dialogRef.afterClosed().subscribe(result => {
       console.log('The dialog was closed');
       console.log(result);
     });

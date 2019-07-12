@@ -7,17 +7,18 @@
           <div class="col-1">
             <mat-checkbox>Granel</mat-checkbox>
           </div>
-          <div class="col-10">
+          <div class="col-11">
             <div class="form-group">
-              <input type="text" [(ngModel)]='currentProduct' (change)="searchArticle()" (keyup)="getBySku($event)"
-                     placeholder="Código / Descripción" class="form-control form-control-sm" list="dynmicUserIds"/>
-              <datalist id="dynmicUserIds">
-                <option *ngFor="let item of articleList" [value]="item.sku">{{item.name}}</option>
-              </datalist>
+              <input type="text" (change)="getBySku($event)"
+                     placeholder="Código / Descripción" class="form-control form-control-sm"
+                     matInput
+                     [matAutocomplete] = "auto"/>
+              <mat-autocomplete #auto="matAutocomplete">
+                <mat-option *ngFor="let state of articleList" [value]="state.sku"(change)="searchArticle(state.sku)">
+                  {{state.name}}
+                </mat-option>
+              </mat-autocomplete>
             </div>
-          </div>
-          <div class="col-1">
-            <button mat-button>Buscar</button>
           </div>
         </div>
       </div>

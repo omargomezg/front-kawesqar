@@ -4,7 +4,7 @@ import { HttpClientModule } from '@angular/common/http';
 import localeCl from '@angular/common/locales/es-CL';
 import { registerLocaleData } from '@angular/common';
 import { NgModule, LOCALE_ID } from '@angular/core';
-import { FormsModule } from '@angular/forms';
+import {FormsModule, ReactiveFormsModule} from '@angular/forms';
 import { BrowserModule } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { Ng2Rut, RutValidator } from 'ng2-rut';
@@ -22,6 +22,7 @@ import { EgresoComponent } from './components/egreso/egreso.component';
 import { ModalEgresoComponent } from './components/modal-egreso/modal-egreso.component';
 import {DialogComponent} from 'src/app/modules/factura/registrar/dialog.component';
 import {ArticleService} from 'src/app/core/services/article.service';
+import { SerachArticleComponent } from './components/serach-article/serach-article.component';
 
 registerLocaleData(localeCl);
 
@@ -33,7 +34,8 @@ registerLocaleData(localeCl);
     GetExternalBaseComponent,
     OnlyNumbersDirective,
     EgresoComponent,
-    ModalEgresoComponent
+    ModalEgresoComponent,
+    SerachArticleComponent
   ],
   imports: [
     HttpClientModule,
@@ -46,6 +48,7 @@ registerLocaleData(localeCl);
     BsDropdownModule.forRoot(),
     TooltipModule.forRoot(),
     ModalModule.forRoot(),
+    ReactiveFormsModule,
   ],
   providers: [
     RutValidator,

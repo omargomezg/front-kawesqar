@@ -3,29 +3,80 @@
   <mat-card-content>
     <div class="row justify-content-md-center">
       <div class="col-9">
-        <div class="row">
-          <div class="col-1">
-            <mat-checkbox>Granel</mat-checkbox>
-          </div>
-          <div class="col-11">
-            <div class="form-group">
-              <input type="text" (change)="getBySku($event)"
-                     placeholder="Código / Descripción" class="form-control form-control-sm"
-                     matInput
-                     [matAutocomplete] = "auto"/>
-              <mat-autocomplete #auto="matAutocomplete">
-                <mat-option *ngFor="let state of articleList" [value]="state.sku"(change)="searchArticle(state.sku)">
-                  {{state.name}}
-                </mat-option>
-              </mat-autocomplete>
-            </div>
-          </div>
-        </div>
+        <app-serach-article (DetailData)="getDetail($event)"></app-serach-article>
       </div>
     </div>
     <div class="row justify-content-md-center">
-      <div class="col-sm-3">
-        <section *ngIf="shippingForm">
+      <div class="col-sm-4">
+        <mat-button-toggle-group name="fontStyle" aria-label="Font Style" appearance="legacy">
+          <mat-button-toggle *ngFor="let item of btn" value="item.key"
+                             (click)="selectOut(item.key)">{{item.abr}}</mat-button-toggle>
+        </mat-button-toggle-group>
+        <section *ngIf="model.output === saleType.CASH_SALE">
+          <b>Contado</b>
+        </section>
+        <section *ngIf="model.output === saleType.CREDIT_CARD">
+          <b>Crédito</b>
+          <mat-form-field class="example-full-width">
+            <input type="text" matInput placeholder="N° de transacción">
+          </mat-form-field>
+          <mat-form-field class="example-full-width">
+            <mat-label>Banco</mat-label>
+            <mat-select>
+              <mat-option>None</mat-option>
+              <mat-option value="option1">Option 1</mat-option>
+              <mat-option value="option2">Option 2</mat-option>
+              <mat-option value="option3">Option 3</mat-option>
+            </mat-select>
+          </mat-form-field>
+
+          <mat-form-field class="example-full-width">
+            <mat-label>Cuotas</mat-label>
+            <mat-select>
+              <mat-option>None</mat-option>
+              <mat-option value="option1">Option 1</mat-option>
+              <mat-option value="option2">Option 2</mat-option>
+              <mat-option value="option3">Option 3</mat-option>
+            </mat-select>
+          </mat-form-field>
+        </section>
+        <section *ngIf="model.output === saleType.DEBIT_CARD">
+          <b>Débito</b>
+          <mat-form-field class="example-full-width">
+            <input type="text" matInput placeholder="N° de transacción">
+          </mat-form-field>
+          <mat-form-field class="example-full-width">
+            <mat-label>Banco</mat-label>
+            <mat-select>
+              <mat-option>None</mat-option>
+              <mat-option value="option1">Option 1</mat-option>
+              <mat-option value="option2">Option 2</mat-option>
+              <mat-option value="option3">Option 3</mat-option>
+            </mat-select>
+          </mat-form-field>
+        </section>
+        <section *ngIf="model.output === saleType.DELIVERY_SUPPLIES">
+          <b>Consumo</b>
+          <mat-form-field class="example-full-width">
+            <input type="text" matInput placeholder="Rut">
+          </mat-form-field>
+          <mat-form-field class="example-full-width">
+            <input type="text" matInput placeholder="Nombre">
+          </mat-form-field>
+          <mat-form-field class="example-full-width">
+            <mat-label>Oficina</mat-label>
+            <mat-select>
+              <mat-option>None</mat-option>
+              <mat-option value="option1">Option 1</mat-option>
+              <mat-option value="option2">Option 2</mat-option>
+              <mat-option value="option3">Option 3</mat-option>
+            </mat-select>
+          </mat-form-field>
+        </section>
+        <section *ngIf="model.output === saleType.BRANCH_TRANSFER">
+          <b>Cambiar de sucursal</b>
+        </section>
+        <section>
           <div class="form-group">
             <textarea placeholder="Notas u Observacione" class="form-control form-control-sm" rows="3"></textarea>
           </div>
@@ -73,8 +124,8 @@
                 <th>Subtotal</th>
               </tr>
               </thead>
-              <tbody>
-              <tr *ngFor="let item of model" (click)="openDialog(item)" style="cursor: pointer;">
+              <tbody *ngIf="model.detail">
+              <tr *ngFor="let item of model.detail" (click)="openDialog(item)" style="cursor: pointer;">
                 <td>{{item.quantity}}</td>
                 <td>{{item.description}}</td>
                 <td>{{item.amount | number}}</td>
@@ -89,10 +140,12 @@
     </div>
     <div class="row">
       <div class="col-12">
-        <button mat-button (click)="preFinalize()" color="primary">Finalizar</button>
+        <button mat-button (click)="preFinalize()" [disabled]="model.detail.length == 0 && model.output" color="primary">Finalizar</button>
         <button mat-button (click)="clean()">Limpiar pantalla</button>
         <button mat-button (click)="cashDiscount()">Descuento</button>
       </div>
     </div>
   </mat-card-content>
 </mat-card>
+
+{{model | json}}

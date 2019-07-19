@@ -4,6 +4,7 @@ export interface SucursalModel {
     fax: string;
     giro: string;
     id: number;
+    descripcion: string;
     nombre: string;
     nombreComuna: string;
     nombreRepLegal: string;

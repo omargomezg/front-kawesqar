@@ -12,7 +12,6 @@ export class StorageDataService {
     }
 
     setRutUser(data: string): void {
-        console.log('la data es', data);
         this.localStorageService.setItem('user', JSON.stringify(data));
     }
 

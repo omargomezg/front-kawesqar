@@ -1,27 +1,28 @@
 <div class="container-fluid d-print-none" style="background-image: linear-gradient(#598ace, #163c95);">
-    <div class="row">
-        <div class="col-4">
-            <a href="{{homeUrl}}">
-                <div class="logo">
-                </div>
-            </a>
+  <div class="row">
+    <div class="col-4">
+      <a href="{{homeUrl}}">
+        <div class="logo">
         </div>
-        <div class="col-8 text-left" style="color:aliceblue; padding-top: 10px;">
-            <section *ngIf="header">
-                Bienvenido <a href="{{homeUrl + '/perfil/modificarPerfil.aspx?id=0'}}"
-                    class="linkMenu">{{header.nombre}}</a> | <a href="#" class="login">Cerrar Sesión</a> <br />
-            </section>
-            <div class="form-inline font-weight-light">
-                <a href="{{homeUrl}}" class="linkMenu">Escritorio</a>
-                <div class="form-group marg5px" *ngIf="data">
-                    <select class="small form-control form-control-sm" *ngIf="data.length > 1">
-                        <option *ngFor="let element of data">{{element.descripcion}}</option>
-                    </select>
-                    <span *ngIf=" data.length===1"> | {{data[0].descripcion}} | </span>
-                </div>
-                <a *ngIf="header" href="{{homeUrl + '/Informes/ventas/informeVentas.aspx'}}" class="linkMenu">Turno
-                    N° {{header.numeroTurno}}</a>
-            </div>
-        </div>
+      </a>
     </div>
+    <div class="col-8 text-left" style="color:aliceblue; padding-top: 10px;">
+      <section *ngIf="header">
+        Bienvenido <a href="{{homeUrl + '/perfil/modificarPerfil.aspx?id=0'}}"
+                      class="linkMenu">{{header.nombre}}</a> | <a href="#" class="login">Cerrar Sesión</a> <br/>
+      </section>
+      <div class="form-inline font-weight-light">
+        <a href="{{homeUrl}}" class="linkMenu">Escritorio</a>
+        <div class="form-group marg5px" *ngIf="data">
+          <select class="small form-control form-control-sm" [(ngModel)]="idSelected" *ngIf="data.length > 1">
+            <option *ngFor="let element of data" [ngValue]="element.id">{{element.descripcion}}</option>
+          </select>
+          <span *ngIf="data.length===1"> | {{data[0].descripcion}} | </span>
+        </div>
+        <a *ngIf="header" href="{{homeUrl + '/Informes/ventas/informeVentas.aspx'}}" class="linkMenu">Turno
+          N° {{header.numeroTurno}}</a>
+      </div>
+    </div>
+  </div>
 </div>
+selected: {{idSelected}}

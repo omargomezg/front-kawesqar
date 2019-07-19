@@ -1,9 +1,8 @@
-import { Component, OnInit } from '@angular/core';
-import { Router } from '@angular/router';
-import { MenuService } from 'src/app/core/services/menu.service';
-import { MenuModel } from 'src/app/core/models/menu.models';
-import { environment } from 'src/environments/environment';
-import { StorageDataService } from 'src/app/core/services/storage-data.service';
+import {Component, OnInit} from '@angular/core';
+import {Router} from '@angular/router';
+import {MenuService} from '../../core/services/menu.service';
+import {MenuModel} from '../../core/models/menu.models';
+import {StorageDataService} from '../../core/services/storage-data.service';
 
 @Component({
   selector: 'app-home',
@@ -17,9 +16,11 @@ export class HomeComponent implements OnInit {
     backId: 0,
     mostrar: false
   };
+
   constructor(private router: Router,
-    private servMenu: MenuService,
-    private localStorage: StorageDataService) { }
+              private servMenu: MenuService,
+              private localStorage: StorageDataService) {
+  }
 
   ngOnInit() {
     this.getData(-1, '');
@@ -43,7 +44,7 @@ export class HomeComponent implements OnInit {
             this.menu = data;
             this.raiz.backId = data[0].parent;
             this.raiz.nombre = nombre;
-            this.raiz.mostrar = data[0].idParent === -1 ? false : true;
+            this.raiz.mostrar = data[0].idParent !== -1;
           }
         },
         error => {

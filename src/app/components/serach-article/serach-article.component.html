@@ -1,0 +1,29 @@
+<form novalidate [formGroup]="fmSearch" (ngSubmit)="loadProduct()">
+  <div class="row">
+    <div class="col-1">
+      <mat-checkbox name="isBulk" formControlName="isBulk" (change)="setSearchFocus()">Granel</mat-checkbox>
+    </div>
+    <div class="col-10">
+      <div class="form-group">
+        <input type="text" class="form-control form-control-sm" required matInput #sku name="sku"
+               formControlName="sku">
+      </div>
+      <div *ngIf="false">
+        <input type="text" (change)="getBySku($event)"
+               (selectionChange)="searchArticle($event.value)"
+               placeholder="Código / Descripción" class="form-control form-control-sm"
+               matInput
+               [matAutocomplete]="auto"/>
+        <mat-autocomplete #auto="matAutocomplete">
+          <mat-option *ngFor="let state of articleList" [value]="state.sku"
+                      (onSelectionChange)="searchArticle($event.source.value)">
+            {{state.name}}
+          </mat-option>
+        </mat-autocomplete>
+      </div>
+    </div>
+    <div class="col-1">
+      <button type="submit" [disabled]="fmSearch.invalid">Buscar</button>
+    </div>
+  </div>
+</form>

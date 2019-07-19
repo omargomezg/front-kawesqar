@@ -1,17 +1,18 @@
-import { Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
-import { environment } from 'src/environments/environment';
-import { SucursalModel } from '../models/sucursal.model';
-import { Observable, of } from 'rxjs';
-import { map } from 'rxjs/operators';
-import { HeaderModel } from 'src/app/layer/header/header.model';
+import {Injectable} from '@angular/core';
+import {HttpClient} from '@angular/common/http';
+import {environment} from 'src/environments/environment';
+import {SucursalModel} from '../models/sucursal.model';
+import {Observable} from 'rxjs';
+import {map} from 'rxjs/operators';
+import {HeaderModel} from 'src/app/layer/header/header.model';
 
 @Injectable({
   providedIn: 'root'
 })
 export class SucursalService {
 
-  constructor(private http: HttpClient) { }
+  constructor(private http: HttpClient) {
+  }
 
   getSucursales(): Observable<SucursalModel[]> {
     return this.http

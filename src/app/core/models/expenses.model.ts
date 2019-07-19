@@ -1,5 +1,6 @@
 export class ExpensesModel {
-    sku: number;
+    sku: string;
+    id: number;
     quantity: number;
     description: string;
     amount: number;

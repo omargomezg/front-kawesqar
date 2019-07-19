@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Observable } from 'rxjs';
-import { environment } from 'src/environments/environment';
+import { environment } from '../../../../../environments/environment';
 import { map, catchError } from 'rxjs/operators';
 import { ExistenciaResponseModel } from '../models/existencia-response.model';
 import { ExistenciaRequestModel } from '../models/existencia-request.model';
@@ -19,11 +19,11 @@ export class ExistenciaService {
   constructor(private readonly http: HttpClient) { }
 
   getExistenciaHistorica(idBodega: number, idSucursal: number): Observable<ExistenciaDetailModel[]> {
-    return this.http.get<ExistenciaDetailModel[]>(`${environment.apiUrl}/api/existencia/${idBodega}/${idSucursal}`);
+    return this.http.get<ExistenciaDetailModel[]>(`${environment.apiUrl}/api/existence/${idBodega}/${idSucursal}`);
   }
 
   deleteExistencia(id: number): Observable<{}> {
-    const url = `${environment.apiUrl}/api/existencia/${id}`; // DELETE api/heroes/42
+    const url = `${environment.apiUrl}/api/existence/${id}`; // DELETE api/heroes/42
 
     return this.http.delete(url, this.httpOptions)
       .pipe(
@@ -35,7 +35,7 @@ export class ExistenciaService {
 
   getExistencias(model: ExistenciaRequestModel): Observable<ExistenciaResponseModel[]> {
     return this.http
-      .post<ExistenciaResponseModel[]>(`${environment.apiUrl}/api/existencia`,
+      .post<ExistenciaResponseModel[]>(`${environment.apiUrl}/api/existence`,
         model, this.httpOptions)
       .pipe(
         // map(data => data),

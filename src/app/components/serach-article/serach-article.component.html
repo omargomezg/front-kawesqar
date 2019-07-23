@@ -1,8 +1,5 @@
 <form novalidate [formGroup]="fmSearch" (ngSubmit)="loadProduct()">
   <div class="row">
-    <div class="col-1">
-      <mat-checkbox name="isBulk" formControlName="isBulk" (change)="setSearchFocus()">Granel</mat-checkbox>
-    </div>
     <div class="col-10">
       <div class="form-group">
         <input type="text" class="form-control form-control-sm" required matInput #sku name="sku"

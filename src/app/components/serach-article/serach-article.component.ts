@@ -22,13 +22,12 @@ export class SerachArticleComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.buildfrSearch();
+    this.buildFormSearch();
   }
 
   loadProduct() {
     const data = this.fmSearch.value;
-    console.log(JSON.stringify(data));
-    this.service.getBySku(data.sku, data.isBulk, this.localStorage.getRutUser().replace('-', '')).subscribe(
+    this.service.getBySku(data.sku, !data.isBulk, this.localStorage.getRutUser().replace('-', '')).subscribe(
       (res: any) => {
         if (Object.keys(res).length) {
           this.addDetail(res);
@@ -48,7 +47,7 @@ export class SerachArticleComponent implements OnInit {
     this.skuElement.nativeElement.focus();
   }
 
-  private buildfrSearch() {
+  private buildFormSearch() {
     this.fmSearch = new FormGroup({
       sku: new FormControl('', [Validators.required, Validators.minLength(3)]),
       isBulk: new FormControl(false)
@@ -57,13 +56,16 @@ export class SerachArticleComponent implements OnInit {
   }
 
   private addDetail(data: any) {
+    const frm = this.fmSearch.value;
     const result: ShoppingCartDetailModel = new ShoppingCartDetailModel();
     result.id = data.idRegistro;
     result.quantity = data.Cant;
     result.description = data.Nombre;
     result.amount = data.ValorUnitario;
     result.cashDiscount = 0;
-    result.quantity = 1;
+    result.sku = frm.sku;
+    result.bulk = !frm.isBulk;
+    result.total = data.ValorUnitario * data.Cant;
     this.clearSearch();
     this.DetailData.emit(result);
   }

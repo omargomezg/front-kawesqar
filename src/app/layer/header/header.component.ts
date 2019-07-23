@@ -3,6 +3,7 @@ import {HeaderModel} from './header.model';
 import {StorageDataService} from 'src/app/core/services/storage-data.service';
 import {SucursalModel} from 'src/app/core/models/sucursal.model';
 import {SucursalService} from 'src/app/core/services/sucursal.service';
+import {UserService} from 'src/app/core/services/user.service';
 
 @Component({
   selector: 'app-header',
@@ -17,7 +18,8 @@ export class HeaderComponent implements OnInit {
   idSelected: number;
 
   constructor(private readonly sucursalService: SucursalService,
-              private localStorage: StorageDataService) {
+              private localStorage: StorageDataService,
+              private userService: UserService) {
   }
 
   ngOnInit() {
@@ -38,12 +40,23 @@ export class HeaderComponent implements OnInit {
 
   getSucursales() {
     this.sucursalService.getSucursalesUsuario(this.localStorage.getRutUser())
-      .subscribe((data: SucursalModel[]) => {
+      .subscribe((data: any[]) => {
         this.data = data;
-        this.idSelected = data[0].id;
+        this.idSelected = data.filter(r =>  r.isPrimary === true)[0].id;
       }, error => {
         console.log('ouch!' + error.status);
       });
   }
 
+  setDefault(id: number) {
+    const data = {
+      rut: this.localStorage.getRutUser(),
+      idSubsidiary: id
+    };
+    this.userService.setDefaultSubsidiary(data)
+      .subscribe(result => {
+      }, error => {
+        console.log('ouch!' + error.status);
+      });
+  }
 }

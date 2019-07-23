@@ -18,8 +18,16 @@ export class ShoppingCartService {
   constructor(private http: HttpClient) {
   }
 
-  getSave(data): Observable<any> {
-    return this.http.put<any>(`${environment.apiUrl}/api/shopping-cart`, JSON.stringify(data), this.httpOptions)
+  addToCart(data: any, rut: string): Observable<any> {
+    return this.http.put<any>(`${environment.apiUrl}/api/shopping-cart/${data.id}/${rut}`, JSON.stringify(data), this.httpOptions)
+      .pipe(
+        retry(1),
+        catchError(this.handleError)
+      );
+  }
+
+  branchTransfer(data: any) {
+    return this.http.put<any>(`${environment.apiUrl}/api/shopping-cart/branch-transfer`, JSON.stringify(data), this.httpOptions)
       .pipe(
         retry(1),
         catchError(this.handleError)

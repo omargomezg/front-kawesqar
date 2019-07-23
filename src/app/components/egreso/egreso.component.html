@@ -23,10 +23,7 @@
           <mat-form-field class="example-full-width">
             <mat-label>Banco</mat-label>
             <mat-select>
-              <mat-option>None</mat-option>
-              <mat-option value="option1">Option 1</mat-option>
-              <mat-option value="option2">Option 2</mat-option>
-              <mat-option value="option3">Option 3</mat-option>
+              <mat-option>nada</mat-option>
             </mat-select>
           </mat-form-field>
 
@@ -75,6 +72,12 @@
         </section>
         <section *ngIf="model.output === saleType.BRANCH_TRANSFER">
           <b>Cambiar de sucursal</b>
+          <mat-form-field class="example-full-width">
+            <mat-label>Sucursal destino</mat-label>
+            <mat-select [(ngModel)]="subsidiaryTo">
+              <mat-option [value]="item.id" *ngFor="let item of subsidiarys">{{item.descripcion}}</mat-option>
+            </mat-select>
+          </mat-form-field>
         </section>
         <section>
           <div class="form-group">
@@ -140,9 +143,9 @@
     </div>
     <div class="row">
       <div class="col-12">
-        <button mat-button (click)="preFinalize()" [disabled]="model.detail.length == 0 && model.output" color="primary">Finalizar</button>
-        <button mat-button (click)="clean()">Limpiar pantalla</button>
-        <button mat-button (click)="cashDiscount()">Descuento</button>
+        <button type="butotn" mat-button (click)="preFinalize()" [disabled]="model.detail.length == 0 && model.output" color="primary">Finalizar</button>
+        <button type="butotn" mat-button (click)="clean()">Limpiar pantalla</button>
+        <button type="butotn" mat-button (click)="cashDiscount()">Descuento</button>
       </div>
     </div>
   </mat-card-content>

@@ -8,6 +8,7 @@ import {ShoppingCartService} from '../../core/services/shopping-cart.service';
 import {ShoppingCartModel} from '../../core/models/request/shopping-cart.model';
 import {ShoppingCartDetailModel} from '../../core/models/request/shopping-cart-detail.model';
 import {SaleTypeEnum} from '../../core/models/constant/SaleTypeEnum';
+import {SucursalService} from '../../core/services/sucursal.service';
 
 @Component({
   selector: 'app-egreso',
@@ -21,7 +22,10 @@ export class EgresoComponent implements OnInit {
   editModel: ExpensesModel;
   isBulk = false;
   sku: string;
+  subsidiaryFrom: number;
+  subsidiaryTo: number;
   saleType = SaleTypeEnum;
+  subsidiarys: any[];
   btn = [
     {abr: 'CONT', key: SaleTypeEnum.CASH_SALE, description: 'Contado'},
     {abr: 'DEB', key: SaleTypeEnum.DEBIT_CARD, description: 'Dedito'},
@@ -34,12 +38,14 @@ export class EgresoComponent implements OnInit {
     public dialog: MatDialog,
     private service: ArticleService,
     private servShoppingCart: ShoppingCartService,
-    private localStorage: StorageDataService) {
+    private localStorage: StorageDataService,
+    private sucursalService: SucursalService) {
   }
 
   ngOnInit() {
     this.model.rut = this.localStorage.getRutUser();
     this.model.output = SaleTypeEnum.CASH_SALE;
+    this.setSubsidiaryForm();
   }
 
   getBySku(event: any) {
@@ -60,11 +66,32 @@ export class EgresoComponent implements OnInit {
     this.editModel = null;
   }
 
+  setSubsidiaryForm() {
+    this.sucursalService.getSucursalesUsuario(this.localStorage.getRutUser())
+      .subscribe((result: any[]) => {
+        this.subsidiaryFrom = result.filter(r => r.isPrimary === true)[0].id;
+      }, error => {
+        console.log('ouch!' + error.status);
+      });
+  }
+
   preFinalize() {
     const rut = this.localStorage.getRutUser();
-    this.model.detail.forEach(item => {
-      this.servShoppingCart.getSave(this.model);
-    });
+    if (this.model.output === SaleTypeEnum.BRANCH_TRANSFER) {
+      this.setSubsidiaryForm();
+      this.sucursalService.getSucursalesUsuario(this.localStorage.getRutUser())
+        .subscribe((result: any[]) => {
+          const data = {
+            rut: rut,
+            subsidiaryFrom: this.subsidiaryFrom,
+            subsidiaryTo: 2
+          };
+          this.servShoppingCart.branchTransfer(data)
+            .subscribe();
+        }, error => {
+          console.log('ouch!' + error.status);
+        });
+    }
   }
 
   saveTemporalCart() {
@@ -104,6 +131,14 @@ export class EgresoComponent implements OnInit {
 
   selectOut(abr: string) {
     this.model.output = abr;
+    if (abr === SaleTypeEnum.BRANCH_TRANSFER) {
+      this.sucursalService.getSucursalesUsuario(this.localStorage.getRutUser())
+        .subscribe((result: any[]) => {
+          this.subsidiarys = result.filter(r => r.isPrimary === false);
+        }, error => {
+          console.log('ouch!' + error.status);
+        });
+    }
   }
 
   getDetail(obj: ShoppingCartDetailModel) {
@@ -114,11 +149,32 @@ export class EgresoComponent implements OnInit {
         this.model.detail.forEach(item => {
           if (item.id === obj.id) {
             item.quantity++;
+            obj.quantity = item.quantity;
           }
         });
       } else {
         this.model.detail.push(obj);
       }
     }
+    this.saveShoppingCart(obj);
+  }
+
+  saveShoppingCart(data: ShoppingCartDetailModel) {
+    const request = {
+      rut: this.localStorage.getRutUser().replace('-', ''),
+      sku: data.sku,
+      quantity: data.quantity,
+      total: data.total,
+      id: data.id,
+      idArticuloID: data.idArticleID,
+      estado: data.bulk,
+      idSucursal: this.subsidiaryFrom,
+      idSucursalDestino: this.subsidiaryTo
+    };
+    console.log(request);
+    this.servShoppingCart.addToCart(request, this.localStorage.getRutUser().replace('-',''))
+      .subscribe(res => {
+        // Code here
+      });
   }
 }

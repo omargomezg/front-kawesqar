@@ -14,7 +14,7 @@
       <div class="form-inline font-weight-light">
         <a href="{{homeUrl}}" class="linkMenu">Escritorio</a>
         <div class="form-group marg5px" *ngIf="data">
-          <select class="small form-control form-control-sm" [(ngModel)]="idSelected" *ngIf="data.length > 1">
+          <select class="small form-control form-control-sm" [(ngModel)]="idSelected" (change)="setDefault(idSelected)" *ngIf="data.length > 1">
             <option *ngFor="let element of data" [ngValue]="element.id">{{element.descripcion}}</option>
           </select>
           <span *ngIf="data.length===1"> | {{data[0].descripcion}} | </span>
@@ -25,4 +25,3 @@
     </div>
   </div>
 </div>
-selected: {{idSelected}}

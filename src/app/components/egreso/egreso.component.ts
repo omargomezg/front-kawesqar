@@ -5,10 +5,11 @@ import {ExpensesModel} from '../../core/models/expenses.model';
 import {ArticleService} from '../../core/services/article.service';
 import {StorageDataService} from '../../core/services/storage-data.service';
 import {ShoppingCartService} from '../../core/services/shopping-cart.service';
-import {ShoppingCartModel} from '../../core/models/request/shopping-cart.model';
+import {ShoppingCartModel} from '../../core/models/database/ShoppingCart.model';
 import {ShoppingCartDetailModel} from '../../core/models/request/shopping-cart-detail.model';
 import {SaleTypeEnum} from '../../core/models/constant/SaleTypeEnum';
 import {SucursalService} from '../../core/services/sucursal.service';
+import {isNgTemplate} from '@angular/compiler';
 
 @Component({
   selector: 'app-egreso',
@@ -43,9 +44,10 @@ export class EgresoComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.model.rut = this.localStorage.getRutUser();
+    // this.model.rut = this.localStorage.getRutUser();
     this.model.output = SaleTypeEnum.CASH_SALE;
     this.setSubsidiaryForm();
+    this.getCart();
   }
 
   getBySku(event: any) {
@@ -107,7 +109,7 @@ export class EgresoComponent implements OnInit {
           const result: ShoppingCartDetailModel = new ShoppingCartDetailModel();
           result.quantity = data.Cant;
           result.description = data.Nombre;
-          this.model.detail.push(result);
+          // this.model.detail.push(result);
         }
       },
       error => {
@@ -118,9 +120,9 @@ export class EgresoComponent implements OnInit {
   cashDiscount() {
   }
 
-  openDialog(data: ExpensesModel): void {
+  openDialog(data: ShoppingCartDetailModel): void {
     const dialogRef = this.dialog.open(ModalEgresoComponent, {
-      width: '250px',
+      width: '300px',
       data: data
     });
     dialogRef.afterClosed().subscribe(result => {
@@ -141,7 +143,7 @@ export class EgresoComponent implements OnInit {
     }
   }
 
-  getDetail(obj: ShoppingCartDetailModel) {
+  /*getDetail(obj: ShoppingCartDetailModel) {
     if (this.model.detail === undefined) {
       this.model.detail.push(obj);
     } else {
@@ -157,7 +159,7 @@ export class EgresoComponent implements OnInit {
       }
     }
     this.saveShoppingCart(obj);
-  }
+  }*/
 
   saveShoppingCart(data: ShoppingCartDetailModel) {
     const request = {
@@ -172,9 +174,24 @@ export class EgresoComponent implements OnInit {
       idSucursalDestino: this.subsidiaryTo
     };
     console.log(request);
-    this.servShoppingCart.addToCart(request, this.localStorage.getRutUser().replace('-',''))
+    this.servShoppingCart.addToCart(request, this.localStorage.getRutUser().replace('-', ''))
       .subscribe(res => {
         // Code here
       });
+  }
+
+  private getCart() {
+    this.servShoppingCart.getCart(this.localStorage.getRutUser().replace('-', ''), 0)
+      .subscribe(res => {
+        this.model = res;
+      });
+  }
+
+  total() {
+    let total = 0;
+    this.model.detail.forEach((item) => {
+      total += item.amount * item.quantity;
+    });
+    return total;
   }
 }

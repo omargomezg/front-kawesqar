@@ -1,6 +1,6 @@
 import {Component, Inject} from '@angular/core';
 import {MAT_DIALOG_DATA, MatDialogRef} from '@angular/material';
-import {ExpensesModel} from '../../core/models/expenses.model';
+import {ShoppingCartDetail} from '../../core/models/database/ShoppingCartDetail.model';
 
 @Component({
   selector: 'app-modal-egreso',
@@ -10,7 +10,7 @@ import {ExpensesModel} from '../../core/models/expenses.model';
 export class ModalEgresoComponent {
 
   constructor(public dialogRef: MatDialogRef<ModalEgresoComponent>,
-              @Inject(MAT_DIALOG_DATA) public data: ExpensesModel) {
+              @Inject(MAT_DIALOG_DATA) public data: ShoppingCartDetail) {
   }
 
   onNoClick(): void {
@@ -20,4 +20,7 @@ export class ModalEgresoComponent {
   updateContent() {
   }
 
+  delete() {
+
+  }
 }

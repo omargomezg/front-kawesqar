@@ -123,19 +123,25 @@
                 <th>Cant</th>
                 <th>Descripción</th>
                 <th>Unidad</th>
-                <th>% Desc</th>
                 <th>Subtotal</th>
               </tr>
               </thead>
               <tbody *ngIf="model.detail">
               <tr *ngFor="let item of model.detail" (click)="openDialog(item)" style="cursor: pointer;">
                 <td>{{item.quantity}}</td>
-                <td>{{item.description}}</td>
-                <td>{{item.amount | number}}</td>
-                <td>{{item.cashDiscount | number}}</td>
-                <td>{{item.quantity * item.amount - item.cashDiscount | number}}</td>
+                <td>{{item.name}}</td>
+                <td class="text-right">{{item.amount | number}}</td>
+                <td class="text-right">{{item.quantity * item.amount | number}}</td>
               </tr>
               </tbody>
+              <tfoot>
+              <tr>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td class="text-right">{{total() | number}}</td>
+              </tr>
+              </tfoot>
             </table>
           </mat-card-content>
         </mat-card>
@@ -143,7 +149,9 @@
     </div>
     <div class="row">
       <div class="col-12">
-        <button type="butotn" mat-button (click)="preFinalize()" [disabled]="model.detail.length == 0 && model.output" color="primary">Finalizar</button>
+        <button type="butotn" mat-button (click)="preFinalize()" [disabled]="model.detail.length == 0 && model.output"
+                color="primary">Finalizar
+        </button>
         <button type="butotn" mat-button (click)="clean()">Limpiar pantalla</button>
         <button type="butotn" mat-button (click)="cashDiscount()">Descuento</button>
       </div>

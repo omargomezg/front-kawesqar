@@ -1,4 +1,4 @@
-<h1 mat-dialog-title>{{data.description}}</h1>
+<h1 mat-dialog-title>{{data.name}}</h1>
 <div mat-dialog-content>
   <mat-form-field class="example-full-width">
     <input matInput placeholder="Cantidad" [(ngModel)]="data.quantity">
@@ -6,5 +6,6 @@
 </div>
 <div mat-dialog-actions class="text-right">
   <button mat-button [mat-dialog-close]="updateContent()" cdkFocusInitial>Ok</button>
+  <button mat-button (click)="delete()">Eliminar</button>
   <button mat-button (click)="onNoClick()">Cerrar</button>
 </div>

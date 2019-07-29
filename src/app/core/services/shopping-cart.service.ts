@@ -2,7 +2,8 @@ import {Injectable} from '@angular/core';
 import {HttpClient, HttpHeaders} from '@angular/common/http';
 import {environment} from '../../../environments/environment';
 import {Observable, throwError} from 'rxjs';
-import {catchError, retry} from 'rxjs/operators';
+import {catchError, map, retry} from 'rxjs/operators';
+import {ShoppingCartModel} from '../../core/models/database/ShoppingCart.model';
 
 @Injectable({
   providedIn: 'root'
@@ -16,6 +17,12 @@ export class ShoppingCartService {
   };
 
   constructor(private http: HttpClient) {
+  }
+
+  getCart(rut: string, id: number) {
+    return this.http
+      .get<ShoppingCartModel>(`${environment.apiUrl}/api/shopping-cart/${id}/${rut}`)
+      .pipe(map(data => data));
   }
 
   addToCart(data: any, rut: string): Observable<any> {

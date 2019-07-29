@@ -1,10 +1,14 @@
-import {SubsidiaryModel} from "./Subsidiary.model";
-import {UserModel} from "./User.model";
+import {SubsidiaryModel} from './Subsidiary.model';
+import {UserModel} from './User.model';
+import {ShoppingCartDetail} from '../../models/database/ShoppingCartDetail.model';
 
 export class ShoppingCartModel {
-    public id: number | undefined;
-    public user: UserModel | undefined;
-    public subsidiary: SubsidiaryModel | undefined;
-    public created: string | undefined;
-    public updated: string | undefined;
+  public id: number;
+  public user: UserModel;
+  public subsidiaryTo: SubsidiaryModel = new SubsidiaryModel();
+  public subsidiaryFrom: SubsidiaryModel = new SubsidiaryModel();
+  public created: string;
+  public updated: string;
+  public detail: ShoppingCartDetail[] = [];
+  public output: string;
 }

@@ -1,6 +1,7 @@
-import {SubsidiaryModel} from './Subsidiary.model';
-import {UserModel} from './User.model';
-import {ShoppingCartDetail} from '../../models/database/ShoppingCartDetail.model';
+import { SubsidiaryModel } from './Subsidiary.model';
+import { UserModel } from './User.model';
+import { ShoppingCartDetail } from '../../models/database/ShoppingCartDetail.model';
+import { OutputFlowTypeModel } from '../../models/database/OutputFlowType.model';
 
 export class ShoppingCartModel {
   public id: number;
@@ -10,5 +11,6 @@ export class ShoppingCartModel {
   public created: string;
   public updated: string;
   public detail: ShoppingCartDetail[] = [];
-  public output: string;
+  public flow: OutputFlowTypeModel = new OutputFlowTypeModel();
+  public output: any;
 }

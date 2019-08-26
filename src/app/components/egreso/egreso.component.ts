@@ -1,15 +1,16 @@
-import {Component, OnInit} from '@angular/core';
-import {ModalEgresoComponent} from '../modal-egreso/modal-egreso.component';
-import {MatDialog} from '@angular/material';
-import {ExpensesModel} from '../../core/models/expenses.model';
-import {ArticleService} from '../../core/services/article.service';
-import {StorageDataService} from '../../core/services/storage-data.service';
-import {ShoppingCartService} from '../../core/services/shopping-cart.service';
-import {ShoppingCartModel} from '../../core/models/database/ShoppingCart.model';
-import {ShoppingCartDetailModel} from '../../core/models/request/shopping-cart-detail.model';
-import {SaleTypeEnum} from '../../core/models/constant/SaleTypeEnum';
-import {SucursalService} from '../../core/services/sucursal.service';
-import {isNgTemplate} from '@angular/compiler';
+import { Component, OnInit } from '@angular/core';
+import { ModalEgresoComponent } from '../modal-egreso/modal-egreso.component';
+import { MatDialog } from '@angular/material';
+import { ExpensesModel } from '../../core/models/expenses.model';
+import { ArticleService } from '../../core/services/article.service';
+import { StorageDataService } from '../../core/services/storage-data.service';
+import { ShoppingCartService } from '../../core/services/shopping-cart.service';
+import { ShoppingCartModel } from '../../core/models/database/ShoppingCart.model';
+import { ShoppingCartDetailModel } from '../../core/models/request/shopping-cart-detail.model';
+import { SaleTypeEnum } from '../../core/models/constant/SaleTypeEnum';
+import { SucursalService } from '../../core/services/sucursal.service';
+import { OutputFlowTypeService } from '../../core/services/output-flow-type.service';
+import { OutputFlowTypeModel } from '../../core/models/database/OutputFlowType.model';
 
 @Component({
   selector: 'app-egreso',
@@ -27,12 +28,13 @@ export class EgresoComponent implements OnInit {
   subsidiaryTo: number;
   saleType = SaleTypeEnum;
   subsidiarys: any[];
+  Flows: OutputFlowTypeModel[] = Array<OutputFlowTypeModel>();
   btn = [
-    {abr: 'CONT', key: SaleTypeEnum.CASH_SALE, description: 'Contado'},
-    {abr: 'DEB', key: SaleTypeEnum.DEBIT_CARD, description: 'Dedito'},
-    {abr: 'CRED', key: SaleTypeEnum.CREDIT_CARD, description: 'Crédito'},
-    {abr: 'CONS', key: SaleTypeEnum.DELIVERY_SUPPLIES, description: 'Consumo'},
-    {abr: 'SUC', key: SaleTypeEnum.BRANCH_TRANSFER, description: 'Cambiar de Bodega'}
+    { abr: 'CONT', key: SaleTypeEnum.CASH_SALE, description: 'Contado' },
+    { abr: 'DEB', key: SaleTypeEnum.DEBIT_CARD, description: 'Dedito' },
+    { abr: 'CRED', key: SaleTypeEnum.CREDIT_CARD, description: 'Crédito' },
+    { abr: 'CONS', key: SaleTypeEnum.DELIVERY_SUPPLIES, description: 'Consumo' },
+    { abr: 'SUC', key: SaleTypeEnum.BRANCH_TRANSFER, description: 'Cambiar de Bodega' }
   ];
 
   constructor(
@@ -40,14 +42,23 @@ export class EgresoComponent implements OnInit {
     private service: ArticleService,
     private servShoppingCart: ShoppingCartService,
     private localStorage: StorageDataService,
-    private sucursalService: SucursalService) {
+    private sucursalService: SucursalService,
+    private flowService: OutputFlowTypeService) {
   }
 
   ngOnInit() {
     // this.model.rut = this.localStorage.getRutUser();
-    this.model.output = SaleTypeEnum.CASH_SALE;
+    // this.model.output = SaleTypeEnum.CASH_SALE;
     this.setSubsidiaryForm();
     this.getCart();
+  }
+
+  loadOutputFlows() {
+    this.flowService.getAvailableOutputFlows(this.localStorage.getRutUser().replace('-', ''))
+      .subscribe(data => {
+        this.Flows = data;
+      }, error => {
+      });
   }
 
   getBySku(event: any) {
@@ -180,18 +191,18 @@ export class EgresoComponent implements OnInit {
       });
   }
 
-  private getCart() {
-    this.servShoppingCart.getCart(this.localStorage.getRutUser().replace('-', ''), 0)
-      .subscribe(res => {
-        this.model = res;
-      });
-  }
-
   total() {
     let total = 0;
     this.model.detail.forEach((item) => {
       total += item.amount * item.quantity;
     });
     return total;
+  }
+
+  private getCart() {
+    this.servShoppingCart.getCart(this.localStorage.getRutUser().replace('-', ''), 0)
+      .subscribe(res => {
+        this.model = res;
+      });
   }
 }

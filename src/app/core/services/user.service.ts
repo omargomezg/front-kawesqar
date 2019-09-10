@@ -1,17 +1,25 @@
-import {HttpClient, HttpHeaders} from '@angular/common/http';
-import {Injectable} from '@angular/core';
-import {catchError} from 'rxjs/operators';
-import {environment} from 'src/environments/environment';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { Injectable } from '@angular/core';
+import { catchError } from 'rxjs/operators';
+import { environment } from 'src/environments/environment';
 
 @Injectable({
   providedIn: 'root'
 })
 export class UserService {
   httpOptions = {
-    headers: new HttpHeaders({'Content-Type': 'application/json'})
+    headers: new HttpHeaders({ 'Content-Type': 'application/json' })
   };
 
   constructor(private http: HttpClient) {
+  }
+
+  login(user: string, password: string) {
+    return this.http
+      .post('', {
+        user: '',
+        password: ''
+      });
   }
 
   setDefaultSubsidiary(data: any): any {

@@ -1,7 +1,8 @@
-import {Component, OnInit} from '@angular/core';
-import {UtilsService} from '../core/services/utils.service';
-import {ActivatedRoute, Router} from '@angular/router';
-import {UserModel} from '../core/models/user.model';
+import { Component, OnInit } from '@angular/core';
+import { UtilsService } from '../core/services/utils.service';
+import { ActivatedRoute, Router } from '@angular/router';
+import { UserModel } from '../core/models/user.model';
+import { RoleModel } from '../core/models/role.model';
 
 @Component({
   selector: 'app-form',
@@ -10,10 +11,11 @@ import {UserModel} from '../core/models/user.model';
 })
 export class FormComponent implements OnInit {
 
-  model: UserModel;
+  model: UserModel = new UserModel();
   common: any = {
     roles: []
   };
+  roles: RoleModel[];
   validation = {
     exists: false,
     rut: ''
@@ -21,7 +23,7 @@ export class FormComponent implements OnInit {
   loading = true;
 
   constructor(private serviceRole: UtilsService,
-              private route: ActivatedRoute, private router: Router) {
+    private route: ActivatedRoute, private router: Router) {
   }
 
   ngOnInit() {
@@ -68,11 +70,10 @@ export class FormComponent implements OnInit {
   loadRol() {
     this.serviceRole.getRoles()
       .subscribe(data => {
-        this.common.roles = data.sort(function (a, b) {
-          return a.titulo.localeCompare(b.titulo);
+        this.roles = data.sort(function (a, b) {
+          return a.name.localeCompare(b.name);
         });
-        console.log(this.common.roles);
-        this.model.rol = this.common.roles[0].idRol;
+        this.model.rol = this.roles[0].id;
       }, error => {
         console.log('ouch!' + error.status);
       });

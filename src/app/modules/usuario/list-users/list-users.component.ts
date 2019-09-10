@@ -28,4 +28,8 @@ export class ListUsersComponent implements OnInit {
     });
   }
 
+  getRolName(data: any) {
+    return data.filter((r: { isActive: any; }) => r.isActive)[0].idRol.name;
+  }
+
 }

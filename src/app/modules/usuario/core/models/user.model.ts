@@ -1,3 +1,19 @@
+
+
+export class AllowedDeliveriesModel {
+  sales: boolean;
+  employees: boolean;
+  subsidiary: boolean;
+  bill: boolean;
+
+  constructor() {
+    this.sales = false;
+    this.employees = false;
+    this.subsidiary = false;
+    this.bill = false;
+  }
+}
+
 export class UserModel {
   action: string;
   clave: string;
@@ -23,24 +39,13 @@ export class UserModel {
   DefaultRol: string;
 
   constructor() {
-
+    this.action = 'insert';
+    this.allowedServices = new AllowedDeliveriesModel();
+    this.updated = new Date();
   }
+
 }
 
 export class ExistsModel {
   value: boolean;
-}
-
-export class AllowedDeliveriesModel {
-  sales: boolean;
-  employees: boolean;
-  subsidiary: boolean;
-  bill: boolean;
-
-  constructor() {
-    this.sales = false;
-    this.employees = false;
-    this.subsidiary = false;
-    this.bill = false;
-  }
 }

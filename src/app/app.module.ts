@@ -23,6 +23,7 @@ import { ModalEgresoComponent } from './components/modal-egreso/modal-egreso.com
 import {DialogComponent} from 'src/app/modules/factura/registrar/dialog.component';
 import {ArticleService} from 'src/app/core/services/article.service';
 import { SerachArticleComponent } from './components/serach-article/serach-article.component';
+import { LoginComponent } from './components/login/login.component';
 
 registerLocaleData(localeCl);
 
@@ -35,7 +36,8 @@ registerLocaleData(localeCl);
     OnlyNumbersDirective,
     EgresoComponent,
     ModalEgresoComponent,
-    SerachArticleComponent
+    SerachArticleComponent,
+    LoginComponent
   ],
   imports: [
     HttpClientModule,

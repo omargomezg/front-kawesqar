@@ -8,19 +8,21 @@
     </div>
     <div class="col-8 text-left" style="color:aliceblue; padding-top: 10px;">
       <section *ngIf="header">
-        Bienvenido <a href="{{homeUrl + '/perfil/modificarPerfil.aspx?id=0'}}"
-                      class="linkMenu">{{header.nombre}}</a> | <a href="#" class="login">Cerrar Sesión</a> <br/>
+        Bienvenido <a href="{{homeUrl + '/perfil/modificarPerfil.aspx?id=0'}}" class="linkMenu">{{header.firstName}}
+          {{header.lastName}}</a>
+        | <a href="#" class="login">Cerrar Sesión</a> <br />
       </section>
       <div class="form-inline font-weight-light">
         <a href="{{homeUrl}}" class="linkMenu">Escritorio</a>
         <div class="form-group marg5px" *ngIf="data">
-          <select class="small form-control form-control-sm" [(ngModel)]="idSelected" (change)="setDefault(idSelected)" *ngIf="data.length > 1">
+          <select class="small form-control form-control-sm" [(ngModel)]="idSelected" (change)="setDefault(idSelected)"
+            *ngIf="data.length > 1">
             <option *ngFor="let element of data" [ngValue]="element.id">{{element.descripcion}}</option>
           </select>
-          <span *ngIf="data.length===1"> | {{data[0].descripcion}} | </span>
+          <span *ngIf="data.length===1"> | {{data[0].branch.name}} | </span>
         </div>
-        <a *ngIf="header" href="{{homeUrl + '/Informes/ventas/informeVentas.aspx'}}" class="linkMenu">Turno
-          N° {{header.numeroTurno}}</a>
+        <a *ngIf="turn" href="{{homeUrl + '/Informes/ventas/informeVentas.aspx'}}" class="linkMenu">Turno
+          N° {{turn.id}}</a>
       </div>
     </div>
   </div>

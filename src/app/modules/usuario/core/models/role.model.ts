@@ -1,7 +1,7 @@
 export class RoleModel {
-    idRol: number;
-    titulo: string;
-    estadO: boolean;
+    id: number;
+    name: string;
+    isActive: boolean;
     accesoVenta: boolean;
     valorDescuento: number;
     ventAdmin: boolean;

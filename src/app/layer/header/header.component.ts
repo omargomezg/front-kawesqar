@@ -1,9 +1,10 @@
-import {Component, OnInit} from '@angular/core';
-import {HeaderModel} from './header.model';
-import {StorageDataService} from 'src/app/core/services/storage-data.service';
-import {SucursalModel} from 'src/app/core/models/sucursal.model';
-import {SucursalService} from 'src/app/core/services/sucursal.service';
-import {UserService} from 'src/app/core/services/user.service';
+import { Component, OnInit } from '@angular/core';
+import { HeaderModel } from './header.model';
+import { StorageDataService } from 'src/app/core/services/storage-data.service';
+import { SucursalModel } from 'src/app/core/models/sucursal.model';
+import { SucursalService } from 'src/app/core/services/sucursal.service';
+import { UserService } from 'src/app/core/services/user.service';
+import { TurnService } from 'src/app/core/services/turn.service';
 
 @Component({
   selector: 'app-header',
@@ -13,19 +14,22 @@ import {UserService} from 'src/app/core/services/user.service';
 export class HeaderComponent implements OnInit {
 
   homeUrl = window.location.origin;
-  data: SucursalModel[];
+  data: any[];
+  turn: any;
   header: HeaderModel;
   idSelected: number;
 
   constructor(private readonly sucursalService: SucursalService,
-              private localStorage: StorageDataService,
-              private userService: UserService) {
+    private localStorage: StorageDataService,
+    private userService: UserService,
+    private turnService: TurnService) {
   }
 
   ngOnInit() {
     if (this.localStorage.getRutUser() !== '') {
       this.getSucursales();
       this.getHeader();
+      this.getTurn();
     }
   }
 
@@ -38,11 +42,20 @@ export class HeaderComponent implements OnInit {
       });
   }
 
+  getTurn() {
+    this.turnService.turnByUser(this.localStorage.getRutUser(), 'A')
+      .subscribe(data => {
+        this.turn = data;
+      }, error => {
+        console.log('ouch!' + error.status);
+      });
+  }
+
   getSucursales() {
     this.sucursalService.getSucursalesUsuario(this.localStorage.getRutUser())
-      .subscribe((data: any[]) => {
-        this.data = data;
-        this.idSelected = data.filter(r =>  r.isPrimary === true)[0].id;
+      .subscribe((data: any) => {
+        this.data = data.relationSystemUserBranch;
+        this.idSelected = data.relationSystemUserBranch.filter(r => r.isActive === true)[0].branch.id;
       }, error => {
         console.log('ouch!' + error.status);
       });

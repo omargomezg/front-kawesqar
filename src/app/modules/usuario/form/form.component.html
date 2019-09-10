@@ -82,12 +82,14 @@
           </div>
         </div>
         <div class="col-sm-4">
-          <label>¿Que perfil de usuario deseas aplicar?</label>
-          <mat-radio-group id="rol" name="rol" #rol="ngModel" [(ngModel)]="model.rol" class="example-radio-group">
-            <mat-radio-button class="example-radio-button" *ngFor="let rol of common.roles" [value]="rol.idRol">
-              {{rol.titulo}}
-            </mat-radio-button>
-          </mat-radio-group>
+          <section *ngIf="roles">
+            <label>¿Que perfil de usuario deseas aplicar?</label>
+            <mat-radio-group id="rol" name="rol" #rol="ngModel" [(ngModel)]="model.rol" class="example-radio-group">
+              <mat-radio-button class="example-radio-button" *ngFor="let rol of roles" [value]="rol.id">
+                {{rol.name}}
+              </mat-radio-button>
+            </mat-radio-group>
+          </section>
           <label>Seleciona una opción de egreso predeterminada</label>
           <p class="bg-gradient-warning" *ngIf="!common.egress">No existen datos en la tabla!</p>
           <mat-radio-group id="egres" name="egres" #egres="ngModel" *ngIf="common.egress" class="example-radio-group"
@@ -99,6 +101,7 @@
           <p>Además de selecionar alguna opción de egreso por defecto, es necesario habilitar algunas de estas
             opciones.
           </p>
+          <section></section>
           <mat-slide-toggle id="salidaVenta" name="salidaVenta" #salidaVenta="ngModel"
             [(ngModel)]="model.allowedServices.sales" class="example-margin" [checked]="model.allowedServices.sales">
             Puede vender

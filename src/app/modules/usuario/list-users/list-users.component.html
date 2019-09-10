@@ -23,15 +23,16 @@
       <tbody>
         <tr *ngFor="let item of users">
           <td scope="row">
-            <a title="Editar a {{item.nombres | titlecase}} {{item.apPaterno | titlecase}} {{item.apMaterno | titlecase}}"
+            <a title="Editar a {{item.firstName | titlecase}} {{item.lastName | titlecase}} {{item.secondLastName | titlecase}}"
               [routerLink]="['/usuarios/edit', item.rut]">
-              {{item.nombres | titlecase}} {{item.apPaterno | titlecase}} {{item.apMaterno | titlecase}}</a>
+              {{item.firstName | titlecase}} {{item.lastName | titlecase}} {{item.secondLastName | titlecase}}</a>
 
           </td>
-          <td scope="row">{{item.DefaultRol}}</td>
-          <td scope="row">{{item.eMail}}</td>
+          <td scope="row">{{getRolName(item.relacionUsuarioRols)}}</td>
+          <td scope="row">{{item.email}}</td>
           <td>
-            <mat-slide-toggle class="example-margin" [checked]="item.estado" (change)="changeStatus($event, item.rut)">
+            <mat-slide-toggle class="example-margin" [checked]="item.isActive"
+              (change)="changeStatus($event, item.rut)">
             </mat-slide-toggle>
           </td>
         </tr>

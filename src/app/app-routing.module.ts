@@ -7,11 +7,11 @@ const routes: Routes = [
     { path: '', redirectTo: '/home', pathMatch: 'full' },
     { path: 'home', component: HomeComponent },
     { path: 'base-url/:rut/:target', component: GetExternalBaseComponent },
-    { path: 'medidas', loadChildren: './modules/medida/medida.module#MedidaModule' },
-    { path: 'sucursales', loadChildren: './modules/sucursal/sucursal.module#SucursalModule' },
-    { path: 'informes', loadChildren: './modules/informes/informes.module#InformesModule' },
-    { path: 'usuarios', loadChildren: './modules/usuario/usuario.module#UsuarioModule' },
-    { path: 'factura', loadChildren: './modules/factura/factura.module#FacturaModule' },
+    { path: 'medidas', loadChildren: () => import('./modules/medida/medida.module').then(m => m.MedidaModule) },
+    { path: 'sucursales', loadChildren: () => import('./modules/sucursal/sucursal.module').then(m => m.SucursalModule) },
+    { path: 'informes', loadChildren: () => import('./modules/informes/informes.module').then(m => m.InformesModule) },
+    { path: 'usuarios', loadChildren: () => import('./modules/usuario/usuario.module').then(m => m.UsuarioModule) },
+    { path: 'factura', loadChildren: () => import('./modules/factura/factura.module').then(m => m.FacturaModule) },
     { path: '**', redirectTo: 'home' }
 ];
 @NgModule({

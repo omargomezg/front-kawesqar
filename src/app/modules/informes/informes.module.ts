@@ -1,7 +1,9 @@
 import { CommonModule } from '@angular/common';
 import { NgModule, LOCALE_ID } from '@angular/core';
 import { FormsModule } from '@angular/forms';
-import { MatDatepickerModule, MatInputModule, MatNativeDateModule, MAT_DATE_LOCALE } from '@angular/material';
+import { MatNativeDateModule, MAT_DATE_LOCALE } from '@angular/material/core';
+import { MatDatepickerModule } from '@angular/material/datepicker';
+import { MatInputModule } from '@angular/material/input';
 import { HistoricalExistenceDetailComponent } from './historical-existence-detail/historical-existence-detail.component';
 import { HistoricalExistenceComponent } from './historical-existence/historical-existence.component';
 import { InformesRoutingModule } from './informes-routing.module';

@@ -1,5 +1,5 @@
 import {Component, OnInit} from '@angular/core';
-import {MatDialog} from '@angular/material';
+import { MatDialog } from '@angular/material/dialog';
 import {DialogComponent} from './dialog.component';
 import {StorageDataService} from '../../../core/services/storage-data.service';
 import {SucursalModel} from '../../../core/models/sucursal.model';

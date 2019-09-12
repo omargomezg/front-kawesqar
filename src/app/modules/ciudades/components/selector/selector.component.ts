@@ -3,7 +3,7 @@ import { FormControl } from '@angular/forms';
 import { Observable } from 'rxjs';
 import { map, startWith } from 'rxjs/operators';
 import { CiudadService } from '../../core/services/ciudades.service';
-import { MatAutocompleteSelectedEvent } from '@angular/material';
+import { MatAutocompleteSelectedEvent } from '@angular/material/autocomplete';
 import { CiudadesModule } from '../../ciudades.module';
 import { CiudadModel } from '../../core/models/ciudad.model';
 

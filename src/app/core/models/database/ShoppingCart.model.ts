@@ -1,7 +1,7 @@
 import { SubsidiaryModel } from './Subsidiary.model';
 import { UserModel } from './User.model';
-import { ShoppingCartDetail } from '../../models/database/ShoppingCartDetail.model';
-import { OutputFlowTypeModel } from '../../models/database/OutputFlowType.model';
+import { ShoppingCartDetail } from './ShoppingCartDetail.model';
+import { OutputFlowTypeModel } from './OutputFlowType.model';
 
 export class ShoppingCartModel {
   public id: number;

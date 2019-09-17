@@ -1,16 +1,17 @@
-import { Component, OnInit } from '@angular/core';
-import { ModalEgresoComponent } from '../modal-egreso/modal-egreso.component';
-import { MatDialog } from '@angular/material';
-import { ExpensesModel } from '../../core/models/expenses.model';
-import { ArticleService } from '../../core/services/article.service';
-import { StorageDataService } from '../../core/services/storage-data.service';
-import { ShoppingCartService } from '../../core/services/shopping-cart.service';
-import { ShoppingCartModel } from '../../core/models/database/ShoppingCart.model';
-import { ShoppingCartDetailModel } from '../../core/models/request/shopping-cart-detail.model';
-import { SaleTypeEnum } from '../../core/models/constant/SaleTypeEnum';
-import { SucursalService } from '../../core/services/sucursal.service';
-import { OutputFlowTypeService } from '../../core/services/output-flow-type.service';
-import { OutputFlowTypeModel } from '../../core/models/database/OutputFlowType.model';
+import {Component, OnInit} from '@angular/core';
+import {ModalEgresoComponent} from '../modal-egreso/modal-egreso.component';
+import {MatDialog} from '@angular/material';
+import {ExpensesModel} from '../../core/models/expenses.model';
+import {ArticleService} from '../../core/services/article.service';
+import {StorageDataService} from '../../core/services/storage-data.service';
+import {ShoppingCartService} from '../../core/services/shopping-cart.service';
+import {ShoppingCartModel} from '../../core/models/database/ShoppingCart.model';
+import {ShoppingCartDetailModel} from '../../core/models/request/shopping-cart-detail.model';
+import {SaleTypeEnum} from '../../core/models/constant/SaleTypeEnum';
+import {SucursalService} from '../../core/services/sucursal.service';
+import {OutputFlowTypeService} from '../../core/services/output-flow-type.service';
+import {OutputFlowTypeModel} from '../../core/models/database/OutputFlowType.model';
+import {ShoppingCartDetail} from '../../core/models/database/ShoppingCartDetail.model';
 
 @Component({
   selector: 'app-egreso',
@@ -30,11 +31,11 @@ export class EgresoComponent implements OnInit {
   subsidiarys: any[];
   Flows: OutputFlowTypeModel[] = Array<OutputFlowTypeModel>();
   btn = [
-    { abr: 'CONT', key: SaleTypeEnum.CASH_SALE, description: 'Contado' },
-    { abr: 'DEB', key: SaleTypeEnum.DEBIT_CARD, description: 'Dedito' },
-    { abr: 'CRED', key: SaleTypeEnum.CREDIT_CARD, description: 'Crédito' },
-    { abr: 'CONS', key: SaleTypeEnum.DELIVERY_SUPPLIES, description: 'Consumo' },
-    { abr: 'SUC', key: SaleTypeEnum.BRANCH_TRANSFER, description: 'Cambiar de Bodega' }
+    {abr: 'CONT', key: SaleTypeEnum.CASH_SALE, description: 'Contado'},
+    {abr: 'DEB', key: SaleTypeEnum.DEBIT_CARD, description: 'Dedito'},
+    {abr: 'CRED', key: SaleTypeEnum.CREDIT_CARD, description: 'Crédito'},
+    {abr: 'CONS', key: SaleTypeEnum.DELIVERY_SUPPLIES, description: 'Consumo'},
+    {abr: 'SUC', key: SaleTypeEnum.BRANCH_TRANSFER, description: 'Cambiar de Bodega'}
   ];
 
   constructor(
@@ -51,6 +52,35 @@ export class EgresoComponent implements OnInit {
     // this.model.output = SaleTypeEnum.CASH_SALE;
     this.setSubsidiaryForm();
     this.getCart();
+    const smd = [];
+    const data1 = new ShoppingCartDetail();
+    data1.id = 112;
+    data1.sku = '23456A8521';
+    data1.name = 'Producto 1';
+    data1.amount = 45566.23;
+    data1.quantity = 2;
+    const data2 = new ShoppingCartDetail();
+    data2.id = 14;
+    data2.sku = '2345678921';
+    data2.name = 'Producto 1';
+    data2.amount = 45566.23;
+    data2.quantity = 1;
+
+    this.model.detail.push(data1);
+    this.model.detail.push(data2);
+  }
+
+  addOrQuitItem(value: number, id: number) {
+    let deleteItem = false;
+    this.model.detail.forEach(item => {
+      if (item.id === id) {
+        item.quantity += value;
+        deleteItem = item.quantity === 0;
+      }
+    });
+    if (deleteItem) {
+      this.model.detail = this.model.detail.filter(item => item.id !== id);
+    }
   }
 
   loadOutputFlows() {
@@ -131,7 +161,7 @@ export class EgresoComponent implements OnInit {
   cashDiscount() {
   }
 
-  openDialog(data: ShoppingCartDetailModel): void {
+  openDialog(data: ShoppingCartDetail): void {
     const dialogRef = this.dialog.open(ModalEgresoComponent, {
       width: '300px',
       data: data

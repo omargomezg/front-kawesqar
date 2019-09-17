@@ -1,6 +1,12 @@
 {
   "name": "my-app",
   "version": "0.0.0",
+  "author": {
+    "email": "omar.fdo.gomez@gmail.com",
+    "name": "Omar Gómez",
+    "url": "https://github.com/omargomezg"
+  },
+  "description": "A system for store administration",
   "scripts": {
     "ng": "ng",
     "start": "ng serve",

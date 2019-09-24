@@ -61,8 +61,8 @@ export class EgresoComponent implements OnInit {
     data1.quantity = 2;
     const data2 = new ShoppingCartDetail();
     data2.id = 14;
-    data2.sku = '2345678921';
-    data2.name = 'Producto 1';
+    data2.sku = '2345676311';
+    data2.name = 'Producto 2';
     data2.amount = 45566.23;
     data2.quantity = 1;
 

@@ -5,11 +5,11 @@ import {ShoppingCartDetailModel} from '../../core/models/request/shopping-cart-d
 import {StorageDataService} from '../../core/services/storage-data.service';
 
 @Component({
-  selector: 'app-serach-article',
-  templateUrl: './serach-article.component.html',
-  styleUrls: ['./serach-article.component.css']
+  selector: 'app-search-article',
+  templateUrl: './search-article.component.html',
+  styleUrls: ['./search-article.component.css']
 })
-export class SerachArticleComponent implements OnInit {
+export class SearchArticleComponent implements OnInit {
 
   @ViewChild('sku', {static: true}) skuElement: ElementRef;
   @Output() DetailData = new EventEmitter();

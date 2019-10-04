@@ -124,14 +124,15 @@
                 <th>Descripción</th>
                 <th>Unidad</th>
                 <th>Subtotal</th>
+                <th>&nbsp;</th>
               </tr>
               </thead>
               <tbody *ngIf="model.detail">
               <tr *ngFor="let item of model.detail">
                 <td>{{item.quantity}}</td>
                 <td>{{item.name}}</td>
-                <td class="text-right">{{item.amount | number}}</td>
-                <td class="text-right">{{item.quantity * item.amount | number}}</td>
+                <td class="text-right">{{item.amount | number:'1.0-0'}}</td>
+                <td class="text-right">{{item.quantity * item.amount | number:'1.0-0'}}</td>
                 <td>
                   <button mat-icon-button color="secondary" aria-label="Example icon-button with a heart icon"
                           (click)="addOrQuitItem(+1, item.id)">
@@ -149,7 +150,8 @@
                 <td></td>
                 <td></td>
                 <td></td>
-                <td class="text-right">{{total() | number}}</td>
+                <td class="text-right">{{total() | number:'1.0-0'}}</td>
+                <th>&nbsp;</th>
               </tr>
               </tfoot>
             </table>

@@ -1,0 +1,25 @@
+{
+  "folio": 345678,
+  "created": "2012-04-23T18:25:43.511Z",
+  "observation": "",
+  "client": {
+    "rut": "14.081.226-9",
+    "fullName": "Omar Gómez Gómez"
+  },
+  "detail": [
+    {
+      "code": "1254633256",
+      "description": "Caja de lápices",
+      "quantity": 3,
+      "amount": 990,
+      "total": 4562
+    },
+    {
+      "code": "1254633256",
+      "description": "Caja de lápices",
+      "quantity": 3,
+      "amount": 990,
+      "total": 4562
+    }
+  ]
+}

@@ -1,5 +1,6 @@
 import { Injectable } from '@angular/core';
 import { Observable, Subject } from 'rxjs';
+import {Router} from '@angular/router';
 
 @Injectable({
     providedIn: 'root'
@@ -7,7 +8,7 @@ import { Observable, Subject } from 'rxjs';
 export class StorageDataService {
     private readonly localStorageService;
 
-    constructor() {
+    constructor(private router: Router) {
         this.localStorageService = localStorage;
     }
 
@@ -20,7 +21,7 @@ export class StorageDataService {
             const data = this.localStorageService.getItem('user');
             return (data) ? <string>JSON.parse(data) : '';
         } else {
-            return '';
+            this.router.navigateByUrl('/login');
         }
     }
 

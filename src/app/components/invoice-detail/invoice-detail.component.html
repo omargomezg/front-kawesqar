@@ -1,0 +1,51 @@
+
+<div *ngIf="model">
+<section *ngIf="this.model.created">
+  <section class="panel-title">BOLETA N° {{model.folio | number:'1.0-0'}}</section>
+  <table style="width: 100%">
+    <tbody>
+    <tr>
+      <td class="classic-table-tr">Rut</td>
+      <td>: {{model.client.rut}}</td>
+      <td class="classic-table-tr">Nombre</td>
+      <td>: {{model.client.fullName}}</td>
+    </tr>
+    <tr>
+      <td class="classic-table-tr">Fecha</td>
+      <td>: {{model.created | date:'dd-MM-yyyy'}}</td>
+      <td class="classic-table-tr">Hora</td>
+      <td>: {{model.created | date:'HH:MM'}}</td>
+    </tr>
+    </tbody>
+  </table>
+</section>
+<table class="table table-bordered table-condensed table-hover table-striped small">
+  <thead>
+  <tr>
+    <th>Código</th>
+    <th>Descripción</th>
+    <th>Cantidad</th>
+    <th>Unidad</th>
+    <th>Total</th>
+  </tr>
+  </thead>
+  <tbody *ngIf="model.detail">
+  <tr *ngFor="let item of model.detail">
+    <td>{{item.code}}</td>
+    <td>{{item.description}}</td>
+    <td class="text-right">{{item.quantity | number:'1.0-0'}}</td>
+    <td class="text-right">{{item.amount | number:'1.0-0'}}</td>
+    <td class="text-right">{{item.quantity * item.amount | number:'1.0-0' }}</td>
+  </tr>
+  </tbody>
+  <tfoot>
+  <tr>
+    <th>&nbsp;</th>
+    <th>&nbsp;</th>
+    <th>&nbsp;</th>
+    <th>&nbsp;</th>
+    <th class="text-right">{{getTotal() | currency:'CLP'}}</th>
+  </tr>
+  </tfoot>
+</table>
+</div>

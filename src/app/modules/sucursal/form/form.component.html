@@ -12,7 +12,7 @@
       </div>
     </div>
     <div class="form-group row">
-      <label for="txt-nombre" class="col-sm-2 col-form-label text-right">Nombre</label>
+      <label for="nombre" class="col-sm-2 col-form-label text-right">Nombre</label>
       <div class="col-sm-5">
         <input id="nombre" type="text" maxlength="50" class="form-control" [(ngModel)]="model.nombre" name="nombre"
           #nombre="ngModel" required />
@@ -29,7 +29,7 @@
       </div>
     </div>
     <div class="form-group row">
-      <label for="txt-ciudad" class="col-sm-2 col-form-label text-right">Ciudad</label>
+      <label for="nombreComuna" class="col-sm-2 col-form-label text-right">Ciudad</label>
       <div class="col-sm-5">
         <app-selector (valueChange)='setCiudad($event)' [nameCity]="model.nombreComuna" name="nombreComuna">
         </app-selector>
@@ -95,7 +95,7 @@
       </div>
     </div>
     <div class="form-group row" *ngIf="model.registroContado">
-      <label for="numero-inicial" class="col-sm-2 col-form-label text-right">Número inicial</label>
+      <label for="numInicialRegContado" class="col-sm-2 col-form-label text-right">Número inicial</label>
       <div class="col-sm-2">
         <input id="numInicialRegContado" type="text" class="form-control text-right"
           [(ngModel)]="model.numInicialRegContado" name="numInicialRegContado" #numInicialRegContado="ngModel"

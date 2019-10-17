@@ -24,6 +24,8 @@ import {DialogComponent} from 'src/app/modules/factura/registrar/dialog.componen
 import {ArticleService} from 'src/app/core/services/article.service';
 import { SearchArticleComponent } from './components/search-article/search-article.component';
 import { LoginComponent } from './components/login/login.component';
+import { InvoiceDetailComponent } from './components/invoice-detail/invoice-detail.component';
+import { InvoiceCancellationOrderComponent } from './components/invoice-cancellation-order/invoice-cancellation-order.component';
 
 registerLocaleData(localeCl);
 
@@ -37,7 +39,9 @@ registerLocaleData(localeCl);
     EgresoComponent,
     ModalEgresoComponent,
     SearchArticleComponent,
-    LoginComponent
+    LoginComponent,
+    InvoiceDetailComponent,
+    InvoiceCancellationOrderComponent
   ],
   imports: [
     HttpClientModule,

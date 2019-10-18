@@ -3,6 +3,7 @@ import {Router} from '@angular/router';
 import {MenuService} from '../../core/services/menu.service';
 import {MenuModel} from '../../core/models/menu.models';
 import {StorageDataService} from '../../core/services/storage-data.service';
+import {ShortcutNavService} from '../../core/services/shortcut-nav.service';
 
 @Component({
   selector: 'app-home',
@@ -18,11 +19,13 @@ export class HomeComponent implements OnInit {
   };
 
   constructor(private router: Router,
-              private servMenu: MenuService,
-              private localStorage: StorageDataService) {
+              private menuService: MenuService,
+              private localStorage: StorageDataService,
+              private pathData: ShortcutNavService) {
   }
 
   ngOnInit() {
+    this.pathData.changePath(['', '', ''], ['', '', '']);
     this.getData(-1, '');
   }
 
@@ -37,7 +40,7 @@ export class HomeComponent implements OnInit {
   }
 
   getData(id: number, nombre: string) {
-    this.servMenu.getMenu(id, this.localStorage.getRutUser())
+    this.menuService.getMenu(id, this.localStorage.getRutUser())
       .subscribe(
         data => {
           if (data.length > 0) {

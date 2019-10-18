@@ -26,6 +26,7 @@ import { SearchArticleComponent } from './components/search-article/search-artic
 import { LoginComponent } from './components/login/login.component';
 import { InvoiceDetailComponent } from './components/invoice-detail/invoice-detail.component';
 import { InvoiceCancellationOrderComponent } from './components/invoice-cancellation-order/invoice-cancellation-order.component';
+import { ShotcutNavComponent } from './components/shotcut-nav/shotcut-nav.component';
 
 registerLocaleData(localeCl);
 
@@ -41,7 +42,8 @@ registerLocaleData(localeCl);
     SearchArticleComponent,
     LoginComponent,
     InvoiceDetailComponent,
-    InvoiceCancellationOrderComponent
+    InvoiceCancellationOrderComponent,
+    ShotcutNavComponent
   ],
   imports: [
     HttpClientModule,

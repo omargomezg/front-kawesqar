@@ -12,6 +12,7 @@ import {SucursalService} from '../../core/services/sucursal.service';
 import {OutputFlowTypeService} from '../../core/services/output-flow-type.service';
 import {OutputFlowTypeModel} from '../../core/models/database/OutputFlowType.model';
 import {ShoppingCartDetail} from '../../core/models/database/ShoppingCartDetail.model';
+import {ShortcutNavService} from '../../core/services/shortcut-nav.service';
 
 @Component({
   selector: 'app-egreso',
@@ -44,10 +45,12 @@ export class EgresoComponent implements OnInit {
     private servShoppingCart: ShoppingCartService,
     private localStorage: StorageDataService,
     private sucursalService: SucursalService,
-    private flowService: OutputFlowTypeService) {
+    private flowService: OutputFlowTypeService,
+    private pathData: ShortcutNavService) {
   }
 
   ngOnInit() {
+    this.pathData.changePath(['egreso', 'Egreso', ''], ['', '', '']);
     // this.model.rut = this.localStorage.getRutUser();
     // this.model.output = SaleTypeEnum.CASH_SALE;
     this.setSubsidiaryForm();

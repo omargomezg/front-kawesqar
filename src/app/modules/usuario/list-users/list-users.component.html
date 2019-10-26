@@ -9,6 +9,9 @@
     <h4>Usuarios registrados</h4>
   </div>
 </div>
+<div class="form-group text-right">
+  <a class="btn btn-primary" routerLink="/usuarios/new">Nuevo usuario</a>
+</div>
 <mat-card>
   <mat-card-content>
     <table class="table table-bordered table-condensed table-hover table-striped small">
@@ -22,14 +25,14 @@
       </thead>
       <tbody>
         <tr *ngFor="let item of users">
-          <td scope="row">
+          <td>
             <a title="Editar a {{item.firstName | titlecase}} {{item.lastName | titlecase}} {{item.secondLastName | titlecase}}"
               [routerLink]="['/usuarios/edit', item.rut]">
               {{item.firstName | titlecase}} {{item.lastName | titlecase}} {{item.secondLastName | titlecase}}</a>
 
           </td>
-          <td scope="row">{{getRolName(item.relacionUsuarioRols)}}</td>
-          <td scope="row">{{item.email}}</td>
+          <td>{{getRolName(item.relacionUsuarioRols)}}</td>
+          <td>{{item.email}}</td>
           <td>
             <mat-slide-toggle class="example-margin" [checked]="item.isActive"
               (change)="changeStatus($event, item.rut)">

@@ -7,12 +7,12 @@
 <form novalidate #usuarioForm="ngForm" (ngSubmit)="save()" *ngIf="loading">
   <div class="row">
     <div class="col-4">
-      <h4>{{model.action == 'edit' ? 'Actualización de usuario' : 'Nuevo usuario'}}</h4>
+      <h4>{{common.action == 'edit' ? 'Actualización de usuario' : 'Nuevo usuario'}}</h4>
     </div>
   </div>
   <mat-card>
     <mat-card-content>
-      <div class="" *ngIf="model.action == 'edit'">
+      <div class="" *ngIf="common.action == 'edit'">
         <p class="text-right text-secondary">Nombre de usuario: {{model.userName}}</p>
       </div>
       <div class="row justify-content-md-center">
@@ -21,7 +21,7 @@
             <div class="form-group col-sm-6">
               <label for="rut">Rut</label>
               <input id="rut" type="text" (change)="validateIfExists()" class="form-control" [(ngModel)]="model.rut"
-                name="rut" #rut="ngModel" [readonly]="model.action == 'edit'" required validateRut formatRut />
+                     name="rut" #rut="ngModel" [readonly]="common.action == 'edit'" required validateRut formatRut/>
               <div [hidden]="rut.valid || rut.pristine" class="invalid-feedback">
                 Rut es requerido
               </div>
@@ -33,49 +33,50 @@
           {{model| json}}
           <div class="form-group">
             <label for="nombres">Nombres</label>
-            <input type="text" id="nombres" class="form-control" [(ngModel)]="model.nombres" name="nombres"
-              #nombres="ngModel" required />
+            <input type="text" id="nombres" class="form-control" [(ngModel)]="model.firstName" name="nombres"
+                   #nombres="ngModel" required/>
             <div [hidden]="nombres.valid || nombres.pristine" class="invalid-feedback">
               Nombre es requerido
             </div>
           </div>
           <div class="form-group">
             <label for="ApPaterno">Apellido Paterno</label>
-            <input type="text" id="apPaterno" maxlength="256" class="form-control" [(ngModel)]="model.apPaterno"
-              name="apPaterno" #apPaterno="ngModel" required />
+            <input type="text" id="apPaterno" maxlength="256" class="form-control" [(ngModel)]="model.lastName"
+                   name="apPaterno" #apPaterno="ngModel" required/>
             <div [hidden]="apPaterno.valid || apPaterno.pristine" class="invalid-feedback">
               Nombre es requerido
             </div>
           </div>
           <div class="form-group">
             <label for="ApMaterno" maxlength="256">Apellido Materno</label>
-            <input type="text" id="apMaterno" class="form-control" [(ngModel)]="model.apMaterno" name="apMaterno"
-              #apPaterno="ngModel" />
+            <input type="text" id="apMaterno" class="form-control" [(ngModel)]="model.secondLastName" name="apMaterno"
+                   #apPaterno="ngModel"/>
           </div>
           <div class="form-group">
             <label for="Fono">Teléfono</label>
-            <input id="fono" type="text" class="form-control" [(ngModel)]="model.fono" name="fono" #fono="ngModel" />
+            <input id="fono" type="text" class="form-control" [(ngModel)]="model.fono" name="fono" #fono="ngModel"/>
           </div>
           <div class="form-group">
             <label for="eMail">Correo Electrónico</label>
-            <input id="eMail" type="text" maxlength="256" class="form-control" [(ngModel)]="model.eMail" name="eMail"
-              #eMail="ngModel" required email />
+            <input id="eMail" type="text" maxlength="256" class="form-control" [(ngModel)]="model.email" name="eMail"
+                   #eMail="ngModel" required email/>
             <div [hidden]="eMail.valid || eMail.pristine" class="invalid-feedback">
               Correo es requerido
             </div>
           </div>
-          <div class="form-group" *ngIf="model.action =='insert'">
+          <div class="form-group" *ngIf="common.action =='insert'">
             <label for="userName">Nombre de Usuario</label>
             <input id="userName" maxlength="50" class="form-control" [(ngModel)]="model.userName" name="userName"
-              #userName="ngModel" required />
+                   #userName="ngModel" required/>
             <div [hidden]="userName.valid || userName.pristine" class="invalid-feedback">
               Username es requerido
             </div>
           </div>
-          <div class="form-group" *ngIf="model.action =='insert'">
+          <div class="form-group" *ngIf="common.action =='insert'">
             <label for="clave">Contraseña</label>
-            <input type="text" id="clave" class="form-control" [(ngModel)]="model.clave" name="clave" #clave="ngModel"
-              required />
+            <input type="text" id="clave" class="form-control" [(ngModel)]="model.password" name="clave"
+                   #clave="ngModel"
+                   required/>
             <div [hidden]="clave.valid || clave.pristine" class="invalid-feedback">
               Contraseña es requerido
             </div>
@@ -93,7 +94,7 @@
           <label>Seleciona una opción de egreso predeterminada</label>
           <p class="bg-gradient-warning" *ngIf="!common.egress">No existen datos en la tabla!</p>
           <mat-radio-group id="egres" name="egres" #egres="ngModel" *ngIf="common.egress" class="example-radio-group"
-            [(ngModel)]="model.egreso">
+                           [(ngModel)]="model.egreso">
             <mat-radio-button class="example-radio-button" *ngFor="let egres of common.egress" [value]="egres.id">
               {{egres.descripcion}}
             </mat-radio-button>
@@ -103,15 +104,18 @@
           </p>
           <section></section>
           <mat-slide-toggle id="salidaVenta" name="salidaVenta" #salidaVenta="ngModel"
-            [(ngModel)]="model.allowedServices.sales" class="example-margin" [checked]="model.allowedServices.sales">
+                            [(ngModel)]="model.salidaVenta" class="example-margin"
+                            [checked]="model.salidaVenta">
             Puede vender
-          </mat-slide-toggle><br>
+          </mat-slide-toggle>
+          <br>
           <mat-slide-toggle class="example-margin" [checked]="model.salidaEmpleados" id="salidaEmpleados"
-            name="salidaEmpleados" #salidaEmpleados="ngModel" [(ngModel)]="model.salidaEmpleados">
+                            name="salidaEmpleados" #salidaEmpleados="ngModel" [(ngModel)]="model.salidaEmpleados">
             Habilitado para entregas internas
-          </mat-slide-toggle><br>
+          </mat-slide-toggle>
+          <br>
           <mat-slide-toggle class="example-margin" [checked]="model.salidaFactura" id="salidaFactura"
-            name="salidaFactura" #salidaFactura="ngModel" [(ngModel)]="model.salidaFactura">
+                            name="salidaFactura" #salidaFactura="ngModel" [(ngModel)]="model.salidaFactura">
             Puede emitir factura
           </mat-slide-toggle>
         </div>

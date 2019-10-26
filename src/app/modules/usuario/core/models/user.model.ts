@@ -15,19 +15,18 @@ export class AllowedDeliveriesModel {
 }
 
 export class UserModel {
-  action: string;
-  clave: string;
+  password: string;
   rol: number;
   egreso: number;
   rut: string;
-  nombres: string;
-  apPaterno: string;
-  apMaterno: string;
+  firstName: string;
+  lastName: string;
+  secondLastName: string;
   fono: string;
-  eMail: string;
+  email: string;
   userName: string;
   fechaCreacion: Date;
-  estado: boolean;
+  isActive: boolean;
   salidaVenta: boolean;
   salidaFactura: boolean;
   salidaEmpleados: boolean;
@@ -39,8 +38,13 @@ export class UserModel {
   DefaultRol: string;
 
   constructor() {
-    this.action = 'insert';
-    this.allowedServices = new AllowedDeliveriesModel();
+    this.isActive = true;
+    this.salidaVenta = false;
+    this.salidaFactura = false;
+    this.salidaEmpleados = false;
+    this.traspaso = false;
+    this.credito = false;
+    this.discount = false;
     this.updated = new Date();
   }
 

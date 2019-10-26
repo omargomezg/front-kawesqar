@@ -1,8 +1,8 @@
-import { Component, OnInit } from '@angular/core';
-import { UtilsService } from '../core/services/utils.service';
-import { ActivatedRoute, Router } from '@angular/router';
-import { UserModel } from '../core/models/user.model';
-import { RoleModel } from '../core/models/role.model';
+import {Component, OnInit} from '@angular/core';
+import {UtilsService} from '../core/services/utils.service';
+import {ActivatedRoute, Router} from '@angular/router';
+import {UserModel} from '../core/models/user.model';
+import {RoleModel} from '../core/models/role.model';
 
 @Component({
   selector: 'app-form',
@@ -13,7 +13,8 @@ export class FormComponent implements OnInit {
 
   model: UserModel = new UserModel();
   common: any = {
-    roles: []
+    roles: [],
+    action: 'insert'
   };
   roles: RoleModel[];
   validation = {
@@ -23,7 +24,7 @@ export class FormComponent implements OnInit {
   loading = true;
 
   constructor(private serviceRole: UtilsService,
-    private route: ActivatedRoute, private router: Router) {
+              private route: ActivatedRoute, private router: Router) {
   }
 
   ngOnInit() {
@@ -39,14 +40,14 @@ export class FormComponent implements OnInit {
             this.model.allowedServices.sales = data.salidaVenta;
             this.model.allowedServices.subsidiary = data.traspaso;
             this.model.rut = params.rut;
-            this.model.action = 'edit';
+            this.common.action = 'edit';
             this.loading = false;
           }, error => {
             console.log('ouch!' + error.status);
           });
       } else {
-        this.model.action = 'insert';
-        this.model.clave = Math.random().toString(36).slice(-8);
+        this.common.action = 'insert';
+        this.model.password = Math.random().toString(36).slice(-8);
       }
     });
   }
@@ -54,7 +55,7 @@ export class FormComponent implements OnInit {
   validateIfExists() {
     this.validation.exists = false;
     this.validation.rut = '';
-    if (this.model.action === 'insert') {
+    if (this.common.action === 'insert') {
       this.serviceRole.getExist(this.model.rut)
         .subscribe(data => {
           this.validation.exists = data;
@@ -94,8 +95,8 @@ export class FormComponent implements OnInit {
   }
 
   save() {
-    if (this.model.action === 'edit') {
-      this.model.clave = '';
+    if (this.common.action === 'edit') {
+      this.model.password = '';
       this.serviceRole.putUpdateUser(this.model)
         .subscribe(data => {
           this.router.navigateByUrl('usuarios/list');
@@ -105,7 +106,8 @@ export class FormComponent implements OnInit {
     } else {
       this.serviceRole.postSaveUser(this.model)
         .subscribe(data => {
-          this.router.navigateByUrl('usuarios/list');
+          console.log(data);
+          // this.router.navigateByUrl('usuarios/list');
         }, error => {
           console.log('ouch!' + error.status);
         });

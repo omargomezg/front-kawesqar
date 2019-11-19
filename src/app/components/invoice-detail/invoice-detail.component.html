@@ -1,20 +1,20 @@
 
-<div *ngIf="model">
+<div *ngIf="id">
 <section *ngIf="this.model.created">
-  <section class="panel-title">BOLETA N° {{model.folio | number:'1.0-0'}}</section>
+  <section class="panel-title">BOLETA N° {{id.id | number:'1.0-0'}}</section>
   <table style="width: 100%">
     <tbody>
     <tr>
       <td class="classic-table-tr">Rut</td>
-      <td>: {{model.client.rut}}</td>
+      <td>: {{id.client.rut}}</td>
       <td class="classic-table-tr">Nombre</td>
-      <td>: {{model.client.fullName}}</td>
+      <td>: {{id.client.firstName}} {{id.client.lastName}}</td>
     </tr>
     <tr>
       <td class="classic-table-tr">Fecha</td>
-      <td>: {{model.created | date:'dd-MM-yyyy'}}</td>
+      <td>: {{id.create | date:'dd-MM-yyyy'}}</td>
       <td class="classic-table-tr">Hora</td>
-      <td>: {{model.created | date:'HH:MM'}}</td>
+      <td>: {{id.create | date:'HH:MM'}}</td>
     </tr>
     </tbody>
   </table>
@@ -29,13 +29,13 @@
     <th>Total</th>
   </tr>
   </thead>
-  <tbody *ngIf="model.detail">
-  <tr *ngFor="let item of model.detail">
-    <td>{{item.code}}</td>
-    <td>{{item.description}}</td>
+  <tbody *ngIf="id">
+  <tr *ngFor="let item of id.purchaseDetails">
+    <td>{{item.product.id}}</td>
+    <td>{{item.product.name}}</td>
     <td class="text-right">{{item.quantity | number:'1.0-0'}}</td>
-    <td class="text-right">{{item.amount | number:'1.0-0'}}</td>
-    <td class="text-right">{{item.quantity * item.amount | number:'1.0-0' }}</td>
+    <td class="text-right">{{item.valorTotal / item.quantity | number:'1.0-0' }}</td>
+    <td class="text-right">{{item.valorTotal | number:'1.0-0'}}</td>
   </tr>
   </tbody>
   <tfoot>
@@ -48,4 +48,5 @@
   </tr>
   </tfoot>
 </table>
+  <p *ngIf="!id.isActive" class="alert-danger">DOCOCUMENTO ANULADO</p>
 </div>

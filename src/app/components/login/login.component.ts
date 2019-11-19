@@ -24,7 +24,7 @@ export class LoginComponent implements OnInit {
   }
 
   send() {
-    this.localStorage.setRutUser('14081226-9');
+    this.localStorage.setRutUser('13085610-1');
     this.router.navigateByUrl('/invoice-cancellation-order');
   }
 }

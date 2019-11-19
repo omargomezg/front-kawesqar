@@ -1,8 +1,11 @@
 import {Component, OnInit} from '@angular/core';
 import {UtilsService} from '../core/services/utils.service';
 import {ActivatedRoute, Router} from '@angular/router';
-import {UserModel} from '../core/models/user.model';
-import {RoleModel} from '../core/models/role.model';
+import {AllowedDeliveriesModel, UserModel} from '../core/models/user.model';
+import {RelationSystemUserRoleModel} from '../core/models/RelationSystemUserRole.model';
+import {RoleModel} from '../core/models/Role.model';
+import {ShortcutNavService} from '../../../core/services/shortcut-nav.service';
+import {templateJitUrl} from '@angular/compiler';
 
 @Component({
   selector: 'app-form',
@@ -24,7 +27,7 @@ export class FormComponent implements OnInit {
   loading = true;
 
   constructor(private serviceRole: UtilsService,
-              private route: ActivatedRoute, private router: Router) {
+              private route: ActivatedRoute, private router: Router, private pathData: ShortcutNavService) {
   }
 
   ngOnInit() {
@@ -32,13 +35,17 @@ export class FormComponent implements OnInit {
     this.loadEgresos();
     this.route.params.subscribe(params => {
       if (params.rut !== undefined) {
+        this.pathData.changePath(['usuarios', 'Usuario', ''], [`usuarios/edit/${params.rut}`, 'Editar usuario', 'active']);
         this.serviceRole.getUserByRut(params.rut)
           .subscribe(data => {
             this.model = data;
+            if (this.model.allowedServices === undefined) {
+              this.model.allowedServices = new AllowedDeliveriesModel();
+            }
             this.model.allowedServices.bill = data.salidaFactura;
             this.model.allowedServices.employees = data.salidaEmpleados;
             this.model.allowedServices.sales = data.salidaVenta;
-            this.model.allowedServices.subsidiary = data.traspaso;
+            this.model.allowedServices.subsidiary = data.sendToOtherBranch;
             this.model.rut = params.rut;
             this.common.action = 'edit';
             this.loading = false;
@@ -46,8 +53,10 @@ export class FormComponent implements OnInit {
             console.log('ouch!' + error.status);
           });
       } else {
+        this.pathData.changePath(['usuarios', 'Usuario', ''], ['new', 'Nuevo usuario', 'active']);
         this.common.action = 'insert';
         this.model.password = Math.random().toString(36).slice(-8);
+
       }
     });
   }
@@ -74,7 +83,18 @@ export class FormComponent implements OnInit {
         this.roles = data.sort(function (a, b) {
           return a.name.localeCompare(b.name);
         });
-        this.model.rol = this.roles[0].id;
+        this.roles.forEach(item => {
+          const newRelationUserRole = new RelationSystemUserRoleModel(
+            0,
+            false,
+            null,
+            item
+          );
+          if (this.model.relationSystemUserRoles === undefined) {
+            this.model.relationSystemUserRoles = [];
+          }
+          this.model.relationSystemUserRoles.push(newRelationUserRole);
+        });
       }, error => {
         console.log('ouch!' + error.status);
       });
@@ -84,7 +104,9 @@ export class FormComponent implements OnInit {
     this.serviceRole.getEgress()
       .subscribe(data => {
         this.common.egress = data;
-        this.model.egreso = data[0].id;
+        if (data.length > 0) {
+          this.model.egreso = data[0].id;
+        }
       }, error => {
         console.log('ouch!' + error.status);
       });
@@ -112,5 +134,17 @@ export class FormComponent implements OnInit {
           console.log('ouch!' + error.status);
         });
     }
+  }
+
+  setRoleStatus(event) {
+    this.model.relationSystemUserRoles.forEach(item => {
+        item.isActive = item.role.id === event.value;
+    });
+  }
+
+  isRoleActive(id: number) {
+    return this.model.relationSystemUserRoles.filter(item => {
+      return item.isActive && item.role.id === id;
+    }).length > 0;
   }
 }

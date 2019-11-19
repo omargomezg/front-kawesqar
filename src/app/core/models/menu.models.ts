@@ -1,6 +1,6 @@
 export interface MenuModel {
-    idParent: number;
+    id: number;
     parent: number;
-    texto: string;
+    name: string;
     url: string;
 }

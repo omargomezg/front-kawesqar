@@ -3,10 +3,10 @@ import {ShortcutNavService} from '../../core/services/shortcut-nav.service';
 
 @Component({
   selector: 'app-shotcut-nav',
-  templateUrl: './shotcut-nav.component.html',
-  styleUrls: ['./shotcut-nav.component.css']
+  templateUrl: './shortcut-nav.component.html',
+  styleUrls: ['./shortcut-nav.component.css']
 })
-export class ShotcutNavComponent implements OnInit {
+export class ShortcutNavComponent implements OnInit {
   model = {
     'homeUrl': window.location.origin,
     'pathLvl1': [],

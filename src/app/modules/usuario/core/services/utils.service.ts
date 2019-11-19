@@ -1,11 +1,12 @@
 import { Injectable } from '@angular/core';
 import { Observable, throwError } from 'rxjs';
-import { RoleModel } from '../models/role.model';
+import { RelationSystemUserRoleModel } from '../models/RelationSystemUserRole.model';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { EgressModel } from '../models/egress.model';
 import { catchError, retry, map } from 'rxjs/operators';
 import { UserModel, ExistsModel } from '../models/user.model';
 import {environment} from '../../../../../environments/environment';
+import {RoleModel} from '../models/Role.model';
 
 @Injectable({
   providedIn: 'root'
@@ -62,7 +63,7 @@ export class UtilsService {
   }
 
   postSaveUser(user: UserModel): Observable<any[]> {
-    return this.http.post<any[]>(`${environment.apiUrl}/api/user/${user.rut}`, JSON.stringify(user), this.httpOptions)
+    return this.http.post<any[]>(`${environment.apiUrl}/api/user/${user.rut.replace('-','')}`, JSON.stringify(user), this.httpOptions)
       .pipe(
         retry(1),
         catchError(this.handleError)

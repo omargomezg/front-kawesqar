@@ -1,11 +1,11 @@
 import { SubsidiaryModel } from './Subsidiary.model';
-import { UserModel } from './User.model';
+import { SystemUserModel } from './system-user.model';
 import { ShoppingCartDetail } from './ShoppingCartDetail.model';
 import { OutputFlowTypeModel } from './OutputFlowType.model';
 
 export class ShoppingCartModel {
   public id: number;
-  public user: UserModel;
+  public user: SystemUserModel;
   public subsidiaryTo: SubsidiaryModel = new SubsidiaryModel();
   public subsidiaryFrom: SubsidiaryModel = new SubsidiaryModel();
   public created: string;

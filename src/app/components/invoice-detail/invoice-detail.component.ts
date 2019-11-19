@@ -1,6 +1,8 @@
-import {Component, OnInit} from '@angular/core';
+import {Component, Input, OnInit} from '@angular/core';
 import {Client, InvoiceDetail, InvoiceModel} from './invoice.model';
-import {InvoiceService} from './invoice.service';
+import {ProofOfPurchaseService} from '../../core/services/proof-of -purchase.service';
+import {ProofOfPurchaseModel} from '../../core/models/database/proof-of-purchase.model';
+import {ProofOfPurchaseDetailModel} from '../../core/models/database/proof-of-purchase-detail.model';
 
 @Component({
   selector: 'app-invoice-detail',
@@ -8,7 +10,6 @@ import {InvoiceService} from './invoice.service';
   styleUrls: ['./invoice-detail.component.css']
 })
 export class InvoiceDetailComponent implements OnInit {
-
   model: InvoiceModel = new InvoiceModel(
     1,
     new Date(),
@@ -30,13 +31,15 @@ export class InvoiceDetailComponent implements OnInit {
     ]
   );
 
-  constructor() {
+  @Input() id: ProofOfPurchaseModel;
+
+  constructor(private proofOfPurchaseService: ProofOfPurchaseService) {
   }
 
   ngOnInit() {
   }
 
   getTotal(): number {
-    return this.model.detail.reduce((sum, item) => sum + item.amount * item.quantity, 0);
+    return this.id.purchaseDetails.reduce((sum, item) => sum + item.valorTotal, 0);
   }
 }

@@ -29,7 +29,7 @@ export class HomeComponent implements OnInit {
     this.getData(-1, '');
   }
 
-  abrirUrl(url: string, id: number, nombre: string) {
+  openUrl(url: string, id: number, nombre: string) {
     if (url.includes('~/Default.aspx?padre=')) {
       this.getData(Number(url.replace('~/Default.aspx?padre=', '')), nombre);
     } else if (url.includes('my-app')) {
@@ -47,7 +47,7 @@ export class HomeComponent implements OnInit {
             this.menu = data;
             this.raiz.backId = data[0].parent;
             this.raiz.nombre = nombre;
-            this.raiz.mostrar = data[0].idParent !== -1;
+            this.raiz.mostrar = data[0].id !== -1;
           }
         },
         error => {

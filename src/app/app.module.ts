@@ -26,7 +26,8 @@ import { SearchArticleComponent } from './components/search-article/search-artic
 import { LoginComponent } from './components/login/login.component';
 import { InvoiceDetailComponent } from './components/invoice-detail/invoice-detail.component';
 import { InvoiceCancellationOrderComponent } from './components/invoice-cancellation-order/invoice-cancellation-order.component';
-import { ShotcutNavComponent } from './components/shotcut-nav/shotcut-nav.component';
+import { ShortcutNavComponent } from './components/shortcut-nav/shortcut-nav.component';
+import {ShortcutNavService} from './core/services/shortcut-nav.service';
 
 registerLocaleData(localeCl);
 
@@ -43,7 +44,7 @@ registerLocaleData(localeCl);
     LoginComponent,
     InvoiceDetailComponent,
     InvoiceCancellationOrderComponent,
-    ShotcutNavComponent
+    ShortcutNavComponent
   ],
   imports: [
     HttpClientModule,
@@ -61,6 +62,7 @@ registerLocaleData(localeCl);
   providers: [
     RutValidator,
     ArticleService,
+    ShortcutNavService,
     { provide: LOCALE_ID, useValue: 'es-CL' }
   ],
   bootstrap: [AppComponent],

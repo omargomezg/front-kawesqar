@@ -1,4 +1,4 @@
-
+import {RelationSystemUserRoleModel} from './RelationSystemUserRole.model';
 
 export class AllowedDeliveriesModel {
   sales: boolean;
@@ -30,22 +30,25 @@ export class UserModel {
   salidaVenta: boolean;
   salidaFactura: boolean;
   salidaEmpleados: boolean;
-  traspaso: boolean;
+  sendToOtherBranch: boolean;
   credito: boolean;
   discount: boolean;
   allowedServices: AllowedDeliveriesModel;
   updated: Date;
   DefaultRol: string;
+  relationSystemUserRoles: RelationSystemUserRoleModel[];
 
   constructor() {
     this.isActive = true;
     this.salidaVenta = false;
     this.salidaFactura = false;
     this.salidaEmpleados = false;
-    this.traspaso = false;
+    this.sendToOtherBranch = false;
     this.credito = false;
     this.discount = false;
     this.updated = new Date();
+    this.relationSystemUserRoles = [];
+    this.allowedServices = new AllowedDeliveriesModel();
   }
 
 }

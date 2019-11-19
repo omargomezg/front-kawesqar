@@ -5,8 +5,8 @@
 <div class="card-columns" *ngIf="menu">
     <div class="card" *ngFor="let item of menu">
         <div class="card-body text-center">
-            <a class="btn btn-link" (click)="abrirUrl(item.url, item.parent, item.texto)"
-                routerLinkActive="active">{{item.texto}}</a>
+            <a class="btn btn-link" (click)="openUrl(item.url, item.parent, item.name)"
+                routerLinkActive="active">{{item.name}}</a>
         </div>
     </div>
 </div>

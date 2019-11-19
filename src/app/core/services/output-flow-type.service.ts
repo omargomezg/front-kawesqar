@@ -18,6 +18,11 @@ export class OutputFlowTypeService {
 
   constructor(private http: HttpClient) {
   }
+
+  /**
+   * Show a list of egress options
+   * @param rut The user system rut
+   */
   getAvailableOutputFlows(rut: string): Observable<OutputFlowTypeModel[]> {
     return this.http
       .get<OutputFlowTypeModel[]>(`${environment.apiUrl}/api/egress/${rut}`)

@@ -17,9 +17,9 @@
         <div class="form-group marg5px" *ngIf="data">
           <select class="small form-control form-control-sm" [(ngModel)]="idSelected" (change)="setDefault(idSelected)"
             *ngIf="data.length > 1">
-            <option *ngFor="let element of data" [ngValue]="element.id">{{element.descripcion}}</option>
+            <option *ngFor="let element of data" [ngValue]="element.branch.id">{{element.branch.name}}, {{element.branch.address}}</option>
           </select>
-          <span *ngIf="data.length===1"> | {{data[0].branch.name}} | </span>
+          <span *ngIf="data.length===1"> | {{data[0].branch.name}}, {{data[0].branch.address}} | </span>
         </div>
         <a *ngIf="turn" href="{{homeUrl + '/Informes/ventas/informeVentas.aspx'}}" class="linkMenu">Turno
           N° {{turn.id}}</a>

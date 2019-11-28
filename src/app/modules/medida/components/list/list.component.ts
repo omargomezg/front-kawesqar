@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { MedidaModel } from '../../core/models/medida.model';
+import { Measure } from 'kawesqar-class-model';
 import { MedidaService } from '../../core/services/medida.service';
 import { CommonDataService } from '../../core/services/common-data.service';
 
@@ -10,7 +10,7 @@ import { CommonDataService } from '../../core/services/common-data.service';
 })
 export class ListComponent implements OnInit {
 
-  medidas: MedidaModel[];
+  medidas: Measure[];
 
   constructor(private readonly medidaService: MedidaService, private commonData: CommonDataService) {
     this.commonData.serviceRefreshList.subscribe((data) => {

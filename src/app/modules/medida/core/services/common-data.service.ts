@@ -1,13 +1,13 @@
 import { Injectable } from '@angular/core';
 import { Observable, Subject } from 'rxjs';
-import { MedidaModel } from '../models/medida.model';
+import { Measure } from 'kawesqar-class-model';
 
 @Injectable({
   providedIn: 'root'
 })
 export class CommonDataService {
 
-  serviceMedidaModel: Observable<MedidaModel>;
+  serviceMedidaModel: Observable<Measure>;
   serviceRefreshList: Observable<boolean>;
 
   private serviceMedidaModelSubject = new Subject<any>();
@@ -18,7 +18,7 @@ export class CommonDataService {
     this.serviceRefreshList = this.serviceRefreshListSubject.asObservable();
   }
 
-  setMedidaModel(data: MedidaModel) {
+  setMedidaModel(data: Measure) {
     this.serviceMedidaModelSubject.next(data);
   }
 

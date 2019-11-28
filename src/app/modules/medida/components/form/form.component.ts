@@ -1,8 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { MedidaService } from '../../core/services/medida.service';
-import { MedidaModel } from '../../core/models/medida.model';
 import { Router } from '@angular/router';
 import { CommonDataService } from '../../core/services/common-data.service';
+import { Measure } from 'kawesqar-class-model';
 
 @Component({
   selector: 'app-form',
@@ -10,7 +10,7 @@ import { CommonDataService } from '../../core/services/common-data.service';
 })
 export class FormComponent implements OnInit {
 
-  model: MedidaModel = new MedidaModel();
+  model: Measure = new Measure();
   submitted = false;
   estado = false;
   mensaje = '';
@@ -25,7 +25,7 @@ export class FormComponent implements OnInit {
   }
 
   limpiar() {
-    this.model = new MedidaModel();
+    this.model = new Measure();
   }
 
   emptyform() {

@@ -4,7 +4,7 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { environment } from 'src/environments/environment';
 import { Observable, of } from 'rxjs';
 import { map, catchError } from 'rxjs/operators';
-import { MedidaModel } from '../models/medida.model';
+import { Measure } from 'kawesqar-class-model';
 
 @Injectable({
   providedIn: 'root'
@@ -13,15 +13,15 @@ export class MedidaService {
 
   constructor(private readonly http: HttpClient) { }
 
-  getMedidas(): Observable<MedidaModel[]> {
-    return this.http.get<MedidaModel[]>(`${environment.apiUrl}/api/measure`);
+  getMedidas(): Observable<Measure[]> {
+    return this.http.get<Measure[]>(`${environment.apiUrl}/api/measure`);
   }
 
-  getMedida(id: number): Observable<MedidaModel> {
-    return this.http.get<MedidaModel>(`${environment.apiUrl}/api/medida/${id}`);
+  getMedida(id: number): Observable<Measure> {
+    return this.http.get<Measure>(`${environment.apiUrl}/api/medida/${id}`);
   }
 
-  putMedidas(model: MedidaModel): Observable<any> {
+  putMedidas(model: Measure): Observable<any> {
     const httpOptions = {
       headers: new HttpHeaders({ 'Content-Type': 'application/json' })
     };

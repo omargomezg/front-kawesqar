@@ -1,0 +1,41 @@
+<div class="row">
+    <div class="col-4">
+        <h4>Clientes</h4>
+    </div>
+</div>
+<div class="form-group text-right">
+    <a class="btn btn-primary" routerLink="/client/new">Nuevo cliente</a>
+</div>
+<mat-card>
+    <mat-card-content>
+        <table class="table table-bordered table-condensed table-hover table-striped small">
+            <thead>
+                <tr>
+                    <th>Rut</th>
+                    <th>Nombre</th>
+                    <th>Credito</th>
+                    <th>Factura</th>
+                    <th>Crédito Autorizado</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr *ngFor="let item of users">
+                    <td>
+                        <a title="Editar a {{item.firstName | titlecase}} {{item.lastName | titlecase}} {{item.secondLastName | titlecase}}"
+                            [routerLink]="['/usuarios/edit', item.rut]">
+                            {{item.firstName | titlecase}} {{item.lastName | titlecase}}
+                            {{item.secondLastName | titlecase}}</a>
+
+                    </td>
+                    <td>{{getRolName(item.relationSystemUserRoles)}}</td>
+                    <td>{{item.email}}</td>
+                    <td>
+                        <mat-slide-toggle class="example-margin" [checked]="item.isActive"
+                            (change)="changeStatus($event, item.rut)">
+                        </mat-slide-toggle>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </mat-card-content>
+</mat-card>

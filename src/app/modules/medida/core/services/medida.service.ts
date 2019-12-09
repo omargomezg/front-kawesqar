@@ -18,7 +18,7 @@ export class MedidaService {
   }
 
   getMedida(id: number): Observable<Measure> {
-    return this.http.get<Measure>(`${environment.apiUrl}/api/medida/${id}`);
+    return this.http.get<Measure>(`${environment.apiUrl}/api/measure/${id}`);
   }
 
   putMedidas(model: Measure): Observable<any> {
@@ -26,7 +26,7 @@ export class MedidaService {
       headers: new HttpHeaders({ 'Content-Type': 'application/json' })
     };
     return this.http
-      .put(`${environment.apiUrl}/api/medida/${model.id}`,
+      .put(`${environment.apiUrl}/api/measure/${model.id}`,
         JSON.stringify(model), httpOptions)
       .pipe(
         map(data => data),

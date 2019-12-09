@@ -10,8 +10,6 @@ import { EditClientComponent } from './components/client/edit-client/edit-client
 import { ListClientsComponent } from './components/client/list-clients/list-clients.component';
 import { ListProductsComponent } from './components/product/list-products/list-products.component';
 import { EditProductComponent } from './components/product/edit-product/edit-product.component';
-import { EditMeasureComponent } from './components/measure/edit-measure/edit-measure.component';
-import { ListMeasureComponent } from './components/measure/list-measure/list-measure.component';
 
 const routes: Routes = [
   { path: 'login', component: LoginComponent },
@@ -27,9 +25,6 @@ const routes: Routes = [
   { path: 'product/show-all', component: ListProductsComponent },
   { path: 'product/edit/:id', component: EditProductComponent },
   { path: 'product/new', component: EditProductComponent },
-  { path: 'measure/edit/:id', component: EditMeasureComponent },
-  { path: 'measure/new', component: EditMeasureComponent },
-  { path: 'measure/show-all', component: ListMeasureComponent },
   { path: 'medidas', loadChildren: () => import('./modules/medida/medida.module').then(m => m.MedidaModule) },
   { path: 'sucursales', loadChildren: () => import('./modules/sucursal/sucursal.module').then(m => m.SucursalModule) },
   { path: 'informes', loadChildren: () => import('./modules/informes/informes.module').then(m => m.InformesModule) },

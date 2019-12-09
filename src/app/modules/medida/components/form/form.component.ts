@@ -3,6 +3,7 @@ import { MedidaService } from '../../core/services/medida.service';
 import { Router } from '@angular/router';
 import { CommonDataService } from '../../core/services/common-data.service';
 import { Measure } from 'kawesqar-class-model';
+import { ShortcutNavService } from 'src/app/core/services/shortcut-nav.service';
 
 @Component({
   selector: 'app-form',
@@ -15,13 +16,17 @@ export class FormComponent implements OnInit {
   estado = false;
   mensaje = '';
   result = true;
-  constructor(private readonly serv: MedidaService, private router: Router, private commonData: CommonDataService) {
+  constructor(private readonly serv: MedidaService, private router: Router, private commonData: CommonDataService,
+    private readonly pathData: ShortcutNavService) {
     this.commonData.serviceMedidaModel.subscribe((data) => {
       this.model = data;
     });
   }
 
   ngOnInit() {
+    this.pathData.changePath(['configuracion', 'Configuración', ''],
+      ['medidas', 'Medidas', 'active']
+    );
   }
 
   limpiar() {
@@ -41,6 +46,7 @@ export class FormComponent implements OnInit {
         this.commonData.setRefreshList(true);
       }, error => {
         console.log('ouch!' + error.status);
+        this.commonData.setRefreshList(true);
       });
   }
 

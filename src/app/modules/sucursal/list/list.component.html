@@ -1,6 +1,9 @@
-<p class="text-right font-weight-light font-italic" *ngIf="sucursales">Mostrando {{sucursales.length}}
-  registros</p>
-<table class="table table-bordered table-condensed table-hover table-striped small">
+<p class="text-right font-weight-light font-italic" *ngIf="sucursales">
+  Mostrando {{ sucursales.length }} registros
+</p>
+<table
+  class="table table-bordered table-condensed table-hover table-striped small"
+>
   <thead>
     <tr>
       <th scope="col">#</th>
@@ -14,18 +17,27 @@
   </thead>
   <tbody>
     <tr *ngFor="let item of sucursales; let i = index">
-      <td scope="row">{{i +1}}</td>
-      <td class="text-nowrap">{{item.rut | rut}}</td>
+      <td scope="row">{{ i + 1 }}</td>
+      <td class="text-nowrap">{{ item.rut | rut }}</td>
       <td scope="col" class="text-capitalize">
-        <a title="Editar {{item.descripcion | titlecase}}"
-          [routerLink]="['/sucursales/edit', item.id]">{{item.descripcion | titlecase}}</a><br>
-        <small *ngIf="item.bodegasAsociadas > 0"><a>{{item.bodegasAsociadas}}
-            {{item.bodegasAsociadas > 1 ? 'bodegas' : 'bodega'}}</a></small>
+        <a
+          title="Editar {{ item.name | titlecase }}"
+          [routerLink]="['/sucursales/edit', item.id]"
+          >{{ item.name | titlecase }}</a
+        ><br />
+        <small *ngIf="actives(item.relationSystemUserBranch) > 0"
+          ><a
+            >{{ actives(item.relationSystemUserBranch) }}
+            {{
+              actives(item.relationSystemUserBranch) > 1 ? "bodegas" : "bodega"
+            }}</a
+          ></small
+        >
       </td>
-      <td scope="col">{{item.direccion | titlecase}}</td>
-      <td scope="col">{{item.ciudad | titlecase}}</td>
-      <td scope="col">{{item.representante | titlecase}}</td>
-      <td scope="col">{{item.updateDate | date}}</td>
+      <td scope="col">{{ item.address | titlecase }}</td>
+      <td scope="col">{{ item.commune.name | titlecase }}</td>
+      <td scope="col">{{ item.nombreRepLegal | titlecase }}</td>
+      <td scope="col">{{ item.updated | date }}</td>
     </tr>
   </tbody>
 </table>

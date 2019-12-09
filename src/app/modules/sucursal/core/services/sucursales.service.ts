@@ -5,6 +5,7 @@ import { SucursalModel } from '../models/sucursal-model';
 import { environment } from 'src/environments/environment';
 import { map, catchError } from 'rxjs/operators';
 import { SucursalesModel } from '../models/sucursales-model';
+import { Branch } from 'kawesqar-class-model';
 
 @Injectable({
   providedIn: 'root'
@@ -13,15 +14,15 @@ export class SucursalesService {
 
   constructor(private readonly http: HttpClient) { }
 
-  getSucursales(): Observable<SucursalesModel[]> {
-    return this.http.get<SucursalesModel[]>(`${environment.apiUrl}/api/subsidiary`);
+  getSucursales(): Observable<Branch[]> {
+    return this.http.get<Branch[]>(`${environment.apiUrl}/api/subsidiary`);
   }
 
-  getSucursal(id: number): Observable<SucursalModel> {
-    return this.http.get<SucursalModel>(`${environment.apiUrl}/api/subsidiary/${id}`);
+  getSucursal(id: number): Observable<Branch> {
+    return this.http.get<Branch>(`${environment.apiUrl}/api/subsidiary/${id}`);
   }
 
-  putSucursal(model: SucursalModel): Observable<any> {
+  putSucursal(model: Branch): Observable<any> {
     const httpOptions = {
       headers: new HttpHeaders({ 'Content-Type': 'application/json' })
     };

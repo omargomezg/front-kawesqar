@@ -1,26 +1,27 @@
-import {Component, OnInit} from '@angular/core';
-import {ModalEgresoComponent} from '../modal-egreso/modal-egreso.component';
-import {MatDialog} from '@angular/material';
-import {ExpensesModel} from '../../core/models/expenses.model';
-import {ArticleService} from '../../core/services/article.service';
-import {StorageDataService} from '../../core/services/storage-data.service';
-import {ShoppingCartService} from '../../core/services/shopping-cart.service';
-import {ShoppingCartModel} from '../../core/models/database/ShoppingCart.model';
-import {ShoppingCartDetailModel} from '../../core/models/request/shopping-cart-detail.model';
-import {SaleTypeEnum} from '../../core/models/constant/SaleTypeEnum';
-import {SucursalService} from '../../core/services/sucursal.service';
-import {OutputFlowTypeService} from '../../core/services/output-flow-type.service';
-import {OutputFlowTypeModel} from '../../core/models/database/OutputFlowType.model';
-import {ShoppingCartDetail} from '../../core/models/database/ShoppingCartDetail.model';
-import {ShortcutNavService} from '../../core/services/shortcut-nav.service';
+import { Component, OnInit } from "@angular/core";
+import { ModalEgresoComponent } from "../modal-egreso/modal-egreso.component";
+import { MatDialog } from "@angular/material";
+import { ExpensesModel } from "../../core/models/expenses.model";
+import { ArticleService } from "../../core/services/article.service";
+import { StorageDataService } from "../../core/services/storage-data.service";
+import { ShoppingCartService } from "../../core/services/shopping-cart.service";
+import { ShoppingCartModel } from "../../core/models/database/ShoppingCart.model";
+import { ShoppingCartDetailModel } from "../../core/models/request/shopping-cart-detail.model";
+import { SaleTypeEnum } from "../../core/models/constant/SaleTypeEnum";
+import { SucursalService } from "../../core/services/sucursal.service";
+import { OutputFlowTypeService } from "../../core/services/output-flow-type.service";
+import { OutputFlowTypeModel } from "../../core/models/database/OutputFlowType.model";
+import { ShoppingCartDetail } from "../../core/models/database/ShoppingCartDetail.model";
+import { ShortcutNavService } from "../../core/services/shortcut-nav.service";
+import { SystemUser, RelationSystemUserBranch } from "kawesqar-class-model";
 
 @Component({
-  selector: 'app-egreso',
-  templateUrl: './egreso.component.html',
-  styleUrls: ['./egreso.component.css']
+  selector: "app-egreso",
+  templateUrl: "./egreso.component.html",
+  styleUrls: ["./egreso.component.css"]
 })
 export class EgresoComponent implements OnInit {
-
+  unauthorized = false;
   model: ShoppingCartModel = new ShoppingCartModel();
   articleList: any[] = [];
   editModel: ExpensesModel;
@@ -32,11 +33,19 @@ export class EgresoComponent implements OnInit {
   subsidiarys: any[];
   Flows: OutputFlowTypeModel[] = Array<OutputFlowTypeModel>();
   btn = [
-    {abr: 'CONT', key: SaleTypeEnum.CASH_SALE, description: 'Contado'},
-    {abr: 'DEB', key: SaleTypeEnum.DEBIT_CARD, description: 'Dedito'},
-    {abr: 'CRED', key: SaleTypeEnum.CREDIT_CARD, description: 'Crédito'},
-    {abr: 'CONS', key: SaleTypeEnum.DELIVERY_SUPPLIES, description: 'Consumo'},
-    {abr: 'SUC', key: SaleTypeEnum.BRANCH_TRANSFER, description: 'Cambiar de Bodega'}
+    { abr: "CONT", key: SaleTypeEnum.CASH_SALE, description: "Contado" },
+    { abr: "DEB", key: SaleTypeEnum.DEBIT_CARD, description: "Dedito" },
+    { abr: "CRED", key: SaleTypeEnum.CREDIT_CARD, description: "Crédito" },
+    {
+      abr: "CONS",
+      key: SaleTypeEnum.DELIVERY_SUPPLIES,
+      description: "Consumo"
+    },
+    {
+      abr: "SUC",
+      key: SaleTypeEnum.BRANCH_TRANSFER,
+      description: "Cambiar de Bodega"
+    }
   ];
 
   constructor(
@@ -46,11 +55,11 @@ export class EgresoComponent implements OnInit {
     private localStorage: StorageDataService,
     private sucursalService: SucursalService,
     private flowService: OutputFlowTypeService,
-    private pathData: ShortcutNavService) {
-  }
+    private pathData: ShortcutNavService
+  ) {}
 
   ngOnInit() {
-    this.pathData.changePath(['egreso', 'Egreso', ''], ['', '', '']);
+    this.pathData.changePath(["egreso", "Egreso", ""], ["", "", ""]);
     // this.model.rut = this.localStorage.getRutUser();
     // this.model.output = SaleTypeEnum.CASH_SALE;
     this.setSubsidiaryForm();
@@ -58,14 +67,14 @@ export class EgresoComponent implements OnInit {
     const smd = [];
     const data1 = new ShoppingCartDetail();
     data1.id = 112;
-    data1.sku = '23456A8521';
-    data1.name = 'Producto 1';
+    data1.sku = "23456A8521";
+    data1.name = "Producto 1";
     data1.amount = 45566.23;
     data1.quantity = 2;
     const data2 = new ShoppingCartDetail();
     data2.id = 14;
-    data2.sku = '2345676311';
-    data2.name = 'Producto 2';
+    data2.sku = "2345676311";
+    data2.name = "Producto 2";
     data2.amount = 45566.23;
     data2.quantity = 1;
 
@@ -87,11 +96,14 @@ export class EgresoComponent implements OnInit {
   }
 
   loadOutputFlows() {
-    this.flowService.getAvailableOutputFlows(this.localStorage.getRutUser().replace('-', ''))
-      .subscribe(data => {
-        this.Flows = data;
-      }, error => {
-      });
+    this.flowService
+      .getAvailableOutputFlows(this.localStorage.getRutUser().replace("-", ""))
+      .subscribe(
+        data => {
+          this.Flows = data;
+        },
+        error => {}
+      );
   }
 
   getBySku(event: any) {
@@ -100,8 +112,9 @@ export class EgresoComponent implements OnInit {
         this.articleList = data;
       },
       error => {
-        console.log('Something wrong here');
-      });
+        console.log("Something wrong here");
+      }
+    );
   }
 
   edit(data: ExpensesModel) {
@@ -113,64 +126,79 @@ export class EgresoComponent implements OnInit {
   }
 
   setSubsidiaryForm() {
-    this.sucursalService.getSucursalesUsuario(this.localStorage.getRutUser())
-      .subscribe((result: any[]) => {
-        this.subsidiaryFrom = result.filter(r => r.isPrimary === true)[0].id;
-      }, error => {
-        console.log('ouch!' + error.status);
-      });
+    this.sucursalService
+      .getSucursalesUsuario(this.localStorage.getRutUser())
+      .subscribe(
+        (result: SystemUser) => {
+          result.relationSystemUserBranch.forEach(item => {
+            if (item.isSelected) {
+              this.subsidiaryFrom = item.branch.id;
+            }
+          });
+        },
+        error => {
+          console.log("ouch!" + error.status);
+        }
+      );
   }
 
   preFinalize() {
     const rut = this.localStorage.getRutUser();
     if (this.model.output === SaleTypeEnum.BRANCH_TRANSFER) {
       this.setSubsidiaryForm();
-      this.sucursalService.getSucursalesUsuario(this.localStorage.getRutUser())
-        .subscribe((result: any[]) => {
-          const data = {
-            rut: rut,
-            subsidiaryFrom: this.subsidiaryFrom,
-            subsidiaryTo: 2
-          };
-          this.servShoppingCart.branchTransfer(data)
-            .subscribe();
-        }, error => {
-          console.log('ouch!' + error.status);
-        });
+      this.sucursalService
+        .getSucursalesUsuario(this.localStorage.getRutUser())
+        .subscribe(
+          (result: SystemUser) => {
+            const data = {
+              rut: rut,
+              subsidiaryFrom: this.subsidiaryFrom,
+              subsidiaryTo: 2
+            };
+            this.servShoppingCart.branchTransfer(data).subscribe();
+          },
+          error => {
+            console.log("ouch!" + error.status);
+          }
+        );
     }
   }
 
-  saveTemporalCart() {
-
-  }
+  saveTemporalCart() {}
 
   searchArticle(sku: string) {
     // call by id
-    this.service.getBySku(sku, this.isBulk, this.localStorage.getRutUser().replace('-', '')).subscribe(
-      (data: any) => {
-        console.log(data);
-        if (data) {
-          const result: ShoppingCartDetailModel = new ShoppingCartDetailModel();
-          result.quantity = data.Cant;
-          result.description = data.Nombre;
-          // this.model.detail.push(result);
+    this.service
+      .getBySku(
+        sku,
+        this.isBulk,
+        this.localStorage.getRutUser().replace("-", "")
+      )
+      .subscribe(
+        (data: any) => {
+          console.log(data);
+          if (data) {
+            const result: ShoppingCartDetailModel = new ShoppingCartDetailModel();
+            result.quantity = data.Cant;
+            result.description = data.Nombre;
+            // this.model.detail.push(result);
+          }
+        },
+        error => {
+          console.log("Something wrong here");
         }
-      },
-      error => {
-        console.log('Something wrong here');
-      });
+      );
   }
 
-  cashDiscount() {
-  }
+  cashDiscount() {}
 
   openDialog(data: ShoppingCartDetail): void {
     const dialogRef = this.dialog.open(ModalEgresoComponent, {
-      width: '300px',
+      width: "300px",
       data: data
     });
     dialogRef.afterClosed().subscribe(result => {
-      console.log('The dialog was closed');
+      console.log("The dialog was closed");
       console.log(result);
     });
   }
@@ -178,15 +206,22 @@ export class EgresoComponent implements OnInit {
   selectOut(abr: string) {
     this.model.output = abr;
     if (abr === SaleTypeEnum.BRANCH_TRANSFER) {
-      this.sucursalService.getSucursalesUsuario(this.localStorage.getRutUser())
-        .subscribe((result: any[]) => {
-          this.subsidiarys = result.filter(r => r.isPrimary === false);
-        }, error => {
-          console.log('ouch!' + error.status);
-        });
+      this.sucursalService
+        .getSucursalesUsuario(this.localStorage.getRutUser())
+        .subscribe(
+          (result: SystemUser) => {
+            this.subsidiarys = result.relationSystemUserBranch.filter(
+              r => r.isSelected === false
+            );
+          },
+          error => {
+            console.log("ouch!" + error.status);
+          }
+        );
     }
   }
 
+  getDetail(obj: any) {}
   /*getDetail(obj: ShoppingCartDetailModel) {
     if (this.model.detail === undefined) {
       this.model.detail.push(obj);
@@ -207,7 +242,7 @@ export class EgresoComponent implements OnInit {
 
   saveShoppingCart(data: ShoppingCartDetailModel) {
     const request = {
-      rut: this.localStorage.getRutUser().replace('-', ''),
+      rut: this.localStorage.getRutUser().replace("-", ""),
       sku: data.sku,
       quantity: data.quantity,
       total: data.total,
@@ -218,7 +253,8 @@ export class EgresoComponent implements OnInit {
       idSucursalDestino: this.subsidiaryTo
     };
     console.log(request);
-    this.servShoppingCart.addToCart(request, this.localStorage.getRutUser().replace('-', ''))
+    this.servShoppingCart
+      .addToCart(request, this.localStorage.getRutUser().replace("-", ""))
       .subscribe(res => {
         // Code here
       });
@@ -226,16 +262,23 @@ export class EgresoComponent implements OnInit {
 
   total() {
     let total = 0;
-    this.model.detail.forEach((item) => {
+    this.model.detail.forEach(item => {
       total += item.amount * item.quantity;
     });
     return total;
   }
 
   private getCart() {
-    this.servShoppingCart.getCart(this.localStorage.getRutUser().replace('-', ''), 0)
-      .subscribe(res => {
-        this.model = res;
-      });
+    this.servShoppingCart
+      .getCart(this.localStorage.getRutUser().replace("-", ""), 0)
+      .subscribe(
+        res => {
+          this.model = res;
+        },
+        error => {
+          this.unauthorized = true;
+          console.log("Something wrong here");
+        }
+      );
   }
 }

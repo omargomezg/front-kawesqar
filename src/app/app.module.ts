@@ -32,8 +32,6 @@ import { EditClientComponent } from './components/client/edit-client/edit-client
 import { ListClientsComponent } from './components/client/list-clients/list-clients.component';
 import { ListProductsComponent } from './components/product/list-products/list-products.component';
 import { EditProductComponent } from './components/product/edit-product/edit-product.component';
-import { EditMeasureComponent } from './components/measure/edit-measure/edit-measure.component';
-import { ListMeasureComponent } from './components/measure/list-measure/list-measure.component';
 
 registerLocaleData(localeCl);
 
@@ -55,8 +53,6 @@ registerLocaleData(localeCl);
     ListClientsComponent,
     ListProductsComponent,
     EditProductComponent,
-    EditMeasureComponent,
-    ListMeasureComponent
   ],
   imports: [
     HttpClientModule,

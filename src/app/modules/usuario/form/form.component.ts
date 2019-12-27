@@ -1,26 +1,26 @@
-import { Component, OnInit } from "@angular/core";
-import { UtilsService } from "../core/services/utils.service";
-import { ActivatedRoute, Router } from "@angular/router";
-import { RelationSystemUserRoleModel } from "../core/models/RelationSystemUserRole.model";
-import { ShortcutNavService } from "../../../core/services/shortcut-nav.service";
-import { SystemUser, Role, OutputType } from "kawesqar-class-model";
+import {Component, OnInit} from '@angular/core';
+import {UtilsService} from '../core/services/utils.service';
+import {ActivatedRoute, Router} from '@angular/router';
+import {ShortcutNavService} from '../../../core/services/shortcut-nav.service';
+import {OutputType, Role, SaleTypeEnum, SystemUser} from 'kawesqar-class-model';
 
 @Component({
-  selector: "app-form",
-  templateUrl: "./form.component.html",
-  styleUrls: ["./form.component.css"]
+  selector: 'app-form',
+  templateUrl: './form.component.html',
+  styleUrls: ['./form.component.css']
 })
 export class FormComponent implements OnInit {
+  saleTypeEnum: SaleTypeEnum;
   model: SystemUser = new SystemUser();
   selectedRoleId: number;
   common: any = {
     roles: [],
-    action: "insert"
+    action: 'insert'
   };
   roles: Role[];
   validation = {
     exists: false,
-    rut: ""
+    rut: ''
   };
   loading = true;
 
@@ -29,7 +29,8 @@ export class FormComponent implements OnInit {
     private route: ActivatedRoute,
     private router: Router,
     private pathData: ShortcutNavService
-  ) {}
+  ) {
+  }
 
   ngOnInit() {
     this.loadRol();
@@ -37,8 +38,8 @@ export class FormComponent implements OnInit {
     this.route.params.subscribe(params => {
       if (params.rut !== undefined) {
         this.pathData.changePath(
-          ["usuarios/list", "Usuario", ""],
-          [`usuarios/edit/${params.rut}`, "Editar usuario", "active"]
+          ['usuarios/list', 'Usuario', ''],
+          [`usuarios/edit/${params.rut}`, 'Editar usuario', 'active']
         );
         this.serviceRole.getUserByRut(params.rut).subscribe(
           (data: SystemUser) => {
@@ -48,19 +49,19 @@ export class FormComponent implements OnInit {
                 this.selectedRoleId = item.outputType.id;
               }
             });
-            this.common.action = "edit";
+            this.common.action = 'edit';
             this.loading = false;
           },
           error => {
-            console.log("ouch!" + error.status);
+            console.log('ouch!' + error.status);
           }
         );
       } else {
         this.pathData.changePath(
-          ["usuarios/list", "Usuario", ""],
-          ["new", "Nuevo usuario", "active"]
+          ['usuarios/list', 'Usuario', ''],
+          ['new', 'Nuevo usuario', 'active']
         );
-        this.common.action = "insert";
+        this.common.action = 'insert';
         this.model.password = Math.random()
           .toString(36)
           .slice(-8);
@@ -70,17 +71,17 @@ export class FormComponent implements OnInit {
 
   validateIfExists() {
     this.validation.exists = false;
-    this.validation.rut = "";
-    if (this.common.action === "insert") {
+    this.validation.rut = '';
+    if (this.common.action === 'insert') {
       this.serviceRole.getExist(this.model.rut).subscribe(
         data => {
           this.validation.exists = data;
           if (data) {
-            this.model.rut = "";
+            this.model.rut = '';
           }
         },
         error => {
-          console.log("ouch!" + error.status);
+          console.log('ouch!' + error.status);
         }
       );
     }
@@ -89,7 +90,7 @@ export class FormComponent implements OnInit {
   loadRol() {
     this.serviceRole.getRoles().subscribe(
       (data: Role[]) => {
-        this.roles = data.sort(function(a, b) {
+        this.roles = data.sort(function (a, b) {
           return a.name.localeCompare(b.name);
         });
         /*this.roles.forEach(item => {
@@ -106,7 +107,7 @@ export class FormComponent implements OnInit {
         });*/
       },
       error => {
-        console.log("ouch!" + error.status);
+        console.log('ouch!' + error.status);
       }
     );
   }
@@ -120,38 +121,34 @@ export class FormComponent implements OnInit {
         }
       },
       error => {
-        console.log("ouch!" + error.status);
+        console.log('ouch!' + error.status);
       }
     );
   }
 
   goToList() {
-    this.router.navigateByUrl("usuarios/list");
+    this.router.navigateByUrl('usuarios/list');
   }
 
   save() {
-    if (this.common.action === "edit") {
-      this.model.password = "";
-      this.model.tipoEgresoUsuarios.forEach(item => {
-        item.isActive =
-          item.outputType.id === this.selectedRoleId ? true : false;
-      });
+    if (this.common.action === 'edit') {
+      this.model.password = '';
       this.serviceRole.putUpdateUser(this.model).subscribe(
         data => {
-          this.router.navigateByUrl("usuarios/list");
+          this.router.navigateByUrl('usuarios/list');
         },
         error => {
-          console.log("ouch!" + error.status);
+          console.log('ouch!' + error.status);
         }
       );
     } else {
       this.serviceRole.postSaveUser(this.model).subscribe(
         data => {
           console.log(data);
-          this.router.navigateByUrl("usuarios/list");
+          this.router.navigateByUrl('usuarios/list');
         },
         error => {
-          console.log("ouch!" + error.status);
+          console.log('ouch!' + error.status);
         }
       );
     }
@@ -170,4 +167,5 @@ export class FormComponent implements OnInit {
       }).length > 0
     );
   }
+
 }

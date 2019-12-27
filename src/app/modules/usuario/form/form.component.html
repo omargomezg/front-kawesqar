@@ -193,49 +193,15 @@
             necesario habilitar algunas de estas opciones.
           </p>
           <section></section>
-          <mat-slide-toggle
-            id="salidaVenta"
-            name="salidaVenta"
-            #salidaVenta="ngModel"
-            [(ngModel)]="model.salidaVenta"
-            class="example-margin"
-            [checked]="model.salidaVenta"
-          >
-            Puede vender
-          </mat-slide-toggle>
-          <br />
-          <mat-slide-toggle
-            class="example-margin"
-            [checked]="model.salidaEmpleados"
-            id="salidaEmpleados"
-            name="salidaEmpleados"
-            #salidaEmpleados="ngModel"
-            [(ngModel)]="model.salidaEmpleados"
-          >
-            Habilitado para entregas internas
-          </mat-slide-toggle>
-          <br />
-          <mat-slide-toggle
-            class="example-margin"
-            [checked]="model.salidaFactura"
-            id="salidaFactura"
-            name="salidaFactura"
-            #salidaFactura="ngModel"
-            [(ngModel)]="model.salidaFactura"
-          >
-            Puede emitir factura
-          </mat-slide-toggle>
-          <br />
-          <mat-slide-toggle
-            class="example-margin"
-            [checked]="model.sendToOtherBranch"
-            id="sendToOtherBranch"
-            name="sendToOtherBranch"
-            #sendToOtherBranch="ngModel"
-            [(ngModel)]="model.sendToOtherBranch"
-          >
-            Permite enviar a otra sucursal
-          </mat-slide-toggle>
+          <div *ngFor="let outputStatus of model.tipoEgresoUsuarios">
+            <mat-slide-toggle
+              class="example-margin"
+              [checked]="outputStatus.isActive"
+              (change)="outputStatus.isActive = !outputStatus.isActive"
+            >
+              {{outputStatus.outputType.name}}
+            </mat-slide-toggle>
+          </div>
         </div>
       </div>
       <div class="text-right">
@@ -257,3 +223,5 @@
     </mat-card-content>
   </mat-card>
 </form>
+
+<code>{{this.model.tipoEgresoUsuarios | json}}</code>

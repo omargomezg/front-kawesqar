@@ -2,166 +2,178 @@
   <h2>No estas autorizado para ver esta página</h2>
 </div>
 <div *ngIf="!unauthorized">
-<div class="text-right">
-  <button mat-button routerLink="/invoice-cancellation-order">Anular</button>
-</div>
-<mat-card *ngIf="!unauthorized">
-  <mat-card-content>
-    <div class="row justify-content-md-center">
-      <div class="col-9">
-        <app-search-article
-          (DetailData)="getDetail($event)"
-        ></app-search-article>
+  <div class="text-right">
+    <button mat-button color="accent" routerLink="/invoice-cancellation-order">
+      Anular egreso
+    </button>
+  </div>
+  <mat-card *ngIf="!unauthorized">
+    <mat-card-content>
+      <div class="row justify-content-md-center">
+        <div class="col-9">
+          <input
+            type="text"
+            matInput
+            id="inputSearch"
+            class="form-control form-control-sm"
+            [(ngModel)]="skuSearch"
+            (change)="loadProduct()"
+          />
+        </div>
       </div>
-    </div>
-    <div class="row justify-content-md-center">
-      <div class="col-sm-4">
-        <mat-button-toggle-group
-          name="fontStyle"
-          aria-label="Font Style"
-          appearance="legacy"
-        >
-          <mat-button-toggle
-            *ngFor="let item of btn"
-            value="item.key"
-            (click)="selectOut(item.key)"
-            >{{ item.abr }}</mat-button-toggle
+      <div class="row justify-content-md-center">
+        <div class="col-sm-4">
+          <mat-button-toggle-group
+            name="fontStyle"
+            aria-label="Font Style"
+            appearance="legacy"
+            [value]="selectedSaleTypeEnum"
           >
-        </mat-button-toggle-group>
-        <section *ngIf="model.output === saleType.CASH_SALE">
-          <strong>Contado</strong>
-        </section>
-        <section *ngIf="model.output === saleType.CREDIT_CARD">
-          <strong>Crédito</strong>
-          <mat-form-field class="example-full-width">
-            <input type="text" matInput placeholder="N° de transacción" />
-          </mat-form-field>
-          <mat-form-field class="example-full-width">
-            <mat-label>Banco</mat-label>
-            <mat-select>
-              <mat-option>nada</mat-option>
-            </mat-select>
-          </mat-form-field>
-
-          <mat-form-field class="example-full-width">
-            <mat-label>Cuotas</mat-label>
-            <mat-select>
-              <mat-option>None</mat-option>
-              <mat-option value="option1">Option 1</mat-option>
-              <mat-option value="option2">Option 2</mat-option>
-              <mat-option value="option3">Option 3</mat-option>
-            </mat-select>
-          </mat-form-field>
-        </section>
-        <section *ngIf="model.output === saleType.DEBIT_CARD">
-          <strong>Débito</strong>
-          <mat-form-field class="example-full-width">
-            <input type="text" matInput placeholder="N° de transacción" />
-          </mat-form-field>
-          <mat-form-field class="example-full-width">
-            <mat-label>Banco</mat-label>
-            <mat-select>
-              <mat-option>None</mat-option>
-              <mat-option value="option1">Option 1</mat-option>
-              <mat-option value="option2">Option 2</mat-option>
-              <mat-option value="option3">Option 3</mat-option>
-            </mat-select>
-          </mat-form-field>
-        </section>
-        <section *ngIf="model.output === saleType.DELIVERY_SUPPLIES">
-          <strong>Consumo</strong>
-          <mat-form-field class="example-full-width">
-            <input type="text" matInput placeholder="Rut" />
-          </mat-form-field>
-          <mat-form-field class="example-full-width">
-            <input type="text" matInput placeholder="Nombre" />
-          </mat-form-field>
-          <mat-form-field class="example-full-width">
-            <mat-label>Oficina</mat-label>
-            <mat-select>
-              <mat-option>None</mat-option>
-              <mat-option value="option1">Option 1</mat-option>
-              <mat-option value="option2">Option 2</mat-option>
-              <mat-option value="option3">Option 3</mat-option>
-            </mat-select>
-          </mat-form-field>
-        </section>
-        <section *ngIf="model.output === saleType.BRANCH_TRANSFER">
-          <strong>Cambiar de sucursal</strong>
-          <mat-form-field class="example-full-width">
-            <mat-label>Sucursal destino</mat-label>
-            <mat-select [(ngModel)]="subsidiaryTo">
-              <mat-option [value]="item.id" *ngFor="let item of subsidiarys">{{
-                item.descripcion
-              }}</mat-option>
-            </mat-select>
-          </mat-form-field>
-        </section>
-        <section>
-          <div class="form-group">
-            <textarea
-              placeholder="Notas u Observaciones"
-              class="form-control form-control-sm"
-              rows="3"
-            ></textarea>
-          </div>
-        </section>
-        <section *ngIf="editModel">
-          <div class="row">
-            <div class="col-4">Descripción</div>
-            <div class="col-8">{{ editModel.description }}</div>
-          </div>
-          <div class="row">
-            <div class="col-8">Disponible</div>
-            <div class="col-4">
-              <span class="text-right">{{ editModel.available | number }}</span>
-            </div>
-          </div>
-          <div class="row">
-            <div class="col-8">Valor</div>
-            <div class="col-4">
-              <span class="text-right">{{ editModel.amount | number }}</span>
-            </div>
-          </div>
-          <div class="form-group">
-            <label for="quantity">Cantidad</label>
-            <input
-              id="quantity"
-              type="text"
-              class="form-control form-control-sm"
-              [(ngModel)]="editModel.quantity"
-            />
-          </div>
-          <div class="form-group">
-            <label for="available">Disponible</label>
-            <input
-              id="available"
-              type="text"
-              class="form-control form-control-sm"
-              [(ngModel)]="editModel.available"
-            />
-          </div>
-          <div class="form-group">
-            <label for="amount">Valor</label>
-            <input
-              id="amount"
-              type="text"
-              class="form-control form-control-sm"
-              [(ngModel)]="editModel.amount"
-            />
-          </div>
-          <button mat-button>Agregar</button>
-          <button mat-button (click)="clean()">Limpiar</button>
-        </section>
-      </div>
-      <div class="col-sm-7">
-        <mat-card>
-          <mat-card-content>
-            <strong>Detalle</strong>
-            <table
-              class="table table-bordered table-condensed table-hover table-striped small"
+            <mat-button-toggle
+              *ngFor="let item of relation"
+              checked="item.isDefault ? 'ckecked' : ''"
+              value="item.outputType.codeEnum"
+              (click)="selectOut(item.outputType.codeEnum)"
+            >{{ item.outputType.abbreviation }} '{{item.outputType.codeEnum}}'</mat-button-toggle
             >
-              <thead>
+          </mat-button-toggle-group>
+          <section *ngIf="showOutput(saleType.CASH_SALE)">
+            <strong>Contado</strong>
+          </section>
+          <section *ngIf="showOutput(saleType.CREDIT_CARD)">
+            <strong>Crédito</strong>
+            <mat-form-field class="example-full-width">
+              <input type="text" matInput placeholder="N° de transacción"/>
+            </mat-form-field>
+            <mat-form-field class="example-full-width">
+              <mat-label>Banco</mat-label>
+              <mat-select>
+                <mat-option>nada</mat-option>
+              </mat-select>
+            </mat-form-field>
+            <mat-form-field class="example-full-width">
+              <mat-label>Cuotas</mat-label>
+              <mat-select>
+                <mat-option>None</mat-option>
+                <mat-option value="option1">Option 1</mat-option>
+                <mat-option value="option2">Option 2</mat-option>
+                <mat-option value="option3">Option 3</mat-option>
+              </mat-select>
+            </mat-form-field>
+          </section>
+          <section *ngIf="showOutput(saleType.DEBIT_CARD)">
+            <strong>Débito</strong>
+            <mat-form-field class="example-full-width">
+              <input type="text" matInput placeholder="N° de transacción"/>
+            </mat-form-field>
+            <mat-form-field class="example-full-width">
+              <mat-label>Banco</mat-label>
+              <mat-select>
+                <mat-option>None</mat-option>
+                <mat-option value="option1">Option 1</mat-option>
+                <mat-option value="option2">Option 2</mat-option>
+                <mat-option value="option3">Option 3</mat-option>
+              </mat-select>
+            </mat-form-field>
+          </section>
+          <section *ngIf="showOutput(saleType.DELIVERY_SUPPLIES)">
+            <strong>Consumo</strong>
+            <mat-form-field class="example-full-width">
+              <input type="text" matInput placeholder="Rut"/>
+            </mat-form-field>
+            <mat-form-field class="example-full-width">
+              <input type="text" matInput placeholder="Nombre"/>
+            </mat-form-field>
+            <mat-form-field class="example-full-width">
+              <mat-label>Oficina</mat-label>
+              <mat-select>
+                <mat-option>None</mat-option>
+                <mat-option value="option1">Option 1</mat-option>
+                <mat-option value="option2">Option 2</mat-option>
+                <mat-option value="option3">Option 3</mat-option>
+              </mat-select>
+            </mat-form-field>
+          </section>
+          <section *ngIf="showOutput(saleType.BRANCH_TRANSFER)">
+            <strong>Cambiar de sucursal</strong>
+            <mat-form-field class="example-full-width">
+              <mat-label>Sucursal destino</mat-label>
+              <mat-select [(ngModel)]="subsidiaryTo">
+                <mat-option
+                  [value]="item.id"
+                  *ngFor="let item of subsidiarys"
+                >{{ item.descripcion }}</mat-option
+                >
+              </mat-select>
+            </mat-form-field>
+          </section>
+          <section>
+            <div class="form-group">
+              <textarea
+                placeholder="Notas u Observaciones"
+                class="form-control form-control-sm"
+                rows="3"
+              ></textarea>
+            </div>
+          </section>
+          <section *ngIf="editModel">
+            <div class="row">
+              <div class="col-4">Descripción</div>
+              <div class="col-8">{{ editModel.description }}</div>
+            </div>
+            <div class="row">
+              <div class="col-8">Disponible</div>
+              <div class="col-4">
+                <span class="text-right">{{
+                  editModel.available | number
+                  }}</span>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-8">Valor</div>
+              <div class="col-4">
+                <span class="text-right">{{ editModel.amount | number }}</span>
+              </div>
+            </div>
+            <div class="form-group">
+              <label for="quantity">Cantidad</label>
+              <input
+                id="quantity"
+                type="text"
+                class="form-control form-control-sm"
+                [(ngModel)]="editModel.quantity"
+              />
+            </div>
+            <div class="form-group">
+              <label for="available">Disponible</label>
+              <input
+                id="available"
+                type="text"
+                class="form-control form-control-sm"
+                [(ngModel)]="editModel.available"
+              />
+            </div>
+            <div class="form-group">
+              <label for="amount">Valor</label>
+              <input
+                id="amount"
+                type="text"
+                class="form-control form-control-sm"
+                [(ngModel)]="editModel.amount"
+              />
+            </div>
+            <button mat-button>Agregar</button>
+            <button mat-button (click)="clean()">Limpiar</button>
+          </section>
+        </div>
+        <div class="col-sm-7">
+          <mat-card>
+            <mat-card-content>
+              <strong>Detalle</strong>
+              <table
+                class="table table-bordered table-condensed table-hover table-striped small"
+              >
+                <thead>
                 <tr>
                   <th>Cant</th>
                   <th>Descripción</th>
@@ -169,8 +181,8 @@
                   <th>Subtotal</th>
                   <th>&nbsp;</th>
                 </tr>
-              </thead>
-              <tbody *ngIf="model.detail">
+                </thead>
+                <tbody *ngIf="model.detail">
                 <tr *ngFor="let item of model.detail">
                   <td>{{ item.quantity }}</td>
                   <td>{{ item.name }}</td>
@@ -199,8 +211,8 @@
                     </button>
                   </td>
                 </tr>
-              </tbody>
-              <tfoot>
+                </tbody>
+                <tfoot>
                 <tr>
                   <td></td>
                   <td></td>
@@ -208,33 +220,33 @@
                   <td class="text-right">{{ total() | number: "1.0-0" }}</td>
                   <th>&nbsp;</th>
                 </tr>
-              </tfoot>
-            </table>
-          </mat-card-content>
-        </mat-card>
+                </tfoot>
+              </table>
+            </mat-card-content>
+          </mat-card>
+        </div>
       </div>
-    </div>
-    <div class="row">
-      <div class="col-12">
-        <button
-          type="button"
-          mat-button
-          (click)="preFinalize()"
-          [disabled]="model.detail.length == 0 && model.output"
-          color="primary"
-        >
-          Finalizar
-        </button>
-        <button type="button" mat-button (click)="clean()">
-          Limpiar pantalla
-        </button>
-        <button type="button" mat-button (click)="cashDiscount()">
-          Descuento
-        </button>
+      <div class="row">
+        <div class="col-12">
+          <button
+            type="button"
+            mat-button
+            (click)="preFinalize()"
+            [disabled]="model.output"
+            color="primary"
+          >
+            Finalizar
+          </button>
+          <button type="button" mat-button (click)="clean()">
+            Limpiar pantalla
+          </button>
+          <button type="button" mat-button (click)="cashDiscount()">
+            Descuento
+          </button>
+        </div>
       </div>
-    </div>
-  </mat-card-content>
-</mat-card>
-
-{{ model | json }}
+    </mat-card-content>
+  </mat-card>
+<code>selectedSaleTypeEnum: {{selectedSaleTypeEnum}}</code>
+  <code>{{ relation | json }}</code>
 </div>

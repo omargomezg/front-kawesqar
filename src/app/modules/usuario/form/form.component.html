@@ -153,18 +153,18 @@
           <section *ngIf="roles">
             <label>¿Que perfil de usuario deseas establecer?</label>
             <mat-radio-group
-              id="rol"
               name="rol"
-              (change)="setRoleStatus($event)"
               class="example-radio-group"
+              [(ngModel)]="selectedRoleId"
+              (ngModelChange)="changedExtraHandler($event)"
             >
               <mat-radio-button
-                [checked]="isRoleActive(rol.id)"
+                name="rol"
                 class="example-radio-button"
-                *ngFor="let rol of roles"
+                *ngFor="let rol of model.relationSystemUserRoles"
                 [value]="rol.id"
               >
-                {{ rol.name }}
+                {{ rol.role.name }}
               </mat-radio-button>
             </mat-radio-group>
           </section>
@@ -223,5 +223,3 @@
     </mat-card-content>
   </mat-card>
 </form>
-
-<code>{{this.model.tipoEgresoUsuarios | json}}</code>

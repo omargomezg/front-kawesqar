@@ -44,9 +44,9 @@ export class FormComponent implements OnInit {
         this.serviceRole.getUserByRut(params.rut).subscribe(
           (data: SystemUser) => {
             this.model = data;
-            this.model.tipoEgresoUsuarios.forEach(item => {
+            this.model.relationSystemUserRoles.forEach(item => {
               if (item.isActive) {
-                this.selectedRoleId = item.outputType.id;
+                this.selectedRoleId = item.id;
               }
             });
             this.common.action = 'edit';
@@ -67,6 +67,10 @@ export class FormComponent implements OnInit {
           .slice(-8);
       }
     });
+  }
+
+  changedExtraHandler(event_id: number) {
+    this.model.relationSystemUserRoles.forEach(item => item.isActive = item.id === event_id);
   }
 
   validateIfExists() {

@@ -22,6 +22,7 @@ import {RelationSystemUserOutputTypeService} from 'src/app/core/services/relatio
   styleUrls: ['./egreso.component.css']
 })
 export class EgresoComponent implements OnInit {
+  eggressToShow: any;
   unauthorized = false;
   model: ShoppingCartModel = new ShoppingCartModel();
   articleList: any[] = [];
@@ -35,18 +36,8 @@ export class EgresoComponent implements OnInit {
   saleType = SaleTypeEnum;
   subsidiarys: any[];
   Flows: OutputFlowTypeModel[] = Array<OutputFlowTypeModel>();
-  btn = [
-    {abr: 'CONT', key: SaleTypeEnum.CASH_SALE, description: 'Contado'},
-    {abr: 'DEB', key: SaleTypeEnum.DEBIT_CARD, description: 'Dedito'},
-    {abr: 'CRED', key: SaleTypeEnum.CREDIT_CARD, description: 'Crédito'},
-    {
-      abr: 'CONS', key: SaleTypeEnum.DELIVERY_SUPPLIES, description: 'Consumo'
-    },
-    {
-      abr: 'SUC', key: SaleTypeEnum.BRANCH_TRANSFER, description: 'Cambiar de Bodega'
-    }
-  ];
   relation: RelationSystemUserOutputType[];
+  skuUnavailable = false;
 
   constructor(
     public dialog: MatDialog,
@@ -155,7 +146,7 @@ export class EgresoComponent implements OnInit {
 
   preFinalize() {
     const rut = this.localStorage.getRutUser();
-    if (this.model.output === SaleTypeEnum.BRANCH_TRANSFER) {
+    if (this.selectedSaleTypeEnum === SaleTypeEnum.BRANCH_TRANSFER) {
       this.setSubsidiaryForm();
       this.sucursalService
         .getSucursalesUsuario(this.localStorage.getRutUser())
@@ -217,7 +208,7 @@ export class EgresoComponent implements OnInit {
   }
 
   selectOut(abr: SaleTypeEnum) {
-    this.model.output = abr;
+    this.selectedSaleTypeEnum = abr;
     if (abr === SaleTypeEnum.BRANCH_TRANSFER) {
       this.sucursalService
         .getSucursalesUsuario(this.localStorage.getRutUser())
@@ -243,25 +234,51 @@ export class EgresoComponent implements OnInit {
           this.localStorage.getRutUser().replace('-', '')
         )
         .subscribe(
-          (res: DisponibleVentaModel) => {
-            const newData = new ShoppingCartDetail();
-            newData.id = res.idRegistro;
-            newData.sku = this.skuSearch;
-            newData.name = res.Nombre;
-            newData.amount = res.ValorUnitario;
-            newData.quantity = 1;
-            if (this.model.detail === undefined) {
-              this.model.detail = Array<ShoppingCartDetail>();
+          (res: DisponibleVentaModel[]) => {
+            if (res.length > 0) {
+              const newData = new ShoppingCartDetail();
+              newData.id = res[0].idRegistro;
+              newData.sku = this.skuSearch;
+              newData.name = res[0].Nombre;
+              newData.amount = res[0].ValorUnitario;
+              newData.quantity = 1;
+              if (this.model.detail === undefined) {
+                this.model.detail = Array<ShoppingCartDetail>();
+              }
+              if (this.model.detail.some((item: ShoppingCartDetail) => item.sku === newData.sku)) {
+                this.model.detail.forEach(detail => {
+                  if (detail.sku === newData.sku) {
+                    detail.quantity += 1;
+                  }
+                });
+              } else {
+                this.model.detail.push(newData);
+              }
+              this.setUnavailableSku(false);
+            } else {
+              this.setUnavailableSku(true);
             }
-            this.model.detail.push(newData);
-            this.skuSearch = '';
-            document.getElementById('inputSearch').focus();
           },
           error => {
-            console.log('Something wrong here');
+            if (error.status === 404) {
+              this.setUnavailableSku(true);
+            } else {
+              console.log('Something wrong here');
+            }
           }
         );
     }
+  }
+
+  setUnavailableSku(enabled: boolean) {
+    this.skuUnavailable = enabled;
+    this.skuSearch = '';
+    if (enabled) {
+      setInterval(() => {
+this.skuUnavailable = false;
+      }, 2000);
+    }
+    document.getElementById('inputSearch').focus();
   }
 
   getDetail(obj: any) {
@@ -316,6 +333,7 @@ export class EgresoComponent implements OnInit {
   }
 
   showOutput(saleTypeEnum: SaleTypeEnum) {
+    console.log(saleTypeEnum);
     let show = false;
     try {
       if (this.relation !== undefined) {

@@ -168,31 +168,10 @@
               </mat-radio-button>
             </mat-radio-group>
           </section>
-          <label>Seleciona una opción de egreso predeterminada</label>
-          <p class="bg-gradient-warning" *ngIf="!common.egress">
-            No existen datos en la tabla!
-          </p>
-          <mat-radio-group
-            id="egres"
-            name="egres"
-            #egres="ngModel"
-            *ngIf="common.egress"
-            class="example-radio-group"
-            [(ngModel)]="selectedRoleId"
-          >
-            <mat-radio-button
-              class="example-radio-button"
-              *ngFor="let egres of common.egress"
-              [value]="egres.id"
-            >
-              {{ egres.name }}
-            </mat-radio-button>
-          </mat-radio-group>
           <p>
             Además de selecionar alguna opción de egreso por defecto, es
             necesario habilitar algunas de estas opciones.
           </p>
-          <section></section>
           <div *ngFor="let outputStatus of model.tipoEgresoUsuarios">
             <mat-slide-toggle
               class="example-margin"

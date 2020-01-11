@@ -25,9 +25,9 @@ export class ArticleService {
     sku: string,
     isBulk: boolean,
     rut: string
-  ): Observable<DisponibleVentaModel> {
+  ): Observable<DisponibleVentaModel[]> {
     return this.http
-      .get<DisponibleVentaModel>(
+      .get<DisponibleVentaModel[]>(
         `${environment.apiUrl}/api/article/sku/${sku}/${isBulk}/${rut}`,
         this.httpOptions
       )

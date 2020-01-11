@@ -7,18 +7,21 @@
       Anular egreso
     </button>
   </div>
-  <mat-card *ngIf="!unauthorized">
+  <mat-card>
     <mat-card-content>
       <div class="row justify-content-md-center">
         <div class="col-9">
+          <mat-form-field class="full-width">
           <input
             type="text"
+            placeholder="Buscar productos"
             matInput
             id="inputSearch"
-            class="form-control form-control-sm"
             [(ngModel)]="skuSearch"
             (change)="loadProduct()"
           />
+            <mat-hint *ngIf="skuUnavailable" class="text-danger text-sm-center" style="width: 100%">Código no disponible</mat-hint>
+          </mat-form-field>
         </div>
       </div>
       <div class="row justify-content-md-center">
@@ -31,27 +34,26 @@
           >
             <mat-button-toggle
               *ngFor="let item of relation"
-              checked="item.isDefault ? 'ckecked' : ''"
               value="item.outputType.codeEnum"
               (click)="selectOut(item.outputType.codeEnum)"
-            >{{ item.outputType.abbreviation }} '{{item.outputType.codeEnum}}'</mat-button-toggle
+            >{{ item.outputType.abbreviation }}</mat-button-toggle
             >
           </mat-button-toggle-group>
-          <section *ngIf="showOutput(saleType.CASH_SALE)">
+          <section *ngIf="selectedSaleTypeEnum === 'CS'">
             <strong>Contado</strong>
           </section>
-          <section *ngIf="showOutput(saleType.CREDIT_CARD)">
+          <section *ngIf="selectedSaleTypeEnum === 'CC'">
             <strong>Crédito</strong>
-            <mat-form-field class="example-full-width">
+            <mat-form-field class="full-width">
               <input type="text" matInput placeholder="N° de transacción"/>
             </mat-form-field>
-            <mat-form-field class="example-full-width">
+            <mat-form-field class="full-width">
               <mat-label>Banco</mat-label>
               <mat-select>
                 <mat-option>nada</mat-option>
               </mat-select>
             </mat-form-field>
-            <mat-form-field class="example-full-width">
+            <mat-form-field class="full-width">
               <mat-label>Cuotas</mat-label>
               <mat-select>
                 <mat-option>None</mat-option>
@@ -61,12 +63,12 @@
               </mat-select>
             </mat-form-field>
           </section>
-          <section *ngIf="showOutput(saleType.DEBIT_CARD)">
+          <section *ngIf="selectedSaleTypeEnum === 'DC'">
             <strong>Débito</strong>
-            <mat-form-field class="example-full-width">
+            <mat-form-field class="full-width">
               <input type="text" matInput placeholder="N° de transacción"/>
             </mat-form-field>
-            <mat-form-field class="example-full-width">
+            <mat-form-field class="full-width">
               <mat-label>Banco</mat-label>
               <mat-select>
                 <mat-option>None</mat-option>
@@ -76,15 +78,15 @@
               </mat-select>
             </mat-form-field>
           </section>
-          <section *ngIf="showOutput(saleType.DELIVERY_SUPPLIES)">
+          <section *ngIf="selectedSaleTypeEnum === 'DS'">
             <strong>Consumo</strong>
-            <mat-form-field class="example-full-width">
+            <mat-form-field class="full-width">
               <input type="text" matInput placeholder="Rut"/>
             </mat-form-field>
-            <mat-form-field class="example-full-width">
+            <mat-form-field class="full-width">
               <input type="text" matInput placeholder="Nombre"/>
             </mat-form-field>
-            <mat-form-field class="example-full-width">
+            <mat-form-field class="full-width">
               <mat-label>Oficina</mat-label>
               <mat-select>
                 <mat-option>None</mat-option>
@@ -94,9 +96,9 @@
               </mat-select>
             </mat-form-field>
           </section>
-          <section *ngIf="showOutput(saleType.BRANCH_TRANSFER)">
+          <section *ngIf="selectedSaleTypeEnum === 'BT'">
             <strong>Cambiar de sucursal</strong>
-            <mat-form-field class="example-full-width">
+            <mat-form-field class="full-width">
               <mat-label>Sucursal destino</mat-label>
               <mat-select [(ngModel)]="subsidiaryTo">
                 <mat-option
@@ -232,7 +234,7 @@
             type="button"
             mat-button
             (click)="preFinalize()"
-            [disabled]="model.output"
+            [disabled]="!model.detail"
             color="primary"
           >
             Finalizar
@@ -247,6 +249,4 @@
       </div>
     </mat-card-content>
   </mat-card>
-<code>selectedSaleTypeEnum: {{selectedSaleTypeEnum}}</code>
-  <code>{{ relation | json }}</code>
 </div>

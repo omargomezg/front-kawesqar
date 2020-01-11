@@ -4,7 +4,7 @@ import {CommuneModel} from './commune.model';
 import {ClientTypeModel} from './client-type.model';
 import {PersonModel} from './person.model';
 
-export class ClientModel extends PersonModel{
+export class ClientModel extends PersonModel {
 
   Fax: string;
   mobile: string;

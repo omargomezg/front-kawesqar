@@ -2,10 +2,10 @@
 @import '~bootstrap/dist/css/bootstrap.min.css';
 @import "~@angular/material/prebuilt-themes/indigo-pink.css";
 /* Master Styles */
-body {
+body, input[text], button {
   color: #888;
   font-family: Arial, Helvetica, sans-serif;
-/* }font-size: 16px; */
+  font-size: 16px;
 }
 
 h1 {
@@ -21,6 +21,24 @@ h2, h3 {
 a {
   cursor: pointer;
   cursor: hand;
+}
+
+button {
+  font-family: Arial, serif;
+  background-color: #eee;
+  border: none;
+  padding: 5px 10px;
+  border-radius: 4px;
+}
+
+button:hover {
+  background-color: #cfd8dc;
+}
+
+button:disabled {
+  background-color: #eee;
+  color: #aaa;
+  cursor: auto;
 }
 
 .classic-table-tr {
@@ -49,7 +67,30 @@ a {
   margin-left: 2px;
 }
 
+/*TODO Validar este estilo para bnt bootstrap
+/* Navigation link styles */
+nav a {
+  padding: 5px 10px;
+  text-decoration: none;
+  margin-right: 10px;
+  margin-top: 10px;
+  display: inline-block;
+  background-color: #eee;
+  border-radius: 4px;
+}
 
+nav a:visited, a:link {
+  color: #607D8B;
+}
+
+nav a:hover {
+  color: #039be5;
+  background-color: #CFD8DC;
+}
+
+nav a.active {
+  color: #039be5;
+}
 
 /* everywhere else */
 * {

@@ -1,25 +1,13 @@
-<form novalidate>
+<form novalidate [formGroup]="fmSearch" (ngSubmit)="loadProduct()">
   <div class="row">
     <div class="col-10">
       <div class="form-group">
-        <input
-          type="text"
-          class="form-control form-control-sm"
-          matInput
-          [(ngModel)]="searchText"
-          (change)="loadProduct()"
-        />
+        <input type="text" class="form-control form-control-sm" required matInput #sku name="sku"
+               formControlName="sku">
       </div>
     </div>
     <div class="col-1">
-      <button
-        type="submit"
-        class="btn btn-secondary btn-sm"
-        (click)="loadProduct()"
-      >
-        Buscar
-      </button>
+      <button type="submit" [disabled]="fmSearch.invalid">Buscar</button>
     </div>
   </div>
 </form>
-<p>searchText: {{ searchText }}</p>

@@ -10,7 +10,7 @@ export class ShoppingCartModel {
   public subsidiaryFrom: SubsidiaryModel = new SubsidiaryModel();
   public created: string;
   public updated: string;
-  public detail: ShoppingCartDetail[] = Array<ShoppingCartDetail>();
+  public detail: ShoppingCartDetail[] = [];
   public flow: OutputFlowTypeModel = new OutputFlowTypeModel();
   public output: any;
 }

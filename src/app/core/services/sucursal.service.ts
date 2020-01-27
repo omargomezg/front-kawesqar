@@ -1,29 +1,33 @@
-import { Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
-import { environment } from '../../../../src/environments/environment';
-import { SucursalModel } from '../models/sucursal.model';
-import { Observable } from 'rxjs';
-import { map } from 'rxjs/operators';
-import { HeaderModel } from '../../../../src/app/layer/header/header.model';
+import { Injectable } from "@angular/core";
+import { HttpClient } from "@angular/common/http";
+import { environment } from "../../../../src/environments/environment";
+import { SucursalModel } from "../models/sucursal.model";
+import { Observable } from "rxjs";
+import { map } from "rxjs/operators";
+import { HeaderModel } from "../../../../src/app/layer/header/header.model";
+import { RelationSystemUserBranch, SystemUser } from "kawesqar-class-model";
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: "root"
 })
 export class SucursalService {
-
-  constructor(private http: HttpClient) {
-  }
+  constructor(private http: HttpClient) {}
 
   getSucursales(): Observable<SucursalModel[]> {
     return this.http
-      .get<SucursalModel[]>(environment.apiUrl + '/api/sucursal')
+      .get<SucursalModel[]>(environment.apiUrl + "/api/sucursal")
       .pipe(map(data => data));
   }
 
-  getSucursalesUsuario(rut: string): Observable<any[]> {
-    const emptyString = '';
+  getSucursalesUsuario(rut: string): Observable<SystemUser> {
+    const emptyString = "";
     return this.http
-      .get<any[]>(`${environment.apiUrl}/api/user/${rut.replace(/\D/g, `${emptyString}`)}/sucursal`)
+      .get<SystemUser>(
+        `${environment.apiUrl}/api/user/${rut.replace(
+          /\D/g,
+          `${emptyString}`
+        )}/sucursal`
+      )
       .pipe(map(data => data));
   }
 
@@ -32,5 +36,4 @@ export class SucursalService {
       .get<any>(`${environment.apiUrl}/api/header/${rut}`)
       .pipe(map(data => data));
   }
-
 }

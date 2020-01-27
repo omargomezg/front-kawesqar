@@ -22,7 +22,7 @@ export class UserModel {
   firstName: string;
   lastName: string;
   secondLastName: string;
-  fono: string;
+  telephone: string;
   email: string;
   userName: string;
   fechaCreacion: Date;

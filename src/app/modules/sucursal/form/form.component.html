@@ -1,77 +1,173 @@
-<form *ngIf="(dataPage.edit && model) || !dataPage.edit" novalidate #sucursalForm="ngForm" (ngSubmit)="update()">
+<form
+  *ngIf="(dataPage.edit && model) || (!dataPage.edit && model)"
+  novalidate
+  #sucursalForm="ngForm"
+  (ngSubmit)="update()"
+>
   <fieldset>
-    <legend>Información básica </legend>
+    <legend>Información básica</legend>
     <div class="form-group row">
       <label for="rut" class="col-sm-2 col-form-label text-right">Rut</label>
       <div class="col-sm-3">
-        <input id="rut" type="text" class="form-control" [(ngModel)]="model.rut" name="rut" #rut="ngModel" required
-          validateRut formatRut />
+        <input
+          id="rut"
+          type="text"
+          class="form-control"
+          [(ngModel)]="model.rut"
+          name="rut"
+          #rut="ngModel"
+          required
+          validateRut
+          formatRut
+        />
         <div [hidden]="rut.valid || rut.pristine" class="invalid-feedback">
           Rut es requerido
         </div>
       </div>
     </div>
     <div class="form-group row">
-      <label for="nombre" class="col-sm-2 col-form-label text-right">Nombre</label>
+      <label for="nombre" class="col-sm-2 col-form-label text-right"
+        >Nombre</label
+      >
       <div class="col-sm-5">
-        <input id="nombre" type="text" maxlength="50" class="form-control" [(ngModel)]="model.nombre" name="nombre"
-          #nombre="ngModel" required />
-        <div [hidden]="nombre.valid || nombre.pristine" class="invalid-feedback">
+        <input
+          id="nombre"
+          type="text"
+          maxlength="50"
+          class="form-control"
+          [(ngModel)]="model.name"
+          name="nombre"
+          #nombre="ngModel"
+          required
+        />
+        <div
+          [hidden]="nombre.valid || nombre.pristine"
+          class="invalid-feedback"
+        >
           Nombre es requerido
         </div>
       </div>
     </div>
     <div class="form-group row">
-      <label for="txt-direccion" class="col-sm-2 col-form-label text-right">Dirección</label>
+      <label for="txt-direccion" class="col-sm-2 col-form-label text-right"
+        >Dirección</label
+      >
       <div class="col-sm-5">
-        <input id="txt-direccion" type="text" maxlength="80" class="form-control" [(ngModel)]="model.direccion"
-          name="direccion" #direccion="ngModel" />
+        <input
+          id="txt-direccion"
+          type="text"
+          maxlength="80"
+          class="form-control"
+          [(ngModel)]="model.address"
+          name="direccion"
+          #direccion="ngModel"
+        />
       </div>
     </div>
     <div class="form-group row">
-      <label for="nombreComuna" class="col-sm-2 col-form-label text-right">Ciudad</label>
+      <label for="nombreComuna" class="col-sm-2 col-form-label text-right"
+        >Ciudad - {{model.commune.name}}</label
+      >
+
       <div class="col-sm-5">
-        <app-selector (valueChange)='setCiudad($event)' [nameCity]="model.nombreComuna" name="nombreComuna">
+        <app-selector
+          (valueChange)="setCiudad($event)"
+          [nameCity]="model.commune.name"
+          name="nombreComuna"
+        >
         </app-selector>
       </div>
     </div>
     <div class="form-group row">
-      <label for="txt-telefono" class="col-sm-2 col-form-label text-right">Teléfono</label>
+      <label for="txt-telefono" class="col-sm-2 col-form-label text-right"
+        >Teléfono</label
+      >
       <div class="col-sm-5">
-        <input id="txt-telefono" type="text" maxlength="50" class="form-control" [(ngModel)]="model.telefono"
-          name="telefono" #telefono="ngModel" />
+        <input
+          id="txt-telefono"
+          type="text"
+          maxlength="50"
+          class="form-control"
+          [(ngModel)]="model.telephone"
+          name="telefono"
+          #telefono="ngModel"
+        />
       </div>
     </div>
     <div class="form-group row">
-      <label for="txt-celular" class="col-sm-2 col-form-label text-right">Celular</label>
+      <label for="txt-celular" class="col-sm-2 col-form-label text-right"
+        >Celular</label
+      >
       <div class="col-sm-5">
-        <input id="txt-celular" type="text" maxlength="50" class="form-control" [(ngModel)]="model.fax" name="fax"
-          #fax="ngModel" />
+        <input
+          id="txt-celular"
+          type="text"
+          maxlength="50"
+          class="form-control"
+          [(ngModel)]="model.fax"
+          name="fax"
+          #fax="ngModel"
+        />
       </div>
     </div>
   </fieldset>
   <fieldset>
     <legend>Información legal</legend>
     <div class="form-group row">
-      <label for="txt-giro" class="col-sm-2 col-form-label text-right">Giro</label>
+      <label for="txt-giro" class="col-sm-2 col-form-label text-right"
+        >Giro</label
+      >
       <div class="col-sm-5">
-        <input id="txt-giro" type="text" maxlength="250" class="form-control" [(ngModel)]="model.giro" name="giro"
-          #giro="ngModel" />
+        <input
+          id="txt-giro"
+          type="text"
+          maxlength="250"
+          class="form-control"
+          [(ngModel)]="model.giro"
+          name="giro"
+          #giro="ngModel"
+        />
       </div>
     </div>
     <div class="form-group row">
-      <label for="rutRepLegal" class="col-sm-2 col-form-label text-right">Representante</label>
+      <label for="rutRepLegal" class="col-sm-2 col-form-label text-right"
+        >Representante</label
+      >
       <div class="col-sm-2">
-        <input id="rutRepLegal" type="text" placeholder="Rut" class="form-control" [(ngModel)]="model.rutRepLegal"
-          name="rutRepLegal" #rutRepLegal="ngModel" validateRut formatRut required />
-        <div [hidden]="rutRepLegal.valid || rutRepLegal.pristine" class="invalid-feedback">
+        <input
+          id="rutRepLegal"
+          type="text"
+          placeholder="Rut"
+          class="form-control"
+          [(ngModel)]="model.rutRepLegal"
+          name="rutRepLegal"
+          #rutRepLegal="ngModel"
+          validateRut
+          formatRut
+          required
+        />
+        <div
+          [hidden]="rutRepLegal.valid || rutRepLegal.pristine"
+          class="invalid-feedback"
+        >
           Rut es requerido
         </div>
       </div>
       <div class="col-sm-3">
-        <input id="nombreRepLegal" type="text" placeholder="Nombre" class="form-control"
-          [(ngModel)]="model.nombreRepLegal" name="nombreRepLegal" #nombreRepLegal="ngModel" required />
-        <div [hidden]="nombreRepLegal.valid || nombreRepLegal.pristine" class="invalid-feedback">
+        <input
+          id="nombreRepLegal"
+          type="text"
+          placeholder="Nombre"
+          class="form-control"
+          [(ngModel)]="model.nombreRepLegal"
+          name="nombreRepLegal"
+          #nombreRepLegal="ngModel"
+          required
+        />
+        <div
+          [hidden]="nombreRepLegal.valid || nombreRepLegal.pristine"
+          class="invalid-feedback"
+        >
           Nombre es requerido
         </div>
       </div>
@@ -83,25 +179,48 @@
       <div class="col-sm-2">&nbsp;</div>
       <div class="col-sm-7">
         <div class="form-check">
-          <input class="form-check-input" type="checkbox" id="gridCheck1" [(ngModel)]="model.registroContado"
-            name="registroContado" #registroContado="ngModel">
+          <input
+            class="form-check-input"
+            type="checkbox"
+            id="gridCheck1"
+            [(ngModel)]="model.registroContado"
+            name="registroContado"
+            #registroContado="ngModel"
+          />
           <label class="form-check-label" for="gridCheck1">
             Usar registro de ingreso al contado
           </label>
           <small id="passwordHelpBlock" class="form-text text-muted">
-            Debe estar activa solo si necesitas registrar en ventas con boleta quien canceló al contado.
+            Debe estar activa solo si necesitas registrar en ventas con boleta
+            quien canceló al contado.
           </small>
         </div>
       </div>
     </div>
     <div class="form-group row" *ngIf="model.registroContado">
-      <label for="numInicialRegContado" class="col-sm-2 col-form-label text-right">Número inicial</label>
+      <label
+        for="numInicialRegContado"
+        class="col-sm-2 col-form-label text-right"
+        >Número inicial</label
+      >
       <div class="col-sm-2">
-        <input id="numInicialRegContado" type="text" class="form-control text-right"
-          [(ngModel)]="model.numInicialRegContado" name="numInicialRegContado" #numInicialRegContado="ngModel"
-          (keypress)="numberOnly($event)" [required]="model.registroContado" />
-        <div [hidden]="numInicialRegContado.valid || numInicialRegContado.pristine && model.registroContado"
-          class="invalid-feedback">
+        <input
+          id="numInicialRegContado"
+          type="text"
+          class="form-control text-right"
+          [(ngModel)]="model.numInicialRegContado"
+          name="numInicialRegContado"
+          #numInicialRegContado="ngModel"
+          (keypress)="numberOnly($event)"
+          [required]="model.registroContado"
+        />
+        <div
+          [hidden]="
+            numInicialRegContado.valid ||
+            (numInicialRegContado.pristine && model.registroContado)
+          "
+          class="invalid-feedback"
+        >
           Nombre es requerido
         </div>
       </div>
@@ -109,9 +228,21 @@
   </fieldset>
   <div class="row">
     <div class="col-sm-7 text-right">
-      <button type="submit" mat-button [disabled]="!sucursalForm.valid">Guardar</button>
-      <a mat-button href="{{homeUrl + '/administrador/asociarBodegas.aspx?id=' + model.id +'&nom=' + model.nombre}}"
-        class="btn btn-light">Ver Bodegas</a>
+      <button type="submit" mat-button [disabled]="!sucursalForm.valid">
+        Guardar
+      </button>
+      <a
+        mat-button
+        href="{{
+          homeUrl +
+            '/administrador/asociarBodegas.aspx?id=' +
+            model.id +
+            '&nom=' +
+            model.name
+        }}"
+        class="btn btn-light"
+        >Ver Bodegas</a
+      >
       <button type="button" (click)="gotoList()" mat-button>Cancelar</button>
     </div>
   </div>

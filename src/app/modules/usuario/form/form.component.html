@@ -1,76 +1,150 @@
 <form novalidate #usuarioForm="ngForm" (ngSubmit)="save()" *ngIf="!loading">
   <div class="row">
     <div class="col-4">
-      <h4>{{common.action == 'edit' ? 'Actualización de usuario' : 'Nuevo usuario'}}</h4>
+      <h4>
+        {{
+        common.action == "edit" ? "Actualización de usuario" : "Nuevo usuario"
+        }}
+      </h4>
     </div>
   </div>
   <mat-card>
     <mat-card-content>
       <div class="" *ngIf="common.action == 'edit'">
-        <p class="text-right text-secondary">Nombre de usuario: {{model.userName}}</p>
+        <p class="text-right text-secondary">
+          Nombre de usuario: {{ model.userName }}
+        </p>
       </div>
       <div class="row justify-content-md-center">
         <div class="col-sm-5">
           <div class="row">
             <div class="form-group col-sm-6">
               <label for="rut">Rut</label>
-              <input id="rut" type="text" (change)="validateIfExists()" class="form-control" [(ngModel)]="model.rut"
-                     name="rut" #rut="ngModel" [readonly]="common.action == 'edit'" required validateRut formatRut/>
-              <div [hidden]="rut.valid || rut.pristine" class="invalid-feedback">
+              <input
+                id="rut"
+                type="text"
+                (change)="validateIfExists()"
+                class="form-control"
+                [(ngModel)]="model.rut"
+                name="rut"
+                #rut="ngModel"
+                [readonly]="common.action == 'edit'"
+                required
+                validateRut
+                formatRut
+              />
+              <div
+                [hidden]="rut.valid || rut.pristine"
+                class="invalid-feedback"
+              >
                 Rut es requerido
               </div>
-              <small *ngIf="validation.exists" class="bg-gradient-warning">El rut {{validation.rut | rut}} ya
-                existe
+              <small *ngIf="validation.exists" class="bg-gradient-warning"
+              >El rut {{ validation.rut | rut }} ya existe
               </small>
             </div>
           </div>
           <div class="form-group">
             <label for="nombres">Nombres</label>
-            <input type="text" id="nombres" class="form-control" [(ngModel)]="model.firstName" name="nombres"
-                   #nombres="ngModel" required/>
-            <div [hidden]="nombres.valid || nombres.pristine" class="invalid-feedback">
+            <input
+              type="text"
+              id="nombres"
+              class="form-control"
+              [(ngModel)]="model.firstName"
+              name="nombres"
+              #nombres="ngModel"
+              required
+            />
+            <div
+              [hidden]="nombres.valid || nombres.pristine"
+              class="invalid-feedback"
+            >
               Nombre es requerido
             </div>
           </div>
           <div class="form-group">
             <label for="ApPaterno">Apellido Paterno</label>
-            <input type="text" id="apPaterno" maxlength="256" class="form-control" [(ngModel)]="model.lastName"
-                   name="apPaterno" #apPaterno="ngModel" required/>
-            <div [hidden]="apPaterno.valid || apPaterno.pristine" class="invalid-feedback">
+            <input
+              type="text"
+              id="apPaterno"
+              maxlength="256"
+              class="form-control"
+              [(ngModel)]="model.lastName"
+              name="apPaterno"
+              #apPaterno="ngModel"
+              required
+            />
+            <div
+              [hidden]="apPaterno.valid || apPaterno.pristine"
+              class="invalid-feedback"
+            >
               Nombre es requerido
             </div>
           </div>
           <div class="form-group">
             <label for="ApMaterno" maxlength="256">Apellido Materno</label>
-            <input type="text" id="apMaterno" class="form-control" [(ngModel)]="model.secondLastName" name="apMaterno"
-                   #apPaterno="ngModel"/>
-          </div>
-          <div class="form-group">
-            <label for="Fono">Teléfono</label>
-            <input id="fono" type="text" class="form-control" [(ngModel)]="model.fono" name="fono" #fono="ngModel"/>
+            <input
+              type="text"
+              id="apMaterno"
+              class="form-control"
+              [(ngModel)]="model.secondLastName"
+              name="apMaterno"
+              #apPaterno="ngModel"
+            />
           </div>
           <div class="form-group">
             <label for="eMail">Correo Electrónico</label>
-            <input id="eMail" type="text" maxlength="256" class="form-control" [(ngModel)]="model.email" name="eMail"
-                   #eMail="ngModel" required email/>
-            <div [hidden]="eMail.valid || eMail.pristine" class="invalid-feedback">
+            <input
+              id="eMail"
+              type="text"
+              maxlength="256"
+              class="form-control"
+              [(ngModel)]="model.email"
+              name="eMail"
+              #eMail="ngModel"
+              required
+              email
+            />
+            <div
+              [hidden]="eMail.valid || eMail.pristine"
+              class="invalid-feedback"
+            >
               Correo es requerido
             </div>
           </div>
-          <div class="form-group" *ngIf="common.action =='insert'">
+          <div class="form-group" *ngIf="common.action == 'insert'">
             <label for="userName">Nombre de Usuario</label>
-            <input id="userName" maxlength="50" class="form-control" [(ngModel)]="model.userName" name="userName"
-                   #userName="ngModel" required/>
-            <div [hidden]="userName.valid || userName.pristine" class="invalid-feedback">
+            <input
+              id="userName"
+              maxlength="50"
+              class="form-control"
+              [(ngModel)]="model.userName"
+              name="userName"
+              #userName="ngModel"
+              required
+            />
+            <div
+              [hidden]="userName.valid || userName.pristine"
+              class="invalid-feedback"
+            >
               Username es requerido
             </div>
           </div>
           <div class="form-group" *ngIf="common.action === 'insert'">
             <label for="clave">Contraseña</label>
-            <input type="text" id="clave" class="form-control" [(ngModel)]="model.password" name="clave"
-                   #clave="ngModel"
-                   required/>
-            <div [hidden]="clave.valid || clave.pristine" class="invalid-feedback">
+            <input
+              type="text"
+              id="clave"
+              class="form-control"
+              [(ngModel)]="model.password"
+              name="clave"
+              #clave="ngModel"
+              required
+            />
+            <div
+              [hidden]="clave.valid || clave.pristine"
+              class="invalid-feedback"
+            >
               Contraseña es requerido
             </div>
           </div>
@@ -78,51 +152,59 @@
         <div class="col-sm-4">
           <section *ngIf="roles">
             <label>¿Que perfil de usuario deseas establecer?</label>
-            <mat-radio-group id="rol" name="rol" (change)="setRoleStatus($event)" class="example-radio-group">
-              <mat-radio-button [checked]="isRoleActive(rol.id)" class="example-radio-button" *ngFor="let rol of roles" [value]="rol.id">
-                {{rol.name}}
+            <mat-radio-group
+              name="rol"
+              class="example-radio-group"
+              [(ngModel)]="selectedRoleId"
+              (ngModelChange)="changedExtraHandler($event)"
+            >
+              <mat-radio-button
+                name="rol"
+                class="example-radio-button"
+                *ngFor="let rol of model.relationSystemUserRoles"
+                [value]="rol.id"
+              >
+                {{ rol.role.name }}
               </mat-radio-button>
             </mat-radio-group>
           </section>
-          <label>Seleciona una opción de egreso predeterminada</label>
-          <p class="bg-gradient-warning" *ngIf="!common.egress">No existen datos en la tabla!</p>
-          <mat-radio-group id="egres" name="egres" #egres="ngModel" *ngIf="common.egress" class="example-radio-group"
-                           [(ngModel)]="model.egreso">
-            <mat-radio-button class="example-radio-button" *ngFor="let egres of common.egress" [value]="egres.id">
-              {{egres.descripcion}}
-            </mat-radio-button>
-          </mat-radio-group>
-          <p>Además de selecionar alguna opción de egreso por defecto, es necesario habilitar algunas de estas
-            opciones.
+          <label>Opciones de egreso</label>
+          <p class="bg-gradient-warning" *ngIf="!common.OutputType">
+            No existen datos en la tabla!
           </p>
-          <section></section>
-          <mat-slide-toggle id="salidaVenta" name="salidaVenta" #salidaVenta="ngModel"
-                            [(ngModel)]="model.salidaVenta" class="example-margin"
-                            [checked]="model.salidaVenta">
-            Puede vender
-          </mat-slide-toggle>
-          <br>
-          <mat-slide-toggle class="example-margin" [checked]="model.salidaEmpleados" id="salidaEmpleados"
-                            name="salidaEmpleados" #salidaEmpleados="ngModel" [(ngModel)]="model.salidaEmpleados">
-            Habilitado para entregas internas
-          </mat-slide-toggle>
-          <br>
-          <mat-slide-toggle class="example-margin" [checked]="model.salidaFactura" id="salidaFactura"
-                            name="salidaFactura" #salidaFactura="ngModel" [(ngModel)]="model.salidaFactura">
-            Puede emitir factura
-          </mat-slide-toggle>
-          <br>
-          <mat-slide-toggle class="example-margin" [checked]="model.sendToOtherBranch" id="sendToOtherBranch"
-                            name="sendToOtherBranch" #sendToOtherBranch="ngModel" [(ngModel)]="model.sendToOtherBranch">
-            Permite enviar a otra sucursal
-          </mat-slide-toggle>
+          <div *ngFor="let outputStatus of model.relationSystemUserOutputType">
+            <mat-slide-toggle
+              class="example-margin"
+              [checked]="outputStatus.isActive"
+              (change)="outputStatus.isActive = !outputStatus.isActive"
+            >
+              {{outputStatus.outputType.name}}
+            </mat-slide-toggle>
+          </div>
+          <label>Opción por defecto</label>
+          <select (change)="setDefaultOutput($event)" name="outputType" [(ngModel)]="selectedOutputTypeId"
+                  class="form-control">
+            <option *ngFor="let outputType of common.OutputType"
+                    [value]="outputType.id">
+              {{outputType.name}}
+            </option>
+          </select>
         </div>
       </div>
       <div class="text-right">
-        <button type="submit" class="btn btn-sm btn-primary" [disabled]="!usuarioForm.valid">Guadar</button>
-        <button type="button" (click)="goToList()" class="btn btn-sm btn-default">Cancelar</button>
+        <button
+          type="submit"
+          class="btn btn-sm btn-primary"
+          [disabled]="!usuarioForm.valid">
+          Guadar
+        </button>
+        <button
+          type="button"
+          (click)="goToList()"
+          class="btn btn-sm btn-default">
+          Cancelar
+        </button>
       </div>
     </mat-card-content>
   </mat-card>
 </form>
-{{this.model | json}}

@@ -4,7 +4,7 @@ import { HttpClientModule } from '@angular/common/http';
 import localeCl from '@angular/common/locales/es-CL';
 import { registerLocaleData } from '@angular/common';
 import { NgModule, LOCALE_ID } from '@angular/core';
-import {FormsModule, ReactiveFormsModule} from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { BrowserModule } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { Ng2Rut, RutValidator } from 'ng2-rut';
@@ -20,14 +20,18 @@ import { AllMaterialModule } from './material-module';
 import { OnlyNumbersDirective } from './directives/only-numbers.directive';
 import { EgresoComponent } from './components/egreso/egreso.component';
 import { ModalEgresoComponent } from './components/modal-egreso/modal-egreso.component';
-import {DialogComponent} from 'src/app/modules/factura/registrar/dialog.component';
-import {ArticleService} from 'src/app/core/services/article.service';
+import { DialogComponent } from 'src/app/modules/factura/registrar/dialog.component';
+import { ArticleService } from 'src/app/core/services/article.service';
 import { SearchArticleComponent } from './components/search-article/search-article.component';
 import { LoginComponent } from './components/login/login.component';
 import { InvoiceDetailComponent } from './components/invoice-detail/invoice-detail.component';
 import { InvoiceCancellationOrderComponent } from './components/invoice-cancellation-order/invoice-cancellation-order.component';
 import { ShortcutNavComponent } from './components/shortcut-nav/shortcut-nav.component';
-import {ShortcutNavService} from './core/services/shortcut-nav.service';
+import { ShortcutNavService } from './core/services/shortcut-nav.service';
+import { EditClientComponent } from './components/client/edit-client/edit-client.component';
+import { ListClientsComponent } from './components/client/list-clients/list-clients.component';
+import { ListProductsComponent } from './components/product/list-products/list-products.component';
+import { EditProductComponent } from './components/product/edit-product/edit-product.component';
 
 registerLocaleData(localeCl);
 
@@ -44,7 +48,11 @@ registerLocaleData(localeCl);
     LoginComponent,
     InvoiceDetailComponent,
     InvoiceCancellationOrderComponent,
-    ShortcutNavComponent
+    ShortcutNavComponent,
+    EditClientComponent,
+    ListClientsComponent,
+    ListProductsComponent,
+    EditProductComponent,
   ],
   imports: [
     HttpClientModule,

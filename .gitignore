@@ -19,10 +19,12 @@
 
 # IDE - VSCode
 .vscode/*
+.vs/*
 !.vscode/settings.json
 !.vscode/tasks.json
 !.vscode/launch.json
 !.vscode/extensions.json
+.vs
 
 # misc
 /.sass-cache

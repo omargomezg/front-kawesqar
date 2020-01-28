@@ -12,6 +12,8 @@ import {OutputType, RelationSystemUserOutputType, Role, SaleTypeEnum, SystemUser
 export class FormComponent implements OnInit {
   saleTypeEnum: SaleTypeEnum;
   model: SystemUser = new SystemUser();
+  selectRelation: RelationSystemUserOutputType[];
+  filterOutputType: {};
   selectedRoleId: number;
   selectedOutputTypeId: number;
   common: any = {
@@ -45,6 +47,7 @@ export class FormComponent implements OnInit {
         this.serviceRole.getUserByRut(params.rut).subscribe(
           (data: SystemUser) => {
             this.model = data;
+            this.selectRelation = data.relationSystemUserOutputType;
             this.model.relationSystemUserRoles.forEach(item => {
               if (item.isActive) {
                 this.selectedRoleId = item.id;
@@ -182,6 +185,21 @@ export class FormComponent implements OnInit {
     this.model.relationSystemUserOutputType.forEach((relation: RelationSystemUserOutputType) => {
       relation.isDefault = relation.outputType.id === parseInt(event.target.value, 0);
       this.selectedOutputTypeId = event.target.value;
+    });
+  }
+
+  enabledOutputType(id: number) {
+    this.model.relationSystemUserOutputType.filter(item => {
+      if (item.id === id) {
+        item.isActive = !item.isActive;
+      }
+    });
+  }
+
+  setPrimary(id: number) {
+    this.selectedOutputTypeId = id;
+    this.model.relationSystemUserOutputType.forEach(item => {
+      item.isDefault = item.id === id;
     });
   }
 }

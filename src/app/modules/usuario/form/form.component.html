@@ -176,19 +176,18 @@
             <mat-slide-toggle
               class="example-margin"
               [checked]="outputStatus.isActive"
-              (change)="outputStatus.isActive = !outputStatus.isActive"
+              (change)="enabledOutputType(outputStatus.id)"
             >
               {{outputStatus.outputType.name}}
             </mat-slide-toggle>
           </div>
-          <label>Opción por defecto</label>
-          <select (change)="setDefaultOutput($event)" name="outputType" [(ngModel)]="selectedOutputTypeId"
-                  class="form-control">
-            <option *ngFor="let outputType of common.OutputType"
-                    [value]="outputType.id">
-              {{outputType.name}}
-            </option>
+          <p>Cual será la opción por defecto?</p>
+          <select class="form-control" name="selectedOutputType" [(ngModel)]="selectedOutputTypeId">
+            <option *ngFor="let relation of model.relationSystemUserOutputType" [ngStyle]="{'display': relation.isActive ? '' : 'none'}"
+                    [value]="relation.id"
+                    (change)="setPrimary(relation.id)">{{relation.outputType.name}}</option>
           </select>
+          {{selectedOutputTypeId}}
         </div>
       </div>
       <div class="text-right">

@@ -1,25 +1,29 @@
-import {Component, OnInit} from '@angular/core';
-import {ModalEgresoComponent} from '../modal-egreso/modal-egreso.component';
-import {MatDialog} from '@angular/material';
-import {ExpensesModel} from '../../core/models/expenses.model';
-import {ArticleService} from '../../core/services/article.service';
-import {StorageDataService} from '../../core/services/storage-data.service';
-import {ShoppingCartService} from '../../core/services/shopping-cart.service';
-import {ShoppingCartModel} from '../../core/models/database/ShoppingCart.model';
-import {ShoppingCartDetailModel} from '../../core/models/request/shopping-cart-detail.model';
-import {RelationSystemUserOutputType, SaleTypeEnum, SystemUser} from 'kawesqar-class-model';
-import {SucursalService} from '../../core/services/sucursal.service';
-import {OutputFlowTypeService} from '../../core/services/output-flow-type.service';
-import {OutputFlowTypeModel} from '../../core/models/database/OutputFlowType.model';
-import {ShoppingCartDetail} from '../../core/models/database/ShoppingCartDetail.model';
-import {ShortcutNavService} from '../../core/services/shortcut-nav.service';
-import {DisponibleVentaModel} from '../../core/models/response/disponibleVenta.model';
-import {RelationSystemUserOutputTypeService} from 'src/app/core/services/relation-system-user-output-type.service';
+import { Component, OnInit } from "@angular/core";
+import { ModalEgresoComponent } from "../modal-egreso/modal-egreso.component";
+import { MatDialog } from "@angular/material";
+import { ExpensesModel } from "../../core/models/expenses.model";
+import { ArticleService } from "../../core/services/article.service";
+import { StorageDataService } from "../../core/services/storage-data.service";
+import { ShoppingCartService } from "../../core/services/shopping-cart.service";
+import { ShoppingCartModel } from "../../core/models/database/ShoppingCart.model";
+import { ShoppingCartDetailModel } from "../../core/models/request/shopping-cart-detail.model";
+import {
+  RelationSystemUserOutputType,
+  SaleTypeEnum,
+  SystemUser
+} from "kawesqar-class-model";
+import { SucursalService } from "../../core/services/sucursal.service";
+import { OutputFlowTypeService } from "../../core/services/output-flow-type.service";
+import { OutputFlowTypeModel } from "../../core/models/database/OutputFlowType.model";
+import { ShoppingCartDetail } from "../../core/models/database/ShoppingCartDetail.model";
+import { ShortcutNavService } from "../../core/services/shortcut-nav.service";
+import { DisponibleVentaModel } from "../../core/models/response/disponibleVenta.model";
+import { RelationSystemUserOutputTypeService } from "src/app/core/services/relation-system-user-output-type.service";
 
 @Component({
-  selector: 'app-egreso',
-  templateUrl: './egreso.component.html',
-  styleUrls: ['./egreso.component.css']
+  selector: "app-egreso",
+  templateUrl: "./egreso.component.html",
+  styleUrls: ["./egreso.component.css"]
 })
 export class EgresoComponent implements OnInit {
   unauthorized = false;
@@ -36,17 +40,22 @@ export class EgresoComponent implements OnInit {
   subsidiarys: any[];
   Flows: OutputFlowTypeModel[] = Array<OutputFlowTypeModel>();
   btn = [
-    {abr: 'CONT', key: SaleTypeEnum.CASH_SALE, description: 'Contado'},
-    {abr: 'DEB', key: SaleTypeEnum.DEBIT_CARD, description: 'Dedito'},
-    {abr: 'CRED', key: SaleTypeEnum.CREDIT_CARD, description: 'Crédito'},
+    { abr: "CONT", key: SaleTypeEnum.CASH_SALE, description: "Contado" },
+    { abr: "DEB", key: SaleTypeEnum.DEBIT_CARD, description: "Dedito" },
+    { abr: "CRED", key: SaleTypeEnum.CREDIT_CARD, description: "Crédito" },
     {
-      abr: 'CONS', key: SaleTypeEnum.DELIVERY_SUPPLIES, description: 'Consumo'
+      abr: "CONS",
+      key: SaleTypeEnum.DELIVERY_SUPPLIES,
+      description: "Consumo"
     },
     {
-      abr: 'SUC', key: SaleTypeEnum.BRANCH_TRANSFER, description: 'Cambiar de Bodega'
+      abr: "SUC",
+      key: SaleTypeEnum.BRANCH_TRANSFER,
+      description: "Cambiar de Bodega"
     }
   ];
   relation: RelationSystemUserOutputType[];
+  outputTypeId: number;
 
   constructor(
     public dialog: MatDialog,
@@ -57,34 +66,35 @@ export class EgresoComponent implements OnInit {
     private flowService: OutputFlowTypeService,
     private pathData: ShortcutNavService,
     private relationOutputService: RelationSystemUserOutputTypeService
-  ) {
-  }
+  ) {}
 
   ngOnInit() {
-    this.pathData.changePath(['egreso', 'Egreso', ''], ['', '', '']);
+    this.pathData.changePath(["egreso", "Egreso", ""], ["", "", ""]);
     // this.model.rut = this.localStorage.getRutUser();
     // this.model.output = SaleTypeEnum.CASH_SALE;
-    this.relationOutputService.getRelations('130856101').subscribe(
-      (data: RelationSystemUserOutputType[]) => {
-        this.relation = data.filter(item => item.isActive);
-      },
-      error => {
-      }
-    );
+    this.relationOutputService
+      .getRelations(this.localStorage.getRutUser())
+      .subscribe(
+        (data: RelationSystemUserOutputType[]) => {
+          this.relation = data.filter(item => item.isActive);
+          this.outputTypeId = data.filter(item => item.isDefault)[0].id;
+        },
+        error => {}
+      );
 
     this.setSubsidiaryForm();
     this.getCart();
     const smd = [];
     const data1 = new ShoppingCartDetail();
     data1.id = 112;
-    data1.sku = '23456A8521';
-    data1.name = 'Producto 1';
+    data1.sku = "23456A8521";
+    data1.name = "Producto 1";
     data1.amount = 45566.23;
     data1.quantity = 2;
     const data2 = new ShoppingCartDetail();
     data2.id = 14;
-    data2.sku = '2345676311';
-    data2.name = 'Producto 2';
+    data2.sku = "2345676311";
+    data2.name = "Producto 2";
     data2.amount = 45566.23;
     data2.quantity = 1;
 
@@ -107,13 +117,12 @@ export class EgresoComponent implements OnInit {
 
   loadOutputFlows() {
     this.flowService
-      .getAvailableOutputFlows(this.localStorage.getRutUser().replace('-', ''))
+      .getAvailableOutputFlows(this.localStorage.getRutUser().replace("-", ""))
       .subscribe(
         data => {
           this.Flows = data;
         },
-        error => {
-        }
+        error => {}
       );
   }
 
@@ -123,7 +132,7 @@ export class EgresoComponent implements OnInit {
         this.articleList = data;
       },
       error => {
-        console.log('Something wrong here');
+        console.log("Something wrong here");
       }
     );
   }
@@ -148,7 +157,7 @@ export class EgresoComponent implements OnInit {
           });
         },
         error => {
-          console.log('ouch!' + error.status);
+          console.log("ouch!" + error.status);
         }
       );
   }
@@ -169,14 +178,13 @@ export class EgresoComponent implements OnInit {
             this.servShoppingCart.branchTransfer(data).subscribe();
           },
           error => {
-            console.log('ouch!' + error.status);
+            console.log("ouch!" + error.status);
           }
         );
     }
   }
 
-  saveTemporalCart() {
-  }
+  saveTemporalCart() {}
 
   searchArticle(sku: string) {
     // call by id
@@ -184,7 +192,7 @@ export class EgresoComponent implements OnInit {
       .getBySku(
         sku,
         this.isBulk,
-        this.localStorage.getRutUser().replace('-', '')
+        this.localStorage.getRutUser().replace("-", "")
       )
       .subscribe(
         (data: any) => {
@@ -197,21 +205,20 @@ export class EgresoComponent implements OnInit {
           }
         },
         error => {
-          console.log('Something wrong here');
+          console.log("Something wrong here");
         }
       );
   }
 
-  cashDiscount() {
-  }
+  cashDiscount() {}
 
   openDialog(data: ShoppingCartDetail): void {
     const dialogRef = this.dialog.open(ModalEgresoComponent, {
-      width: '300px',
+      width: "300px",
       data: data
     });
     dialogRef.afterClosed().subscribe(result => {
-      console.log('The dialog was closed');
+      console.log("The dialog was closed");
       console.log(result);
     });
   }
@@ -228,7 +235,7 @@ export class EgresoComponent implements OnInit {
             );
           },
           error => {
-            console.log('ouch!' + error.status);
+            console.log("ouch!" + error.status);
           }
         );
     }
@@ -240,7 +247,7 @@ export class EgresoComponent implements OnInit {
         .getBySku(
           this.skuSearch,
           true,
-          this.localStorage.getRutUser().replace('-', '')
+          this.localStorage.getRutUser().replace("-", "")
         )
         .subscribe(
           (res: DisponibleVentaModel) => {
@@ -254,18 +261,17 @@ export class EgresoComponent implements OnInit {
               this.model.detail = Array<ShoppingCartDetail>();
             }
             this.model.detail.push(newData);
-            this.skuSearch = '';
-            document.getElementById('inputSearch').focus();
+            this.skuSearch = "";
+            document.getElementById("inputSearch").focus();
           },
           error => {
-            console.log('Something wrong here');
+            console.log("Something wrong here");
           }
         );
     }
   }
 
-  getDetail(obj: any) {
-  }
+  getDetail(obj: any) {}
 
   /*getDetail(obj: ShoppingCartDetailModel) {
     if (this.model.detail === undefined) {
@@ -287,7 +293,7 @@ export class EgresoComponent implements OnInit {
 
   saveShoppingCart(data: ShoppingCartDetailModel) {
     const request = {
-      rut: this.localStorage.getRutUser().replace('-', ''),
+      rut: this.localStorage.getRutUser().replace("-", ""),
       sku: data.sku,
       quantity: data.quantity,
       total: data.total,
@@ -299,7 +305,7 @@ export class EgresoComponent implements OnInit {
     };
     console.log(request);
     this.servShoppingCart
-      .addToCart(request, this.localStorage.getRutUser().replace('-', ''))
+      .addToCart(request, this.localStorage.getRutUser().replace("-", ""))
       .subscribe(res => {
         // Code here
       });
@@ -319,7 +325,9 @@ export class EgresoComponent implements OnInit {
     let show = false;
     try {
       if (this.relation !== undefined) {
-        const exists = this.relation.find(item => item.outputType.codeEnum === saleTypeEnum);
+        const exists = this.relation.find(
+          item => item.outputType.codeEnum === saleTypeEnum
+        );
         show = exists.isActive;
       }
     } catch (e) {
@@ -330,14 +338,14 @@ export class EgresoComponent implements OnInit {
 
   private getCart() {
     this.servShoppingCart
-      .getCart(this.localStorage.getRutUser().replace('-', ''), 0)
+      .getCart(this.localStorage.getRutUser().replace("-", ""), 0)
       .subscribe(
         res => {
           this.model = res;
         },
         error => {
           this.unauthorized = true;
-          console.log('Something wrong here');
+          console.log("Something wrong here");
         }
       );
   }

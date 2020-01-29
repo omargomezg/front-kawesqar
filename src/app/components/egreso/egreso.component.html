@@ -2,7 +2,12 @@
   <h2>No estas autorizado para ver esta página</h2>
 </div>
 <div *ngIf="!unauthorized">
-  <div class="text-right">
+  <div class="text-right form-inline">
+    <mat-select [(value)]="outputTypeId">
+      <mat-option *ngFor="let food of relation" [value]="food.id">
+        {{ food.outputType.name }}
+      </mat-option>
+    </mat-select>
     <button mat-button color="accent" routerLink="/invoice-cancellation-order">
       Anular egreso
     </button>
@@ -32,9 +37,11 @@
             <mat-button-toggle
               *ngFor="let item of relation"
               checked="item.isDefault ? 'ckecked' : ''"
-              value="item.outputType.codeEnum"
-              (click)="selectOut(item.outputType.codeEnum)"
-            >{{ item.outputType.abbreviation }} '{{item.outputType.codeEnum}}'</mat-button-toggle
+              value="item.outputType.code"
+              (click)="selectOut(item.outputType.code)"
+              >{{ item.outputType.code }} '{{
+                item.outputType.codeEnum
+              }}'</mat-button-toggle
             >
           </mat-button-toggle-group>
           <section *ngIf="showOutput(saleType.CASH_SALE)">
@@ -43,7 +50,7 @@
           <section *ngIf="showOutput(saleType.CREDIT_CARD)">
             <strong>Crédito</strong>
             <mat-form-field class="example-full-width">
-              <input type="text" matInput placeholder="N° de transacción"/>
+              <input type="text" matInput placeholder="N° de transacción" />
             </mat-form-field>
             <mat-form-field class="example-full-width">
               <mat-label>Banco</mat-label>
@@ -64,7 +71,7 @@
           <section *ngIf="showOutput(saleType.DEBIT_CARD)">
             <strong>Débito</strong>
             <mat-form-field class="example-full-width">
-              <input type="text" matInput placeholder="N° de transacción"/>
+              <input type="text" matInput placeholder="N° de transacción" />
             </mat-form-field>
             <mat-form-field class="example-full-width">
               <mat-label>Banco</mat-label>
@@ -79,10 +86,10 @@
           <section *ngIf="showOutput(saleType.DELIVERY_SUPPLIES)">
             <strong>Consumo</strong>
             <mat-form-field class="example-full-width">
-              <input type="text" matInput placeholder="Rut"/>
+              <input type="text" matInput placeholder="Rut" />
             </mat-form-field>
             <mat-form-field class="example-full-width">
-              <input type="text" matInput placeholder="Nombre"/>
+              <input type="text" matInput placeholder="Nombre" />
             </mat-form-field>
             <mat-form-field class="example-full-width">
               <mat-label>Oficina</mat-label>
@@ -102,7 +109,7 @@
                 <mat-option
                   [value]="item.id"
                   *ngFor="let item of subsidiarys"
-                >{{ item.descripcion }}</mat-option
+                  >{{ item.descripcion }}</mat-option
                 >
               </mat-select>
             </mat-form-field>
@@ -126,7 +133,7 @@
               <div class="col-4">
                 <span class="text-right">{{
                   editModel.available | number
-                  }}</span>
+                }}</span>
               </div>
             </div>
             <div class="row">
@@ -174,52 +181,52 @@
                 class="table table-bordered table-condensed table-hover table-striped small"
               >
                 <thead>
-                <tr>
-                  <th>Cant</th>
-                  <th>Descripción</th>
-                  <th>Unidad</th>
-                  <th>Subtotal</th>
-                  <th>&nbsp;</th>
-                </tr>
+                  <tr>
+                    <th>Cant</th>
+                    <th>Descripción</th>
+                    <th>Unidad</th>
+                    <th>Subtotal</th>
+                    <th>&nbsp;</th>
+                  </tr>
                 </thead>
                 <tbody *ngIf="model.detail">
-                <tr *ngFor="let item of model.detail">
-                  <td>{{ item.quantity }}</td>
-                  <td>{{ item.name }}</td>
-                  <td class="text-right">
-                    {{ item.amount | number: "1.0-0" }}
-                  </td>
-                  <td class="text-right">
-                    {{ item.quantity * item.amount | number: "1.0-0" }}
-                  </td>
-                  <td>
-                    <button
-                      mat-icon-button
-                      color="secondary"
-                      aria-label="Example icon-button with a heart icon"
-                      (click)="addOrQuitItem(+1, item.id)"
-                    >
-                      <mat-icon>add</mat-icon>
-                    </button>
-                    <button
-                      mat-icon-button
-                      color="secondary"
-                      aria-label="Example icon-button with a heart icon"
-                      (click)="addOrQuitItem(-1, item.id)"
-                    >
-                      <mat-icon>remove</mat-icon>
-                    </button>
-                  </td>
-                </tr>
+                  <tr *ngFor="let item of model.detail">
+                    <td>{{ item.quantity }}</td>
+                    <td>{{ item.name }}</td>
+                    <td class="text-right">
+                      {{ item.amount | number: "1.0-0" }}
+                    </td>
+                    <td class="text-right">
+                      {{ item.quantity * item.amount | number: "1.0-0" }}
+                    </td>
+                    <td>
+                      <button
+                        mat-icon-button
+                        color="secondary"
+                        aria-label="Example icon-button with a heart icon"
+                        (click)="addOrQuitItem(+1, item.id)"
+                      >
+                        <mat-icon>add</mat-icon>
+                      </button>
+                      <button
+                        mat-icon-button
+                        color="secondary"
+                        aria-label="Example icon-button with a heart icon"
+                        (click)="addOrQuitItem(-1, item.id)"
+                      >
+                        <mat-icon>remove</mat-icon>
+                      </button>
+                    </td>
+                  </tr>
                 </tbody>
                 <tfoot>
-                <tr>
-                  <td></td>
-                  <td></td>
-                  <td></td>
-                  <td class="text-right">{{ total() | number: "1.0-0" }}</td>
-                  <th>&nbsp;</th>
-                </tr>
+                  <tr>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td class="text-right">{{ total() | number: "1.0-0" }}</td>
+                    <th>&nbsp;</th>
+                  </tr>
                 </tfoot>
               </table>
             </mat-card-content>
@@ -247,6 +254,6 @@
       </div>
     </mat-card-content>
   </mat-card>
-<code>selectedSaleTypeEnum: {{selectedSaleTypeEnum}}</code>
+  <code>selectedSaleTypeEnum: {{ selectedSaleTypeEnum }}</code>
   <code>{{ relation | json }}</code>
 </div>

@@ -31,9 +31,9 @@ export class SucursalService {
       .pipe(map(data => data));
   }
 
-  getHeader(rut: string): Observable<any> {
+  getHeader(rut: string): Observable<SystemUser> {
     return this.http
-      .get<any>(`${environment.apiUrl}/api/header/${rut}`)
+      .get<SystemUser>(`${environment.apiUrl}/api/header/${rut}`)
       .pipe(map(data => data));
   }
 }

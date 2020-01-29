@@ -5,6 +5,7 @@ import { SucursalModel } from 'src/app/core/models/sucursal.model';
 import { SucursalService } from 'src/app/core/services/sucursal.service';
 import { UserService } from 'src/app/core/services/user.service';
 import { TurnService } from 'src/app/core/services/turn.service';
+import {SystemUser} from 'kawesqar-class-model';
 
 @Component({
   selector: 'app-header',
@@ -16,7 +17,7 @@ export class HeaderComponent implements OnInit {
   homeUrl = window.location.origin;
   data: any[];
   turn: any;
-  header: HeaderModel;
+  header: SystemUser;
   idSelected: number;
 
   constructor(private readonly sucursalService: SucursalService,

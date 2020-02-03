@@ -10,7 +10,8 @@ import { ShoppingCartDetailModel } from "../../core/models/request/shopping-cart
 import {
   RelationSystemUserOutputType,
   SaleTypeEnum,
-  SystemUser
+  SystemUser,
+  CostCenterChild
 } from "kawesqar-class-model";
 import { SucursalService } from "../../core/services/sucursal.service";
 import { OutputFlowTypeService } from "../../core/services/output-flow-type.service";
@@ -19,6 +20,9 @@ import { ShoppingCartDetail } from "../../core/models/database/ShoppingCartDetai
 import { ShortcutNavService } from "../../core/services/shortcut-nav.service";
 import { DisponibleVentaModel } from "../../core/models/response/disponibleVenta.model";
 import { RelationSystemUserOutputTypeService } from "src/app/core/services/relation-system-user-output-type.service";
+import { FormBuilder } from "@angular/forms";
+import { CostCenterService } from "../../core/services/cost-center.service";
+import { UserService } from "../../core/services/user.service";
 
 @Component({
   selector: "app-egreso",
@@ -27,6 +31,7 @@ import { RelationSystemUserOutputTypeService } from "src/app/core/services/relat
 })
 export class EgresoComponent implements OnInit {
   unauthorized = false;
+  costCenterChilds: CostCenterChild[] = Array<CostCenterChild>();
   model: ShoppingCartModel = new ShoppingCartModel();
   articleList: any[] = [];
   editModel: ExpensesModel;
@@ -56,6 +61,7 @@ export class EgresoComponent implements OnInit {
   ];
   relation: RelationSystemUserOutputType[];
   outputTypeId: number;
+  userForm: any;
 
   constructor(
     public dialog: MatDialog,
@@ -65,41 +71,40 @@ export class EgresoComponent implements OnInit {
     private sucursalService: SucursalService,
     private flowService: OutputFlowTypeService,
     private pathData: ShortcutNavService,
-    private relationOutputService: RelationSystemUserOutputTypeService
-  ) {}
+    private relationOutputService: RelationSystemUserOutputTypeService,
+    private costCenter: CostCenterService,
+    private formBuilder: FormBuilder,
+    private userService: UserService
+  ) {
+    this.userForm = this.formBuilder.group({
+      rut: "",
+      fullName: "",
+      businessOffice: []
+    });
+  }
 
   ngOnInit() {
     this.pathData.changePath(["egreso", "Egreso", ""], ["", "", ""]);
-    // this.model.rut = this.localStorage.getRutUser();
-    // this.model.output = SaleTypeEnum.CASH_SALE;
     this.relationOutputService
       .getRelations(this.localStorage.getRutUser())
       .subscribe(
         (data: RelationSystemUserOutputType[]) => {
           this.relation = data.filter(item => item.isActive);
-          this.outputTypeId = data.filter(item => item.isDefault)[0].id;
+          this.model.output = data.find(item => item.isDefault).outputType.code;
         },
         error => {}
       );
+    this.loadCenterCostChild();
+  }
 
-    this.setSubsidiaryForm();
-    this.getCart();
-    const smd = [];
-    const data1 = new ShoppingCartDetail();
-    data1.id = 112;
-    data1.sku = "23456A8521";
-    data1.name = "Producto 1";
-    data1.amount = 45566.23;
-    data1.quantity = 2;
-    const data2 = new ShoppingCartDetail();
-    data2.id = 14;
-    data2.sku = "2345676311";
-    data2.name = "Producto 2";
-    data2.amount = 45566.23;
-    data2.quantity = 1;
-
-    // this.model.detail.push(data1);
-    // this.model.detail.push(data2);
+  onSubmitUser(user: any) {
+    const rut = user.rut.replace(/[^0-9kK]+|[kK](?!\s*$)/g, "");
+    console.log(rut);
+    this.userService.getUser(rut).subscribe(result => {
+      this.userForm.patchValue({
+        fullName: `${result.firstName} ${result.lastName}`
+      });
+    });
   }
 
   addOrQuitItem(value: number, id: number) {
@@ -223,9 +228,9 @@ export class EgresoComponent implements OnInit {
     });
   }
 
-  selectOut(abr: SaleTypeEnum) {
-    this.model.output = abr;
-    if (abr === SaleTypeEnum.BRANCH_TRANSFER) {
+  selectOut(outputType: any) {
+    this.model.output = outputType.value;
+    if (outputType.value === SaleTypeEnum.BRANCH_TRANSFER) {
       this.sucursalService
         .getSucursalesUsuario(this.localStorage.getRutUser())
         .subscribe(
@@ -348,5 +353,13 @@ export class EgresoComponent implements OnInit {
           console.log("Something wrong here");
         }
       );
+  }
+
+  openUrl(data: any) {}
+
+  loadCenterCostChild() {
+    this.costCenter.getCostCenterChild().subscribe(result => {
+      this.costCenterChilds = result;
+    });
   }
 }

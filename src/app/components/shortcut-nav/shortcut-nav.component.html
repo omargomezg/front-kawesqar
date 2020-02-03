@@ -1,19 +1,29 @@
-<div class="row d-print-none bg-light">
-  <div class="col-12">
-    <div class="small text-capitalize p-2 mb-0">
-      <a routerLink="/" routerLinkActive="">Home</a>
-      <ng-template [ngIf]="model.pathLvl1[1] !== undefined">
-        <span *ngIf="model.pathLvl1[1].length > 0"> > </span>
-        <a *ngIf="model.pathLvl1[1].length > 0" routerLink="/{{model.pathLvl1[0]}}"
-           routerLinkActive="{{model.pathLvl1[2]}}">
-          {{model.pathLvl1[1]}}</a>
-      </ng-template>
-      <ng-template [ngIf]="model.pathLvl1[1] !== undefined">
-        <span *ngIf="model.pathLvl2[1].length > 0"> > </span>
-        <a *ngIf="model.pathLvl2[1].length > 0" routerLink="/{{model.pathLvl2[0]}}"
-           routerLinkActive="{{model.pathLvl2[2]}}">
-          {{model.pathLvl2[1]}}</a>
-      </ng-template>
+<div class="container-fluid">
+  <div class="row d-print-none bg-light">
+    <div class="col-12">
+      <div class="small text-capitalize p-2 mb-0">
+        <a routerLink="/" routerLinkActive="">Home</a>
+        <ng-template [ngIf]="model.pathLvl1[1] !== undefined">
+          <span *ngIf="model.pathLvl1[1].length > 0"> > </span>
+          <a
+            *ngIf="model.pathLvl1[1].length > 0"
+            routerLink="/{{ model.pathLvl1[0] }}"
+            routerLinkActive="{{ model.pathLvl1[2] }}"
+          >
+            {{ model.pathLvl1[1] }}</a
+          >
+        </ng-template>
+        <ng-template [ngIf]="model.pathLvl1[1] !== undefined">
+          <span *ngIf="model.pathLvl2[1].length > 0"> > </span>
+          <a
+            *ngIf="model.pathLvl2[1].length > 0"
+            routerLink="/{{ model.pathLvl2[0] }}"
+            routerLinkActive="{{ model.pathLvl2[2] }}"
+          >
+            {{ model.pathLvl2[1] }}</a
+          >
+        </ng-template>
+      </div>
     </div>
   </div>
 </div>

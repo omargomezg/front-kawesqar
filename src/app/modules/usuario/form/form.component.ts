@@ -229,9 +229,7 @@ export class FormComponent implements OnInit {
     const id = parseInt(value.target.value, 0);
     this.selectedOutputTypeId = id;
     this.model.relationSystemUserOutputType.forEach(item => {
-      if (item.id === id) {
-        item.isDefault = true;
-      }
+      item.isDefault = item.id === id;
     });
   }
 }

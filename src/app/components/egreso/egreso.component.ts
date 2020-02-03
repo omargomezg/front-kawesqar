@@ -11,7 +11,8 @@ import {
   RelationSystemUserOutputType,
   SaleTypeEnum,
   SystemUser,
-  CostCenterChild
+  CostCenterChild,
+  Bank
 } from "kawesqar-class-model";
 import { SucursalService } from "../../core/services/sucursal.service";
 import { OutputFlowTypeService } from "../../core/services/output-flow-type.service";
@@ -23,6 +24,7 @@ import { RelationSystemUserOutputTypeService } from "src/app/core/services/relat
 import { FormBuilder } from "@angular/forms";
 import { CostCenterService } from "../../core/services/cost-center.service";
 import { UserService } from "../../core/services/user.service";
+import { BankService } from "../../core/services/bank.service";
 
 @Component({
   selector: "app-egreso",
@@ -32,6 +34,7 @@ import { UserService } from "../../core/services/user.service";
 export class EgresoComponent implements OnInit {
   unauthorized = false;
   costCenterChilds: CostCenterChild[] = Array<CostCenterChild>();
+  banks: Bank[] = Array<Bank>();
   model: ShoppingCartModel = new ShoppingCartModel();
   articleList: any[] = [];
   editModel: ExpensesModel;
@@ -74,12 +77,13 @@ export class EgresoComponent implements OnInit {
     private relationOutputService: RelationSystemUserOutputTypeService,
     private costCenter: CostCenterService,
     private formBuilder: FormBuilder,
-    private userService: UserService
+    private userService: UserService,
+    private bankService: BankService
   ) {
     this.userForm = this.formBuilder.group({
       rut: "",
       fullName: "",
-      businessOffice: []
+      businessOffice: [""]
     });
   }
 
@@ -95,11 +99,17 @@ export class EgresoComponent implements OnInit {
         error => {}
       );
     this.loadCenterCostChild();
+    this.getBanks();
+  }
+
+  getBanks() {
+    this.bankService.getAll().subscribe(result => {
+      this.banks = result;
+    });
   }
 
   onSubmitUser(user: any) {
     const rut = user.rut.replace(/[^0-9kK]+|[kK](?!\s*$)/g, "");
-    console.log(rut);
     this.userService.getUser(rut).subscribe(result => {
       this.userForm.patchValue({
         fullName: `${result.firstName} ${result.lastName}`
@@ -148,6 +158,11 @@ export class EgresoComponent implements OnInit {
 
   clean() {
     this.model.detail = [];
+    this.userForm.patchValue({
+      rut: "",
+      fullName: "",
+      businessOffice: [""]
+    });
   }
 
   setSubsidiaryForm() {
@@ -308,7 +323,6 @@ export class EgresoComponent implements OnInit {
       idSucursal: this.subsidiaryFrom,
       idSucursalDestino: this.subsidiaryTo
     };
-    console.log(request);
     this.servShoppingCart
       .addToCart(request, this.localStorage.getRutUser().replace("-", ""))
       .subscribe(res => {
@@ -354,8 +368,6 @@ export class EgresoComponent implements OnInit {
         }
       );
   }
-
-  openUrl(data: any) {}
 
   loadCenterCostChild() {
     this.costCenter.getCostCenterChild().subscribe(result => {

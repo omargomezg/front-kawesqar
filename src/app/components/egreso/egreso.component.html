@@ -54,7 +54,7 @@
             <mat-form-field class="full-width">
               <mat-label>Banco</mat-label>
               <mat-select>
-                <mat-option>nada</mat-option>
+                <mat-option *ngFor="let bank of banks" [value]="bank">{{bank.name}}</mat-option>
               </mat-select>
             </mat-form-field>
             <mat-form-field class="full-width">
@@ -117,7 +117,7 @@
               </mat-form-field>
               <mat-form-field class="full-width">
                 <mat-label>Oficina</mat-label>
-                <mat-select>
+                <mat-select id="businessOffice" formControlName="businessOffice">
                   <mat-option *ngFor="let cost of costCenterChilds"
                 [value]="cost.id">{{cost.name}}</mat-option>
                 </mat-select>

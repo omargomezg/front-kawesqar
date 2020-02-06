@@ -12,7 +12,9 @@ import {
   SaleTypeEnum,
   SystemUser,
   CostCenterChild,
-  Bank
+  Bank,
+  RelationSystemUserBranch,
+  ProofOfPurchase
 } from "kawesqar-class-model";
 import { SucursalService } from "../../core/services/sucursal.service";
 import { OutputFlowTypeService } from "../../core/services/output-flow-type.service";
@@ -25,6 +27,7 @@ import { FormBuilder } from "@angular/forms";
 import { CostCenterService } from "../../core/services/cost-center.service";
 import { UserService } from "../../core/services/user.service";
 import { BankService } from "../../core/services/bank.service";
+import {ProofOfPurchaseService} from 'src/app/core/services/proof-of -purchase.service';
 
 @Component({
   selector: "app-egreso",
@@ -32,6 +35,7 @@ import { BankService } from "../../core/services/bank.service";
   styleUrls: ["./egreso.component.css"]
 })
 export class EgresoComponent implements OnInit {
+  proofOfPurchase: ProofOfPurchase;
   unauthorized = false;
   costCenterChilds: CostCenterChild[] = Array<CostCenterChild>();
   banks: Bank[] = Array<Bank>();
@@ -45,23 +49,8 @@ export class EgresoComponent implements OnInit {
   subsidiaryFrom: number;
   subsidiaryTo: number;
   saleType = SaleTypeEnum;
-  subsidiarys: any[];
+  subsidiarys: RelationSystemUserBranch[] = Array<RelationSystemUserBranch>();
   Flows: OutputFlowTypeModel[] = Array<OutputFlowTypeModel>();
-  btn = [
-    { abr: "CONT", key: SaleTypeEnum.CASH_SALE, description: "Contado" },
-    { abr: "DEB", key: SaleTypeEnum.DEBIT_CARD, description: "Dedito" },
-    { abr: "CRED", key: SaleTypeEnum.CREDIT_CARD, description: "Crédito" },
-    {
-      abr: "CONS",
-      key: SaleTypeEnum.DELIVERY_SUPPLIES,
-      description: "Consumo"
-    },
-    {
-      abr: "SUC",
-      key: SaleTypeEnum.BRANCH_TRANSFER,
-      description: "Cambiar de Bodega"
-    }
-  ];
   relation: RelationSystemUserOutputType[];
   outputTypeId: number;
   userForm: any;
@@ -74,6 +63,7 @@ export class EgresoComponent implements OnInit {
     private sucursalService: SucursalService,
     private flowService: OutputFlowTypeService,
     private pathData: ShortcutNavService,
+    private proofOfPurchaseService: ProofOfPurchaseService,
     private relationOutputService: RelationSystemUserOutputTypeService,
     private costCenter: CostCenterService,
     private formBuilder: FormBuilder,
@@ -100,6 +90,14 @@ export class EgresoComponent implements OnInit {
       );
     this.loadCenterCostChild();
     this.getBanks();
+    this.loadProofOfPurchase();
+  }
+
+  loadProofOfPurchase() {
+    this.proofOfPurchaseService.getProofOfPurchase(-1)
+      .subscribe(result => {
+        this.proofOfPurchase = result;
+      });
   }
 
   getBanks() {
@@ -251,7 +249,7 @@ export class EgresoComponent implements OnInit {
         .subscribe(
           (result: SystemUser) => {
             this.subsidiarys = result.relationSystemUserBranch.filter(
-              r => r.isSelected === false
+              r => r.isActive === true
             );
           },
           error => {

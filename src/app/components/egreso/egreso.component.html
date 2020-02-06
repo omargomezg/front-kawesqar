@@ -129,9 +129,9 @@
               <mat-label>Sucursal destino</mat-label>
               <mat-select [(ngModel)]="subsidiaryTo">
                 <mat-option
-                  [value]="item.id"
+                  [value]="item.branch.id"
                   *ngFor="let item of subsidiarys"
-                  >{{ item.descripcion }}</mat-option
+                  >{{ item.branch.name }}</mat-option
                 >
               </mat-select>
             </mat-form-field>
@@ -142,6 +142,7 @@
                 placeholder="Notas u Observaciones"
                 class="form-control form-control-sm"
                 rows="3"
+                [(ngModel)]="proofOfPurchase.notas"
               ></textarea>
             </div>
           </section>
@@ -277,3 +278,4 @@
     </mat-card-content>
   </mat-card>
 </div>
+{{proofOfPurchase |json}}
